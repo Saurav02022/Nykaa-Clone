@@ -19,6 +19,8 @@ step 3 :- npm start <br/>
 4.redux <br/>
 5.redux-thunk <br/>
 6.react-icons <br/>
+7.axios <br/>
+8.@chakra-ui/icons <br/>
 <hr/>
 <h1>Backend folder structure</h1>
 <img src="https://user-images.githubusercontent.com/104342116/212834128-ef5d4918-a865-48da-b317-02a4aa1c3459.png"/>
