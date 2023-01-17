@@ -40,9 +40,9 @@ step 3 :- npm start <br/>
 
 2.ProductsPages
 
-1.makeupPage https://www.nykaa.com/makeup/c/12?page_no=1&sort=popularity&ptype=lst&id=13&root=nav_2&dir=desc&order=popularity&eq=desktop
+            1.makeupPage https://www.nykaa.com/makeup/c/12?page_no=1&sort=popularity&ptype=lst&id=13&root=nav_2&dir=desc&order=popularity&eq=desktop
 
-2.skinPage https://www.nykaa.com/skin/c/8377?page_no=1&sort=popularity&eq=desktop
+             2.skinPage https://www.nykaa.com/skin/c/8377?page_no=1&sort=popularity&eq=desktop
 
 3.single ProductPage
 
@@ -54,4 +54,4 @@ step 3 :- npm start <br/>
 
 6.Login and Signup
 
-AdminPage CRUD
+7.AdminPage CRUD
