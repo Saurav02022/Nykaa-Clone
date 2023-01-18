@@ -21,6 +21,8 @@ step 3 :- npm start <br/>
 6.react-icons <br/>
 7.axios <br/>
 8.@chakra-ui/icons <br/>
+9.react-responsive-carousel
+10.react-slick 
 <hr/>
 <h1>Backend folder structure</h1>
 <img src="https://user-images.githubusercontent.com/104342116/212834128-ef5d4918-a865-48da-b317-02a4aa1c3459.png"/>
