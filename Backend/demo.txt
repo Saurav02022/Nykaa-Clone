@@ -1,0 +1,13 @@
+{
+  "name":"Ali",
+  "phone":123456789,
+  "email":"ali@gmail.com",
+  "password":"12345"
+}
+
+{
+  "name": "Brow Studio  Kit - Ebony",
+  "brand": "Anastasia Beverly Hills",
+  "imgurl": "https://cdn14.nnnow.com/web-images/medium/styles/S5RJAITHOQ8/1654579261125/1.jpg",
+  "mrp":500
+}
