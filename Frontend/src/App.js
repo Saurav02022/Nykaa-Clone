@@ -1,5 +1,5 @@
-import Routers from "./routes/routers";
 
+import Routers from "./routes/routers";
 function App() {
   return (
     <div>
