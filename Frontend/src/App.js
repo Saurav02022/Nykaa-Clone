@@ -1,10 +1,7 @@
 import { Footer } from "./Components/Footer/Footer";
-import FaceProductPage from "./Pages/FaceProductPage";
 
 function App() {
-  return <div>
-    <FaceProductPage />
-  </div>;
+  return <div>Nykaa.com</div>;
 }
 
 export default App;
