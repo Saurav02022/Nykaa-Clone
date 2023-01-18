@@ -1,7 +1,11 @@
-import { Footer } from "./Components/Footer/Footer";
+import Routers from "./routes/routers";
 
 function App() {
-  return <div>Nykaa.com</div>;
+  return (
+    <div>
+      <Routers />
+    </div>
+  );
 }
 
 export default App;

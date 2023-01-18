@@ -26,7 +26,7 @@ const NavLink = ({ children }) => (
 
 const BottomNavbar = () => {
   return (
-    <Box borderBottom={"1px solid black"} paddingY="3">
+    <Box  paddingY="3" shadow={'lg'}>
       <Flex
         flexDirection={{
           base: "column",
