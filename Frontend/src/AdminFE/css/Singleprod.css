@@ -1,0 +1,16 @@
+.sing-prod{
+    /* border: 1px solid red; */
+    height: 270px;
+    display: grid;
+    grid-column: auto;
+    padding: 5px;
+}
+/* .prod-btn{
+    border: 1px solid palegreen;
+   
+} */
+
+.sing-prod>div>img{
+    /* border: 1px solid blue; */
+    margin-left: 25%;
+}
