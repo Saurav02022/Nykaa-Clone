@@ -7,6 +7,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import "./product.css"
 import Sidebar from "./Sidebar";
+import Pagination from "../Pagination";
+import { useState } from "react";
 
 
 
@@ -62,6 +64,13 @@ const banner = [
 
 function SkinProductPage() {
 
+  const total=Skinproducts.length;
+  const [page,setPage]=useState(1)
+
+  const pageChangeHandle = (value) => {
+    setPage((prev) => prev + value);
+  };
+
   const settings = {
     infinite: true,
     dots: true,
@@ -114,62 +123,69 @@ function SkinProductPage() {
           <Sidebar />
         </div>
         <div className="product_containor">
-        <div className="sort">
-        <select id="sort" name="Price">
-  <option value="">Price</option>
-  <option value="Price low to high">Price low to high</option>
-  <option value="Price high to low">Price high to low</option>
-</select>
+          <div className="sort">
+            <select id="sort" name="Price">
+              <option value="">Price</option>
+              <option value="Price low to high">Price low to high</option>
+              <option value="Price high to low">Price high to low</option>
+            </select>
 
-<select id="sort" name="Rating">
-  <option value="">Rating</option>
-  <option value="Rating low to high">Rating low to high</option>
-  <option value="Rating high to low">Rating high to low</option>
-</select>
+            <select id="sort" name="Rating">
+              <option value="">Rating</option>
+              <option value="Rating low to high">Rating low to high</option>
+              <option value="Rating high to low">Rating high to low</option>
+            </select>
 
-<select id="sort" name="Category">
-  <option value="">Category</option>
-  <option value="Maybelline">Maybelline </option>
-  <option value="Kay ">Kay </option>
-  <option value="NYX ">NYX </option>
-  <option value="Lakme ">Lakme </option>
-  <option value="Garnier ">Garnier </option>
-</select>
-        </div>
-      <Flex
-        display={"grid"}
-        gridTemplateColumns={{
-          base: "repeat(1,1fr)",
-          sm: "repeat(2,1fr)",
-          md: "repeat(2,1fr)",
-          lg: "repeat(3,1fr)",
-          xl: "repeat(3,1fr)",
-        }}
-        width="90%"
-        margin="auto"
-        gap={5}
-        marginTop="20px"
-        marginBottom={"20px"}
-      >
-        {Skinproducts.map(
-          ({ imgsrc, title, price, discountedprice, discount, rating }) => (
-            <ProductCartItem key={title}
-              imgsrc={imgsrc}
-              title={title}
-              price={price}
-              discount={discount}
-              discountPrice={discountedprice}
-              rating={rating}
+            <select id="sort" name="Category">
+              <option value="">Category</option>
+              <option value="Maybelline">Maybelline </option>
+              <option value="Kay ">Kay </option>
+              <option value="NYX ">NYX </option>
+              <option value="Lakme ">Lakme </option>
+              <option value="Garnier ">Garnier </option>
+            </select>
+          </div>
+          <Flex
+            display={"grid"}
+            gridTemplateColumns={{
+              base: "repeat(1,1fr)",
+              sm: "repeat(2,1fr)",
+              md: "repeat(2,1fr)",
+              lg: "repeat(3,1fr)",
+              xl: "repeat(3,1fr)",
+            }}
+            width="90%"
+            margin="auto"
+            gap={5}
+            marginTop="20px"
+            marginBottom={"20px"}
+          >
+            {Skinproducts.map(
+              ({ imgsrc, title, price, discountedprice, discount, rating }) => (
+                <ProductCartItem key={title}
+                  imgsrc={imgsrc}
+                  title={title}
+                  price={price}
+                  discount={discount}
+                  discountPrice={discountedprice}
+                  rating={rating}
+                />
+              )
+            )}
+          </Flex>
+          <Pagination
+              pageChangeHandle={pageChangeHandle}
+              currentPage={page}
+              totalPages={total}
             />
-          )
-        )}
-      </Flex>
-     
+
         </div>
 
       </div>
-    
-    
+
+      
+
+
     </div>
   </>
 }

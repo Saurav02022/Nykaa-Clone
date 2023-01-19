@@ -4,7 +4,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 
 function ProductCartItem({imgsrc,title,price,discountedprice,rating,discount}) {
   return (
-    <Box border="0px solid black" boxShadow={"md"} borderRadius="md">
+    <Box display={"flex"} flexDirection="column" justifyContent={"space-between"} gap="10px" bg={"white"} border="0px solid black" boxShadow={"md"} borderRadius="md">
       <Box border={'0px solid red'} justifyContent='center' alignItems={'center'}>
         <Image src={imgsrc} margin='auto' />
       </Box>
