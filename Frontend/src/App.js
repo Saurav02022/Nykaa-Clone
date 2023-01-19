@@ -1,3 +1,4 @@
+// import { Footer } from "./Components/Footer/Footer";
 
 import Routers from "./routes/routers";
 function App() {
@@ -5,7 +6,7 @@ function App() {
     <div>
       <Routers/>
     </div>
-  );
+  )
 }
 
 export default App;
