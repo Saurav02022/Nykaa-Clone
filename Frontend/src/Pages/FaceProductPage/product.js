@@ -60,18 +60,6 @@ export const products=[
       "preview": "Preview Shades"
     },
     {
-      "imglink": "https://www.nykaa.com/maybelline-new-york-fit-me-matte-poreless-foundation/p/31074?productId=31074&pps=6",
-      "imgsrc": "https://images-static.nykaa.com/media/catalog/product/tr:w-220,h-220,cm-pad_resize/5/3/536b16c6902395718338.jpg",
-      "title": "Maybelline New York Fit Me Matte+Poreless Liquid Foundation ...",
-      "price": "₹629",
-      "discountedprice": "₹440",
-      "discount": "30% Off",
-      "spanned": "",
-      "rating": "( 63681 )",
-      "shades": "17 shades",
-      "preview": "Preview Shades"
-    },
-    {
       "imglink": "https://www.nykaa.com/maybelline-new-york-fit-me-matte-poreless-liquid-foundation-tube/p/408011?productId=408011&pps=7",
       "imgsrc": "https://images-static.nykaa.com/media/catalog/product/tr:w-220,h-220,cm-pad_resize/8/d/8d9e16c6902395722434.jpg",
       "title": "Maybelline New York Fit Me Matte+Poreless Liquid Foundation ...",

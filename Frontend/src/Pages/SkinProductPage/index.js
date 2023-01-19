@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { products } from "./product";
+import { Skinproducts } from "./product";
 import ProductCartItem from "./ProductCardItem";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -60,7 +60,7 @@ const banner = [
   "https://images-static.nykaa.com/uploads/56af97a6-e339-42f1-8add-cc4c3136014c.jpg?tr=w-1200,cm-pad_resize"
 ]
 
-function FaceProductPage() {
+function SkinProductPage() {
 
   const settings = {
     infinite: true,
@@ -151,7 +151,7 @@ function FaceProductPage() {
         marginTop="20px"
         marginBottom={"20px"}
       >
-        {products.map(
+        {Skinproducts.map(
           ({ imgsrc, title, price, discountedprice, discount, rating }) => (
             <ProductCartItem key={title}
               imgsrc={imgsrc}
@@ -174,4 +174,4 @@ function FaceProductPage() {
   </>
 }
 
-export default FaceProductPage;
+export default SkinProductPage;
