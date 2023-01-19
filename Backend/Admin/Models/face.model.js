@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 const faceSchema = mongoose.Schema({
     imgsrc:String,
     title:String,
-    price:String,
-    discountedprice:String,
+    price:Number,
+    discountedprice:Number,
     discount:String,
     spanned:String,
     rating:String,

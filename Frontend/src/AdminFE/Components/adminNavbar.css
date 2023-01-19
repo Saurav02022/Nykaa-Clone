@@ -1,0 +1,41 @@
+.adminNavbar{
+    border: 1px solid grey;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content:flex-end;
+    background-color: #2a2f43;
+    color: white;
+    gap: 10%;
+}
+.navicon-cont{
+    display: flex;
+    justify-content: space-evenly;
+    width: 20%;
+}
+.nav-icons{
+    border: 1px solid white;
+    border-radius: 7px;
+    background-color: white;
+    padding: 3px 4px 0px 4px;
+}
+.navicon-cont>div:nth-child(1){
+    color: green;
+}
+.navicon-cont>div:nth-child(2){
+    color:rgb(32, 159, 159);
+}
+.navicon-cont>div:nth-child(3){
+    color:steelblue;
+}
+.user-admin{
+    border: 1px solid white;
+    display: flex;
+    width: 20%;
+    gap: 20%;
+}
+
+.user-admin>div:nth-child(2){
+    color:rgb(44, 223, 44);
+}
