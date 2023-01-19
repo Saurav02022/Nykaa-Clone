@@ -1,0 +1,7 @@
+.suggbox{
+    border: 1px solid grey;
+    max-height: 150px;
+    overflow: auto;
+    width: 500px;
+    margin: auto;
+}
