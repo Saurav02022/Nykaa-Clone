@@ -13,6 +13,7 @@ import Users from "../AdminFE/Pages/Users";
 const Routers = () => {
   return (
     <>
+      <Navbar/>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/admin/login" element={<Login />} />
@@ -24,6 +25,7 @@ const Routers = () => {
         <Route path="/face" element={<FaceProductPage/>} />
         <Route path="/skin" element={<SkinProductPage />}/>
       </Routes>
+      <Footer/>
     </>
   );
 };
