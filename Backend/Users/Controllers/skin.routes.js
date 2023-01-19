@@ -1,5 +1,5 @@
 const express = require('express');
-const { FaceModel } = require('../..');
+const { FaceModel } = require('../../Admin/Models/face.model');
 
 const skinRouter = express.Router();
 

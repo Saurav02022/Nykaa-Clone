@@ -7,6 +7,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import "./product.css"
 import Sidebar from "./Sidebar";
+import Pagination from "../Pagination";
+import { useState } from "react";
 
 
 
@@ -61,6 +63,12 @@ const banner = [
 ]
 
 function FaceProductPage() {
+
+  const [currentPage,setCurrentPage]=useState(1)
+  let totalPages=products.length
+  const pageChangeHandle = (value) => {
+    setCurrentPage((prev) => prev + value);
+  }; 
 
   const settings = {
     infinite: true,
@@ -164,6 +172,14 @@ function FaceProductPage() {
           )
         )}
       </Flex>
+      <div style={{marginLeft:"50px",marginBottom:"20px"}}>
+      <Pagination
+              pageChangeHandle={pageChangeHandle}
+              currentPage={currentPage}
+              totalPages={totalPages}
+            />
+      </div>
+     
      
         </div>
 
