@@ -1,0 +1,25 @@
+.admin-products{
+    border: 1px solid red;
+    display: flex;
+    justify-content: space-evenly;
+    width: 90%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.adding-product{
+    border: 1px solid blue;
+    width: 25%;
+    height: 600px;
+}
+.all-products{
+    border: 1px solid blueviolet;
+    height: fit-content;
+    width: 75%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}

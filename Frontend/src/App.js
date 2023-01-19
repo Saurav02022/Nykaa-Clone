@@ -1,7 +1,12 @@
-// import { Footer } from "./Components/Footer/Footer";
-import { MainRoutes } from "./Pages/mainRoutes";
+import { Footer } from "./Components/Footer/Footer";
 
+import Routers from "./routes/routers";
 function App() {
+  return (
+    <div>
+      <Routers/>
+    </div>
+  );
   return <div>
     {/* Nykaa.com */}
   <MainRoutes />

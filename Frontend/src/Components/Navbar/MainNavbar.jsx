@@ -12,6 +12,7 @@ import {
 // eslint-disable-next-line no-unused-vars
 import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const Links = [
   "Categories",
@@ -66,14 +67,16 @@ export default function MainNavbar() {
           </Box>
 
           <Box border={"0px solid blue"}>
-            <Image
-              src={
-                "https://cdn.iconscout.com/icon/free/png-256/nykaa-3384872-2822953.png"
-              }
-              alt="NykaaLogo"
-              width={20}
-              height=""
-            />
+            <Link to={'/'}>
+              <Image
+                src={
+                  "https://cdn.iconscout.com/icon/free/png-256/nykaa-3384872-2822953.png"
+                }
+                alt="NykaaLogo"
+                width={20}
+                height=""
+              />
+            </Link>
           </Box>
           <Flex
             display={{ base: "none", md: "flex" }}
@@ -98,7 +101,10 @@ export default function MainNavbar() {
           <Button backgroundColor={"#fc2779"} color="white">
             Signin
           </Button>
-          <HiOutlineShoppingBag size={30} />
+          <Link to={"/cart"}>
+            {" "}
+            <HiOutlineShoppingBag size={30} />
+          </Link>
         </Flex>
       </Flex>
       {isOpen && (

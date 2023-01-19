@@ -1,6 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
-
-const Links = ["Makeup", "Skin", "Hair", "Bath & Body", "Natural"];
+import {Link} from 'react-router-dom'
+const Links = ["Make up", "Skin", "Hair", "Bath & Body", "Natural"];
 
 const links = [
   "Mom & Baby",
@@ -26,7 +26,7 @@ const NavLink = ({ children }) => (
 
 const BottomNavbar = () => {
   return (
-    <Box borderBottom={"1px solid black"} paddingY="3">
+    <Box paddingY="3" shadow={"lg"}>
       <Flex
         flexDirection={{
           base: "column",
@@ -40,16 +40,18 @@ const BottomNavbar = () => {
       >
         <NavLink>
           {Links.map((link) => (
-            <Flex
-              key={link}
-              _hover={{
-                textDecoration: "underline",
-                cursor: "pointer",
-                color: "#fb94bc",
-              }}
-            >
-              {link}
-            </Flex>
+            <Link to={link === "Make up" ? "/face" : null}>
+              <Flex
+                key={link}
+                _hover={{
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                  color: "#fb94bc",
+                }}
+              >
+                {link}
+              </Flex>
+            </Link>
           ))}
         </NavLink>
         <NavLink>
