@@ -1,34 +1,61 @@
 import React from 'react'
-import {Box, Heading, Input, Button} from "@chakra-ui/react";
+import {Box, Heading, Input, Button, InputGroup, InputRightElement,   } from "@chakra-ui/react";
 import { Link } from 'react-router-dom';
 // import {app as firebase} from './firebase.js';
 import { useState } from 'react';
-
+import {postdata} from "../Redux/LogReducer/action";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 export const SignUp = () => {
-const [num, setNum] = useState("");
-
+const [phone, setPhone] = useState("");
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [name, setName] = useState("");
+const navigate = useNavigate();
+const [show, setShow] = React.useState(false)
+  const handlePass = () => setShow(!show)
+const dispatch = useDispatch();
 const handleClick = (e)=>{
-       
+  
+      dispatch(postdata({email, name, password, phone}))
+      .then((res)=>{
+         console.log("User Registered Successfully")
+      // navigate("/login")
+      })
+        
     }
 
-console.log(num)
+
   return (
-    <Box height={"50%"} textAlign={"center"} p="10px" border={"3px solid gray"} margin="auto" marginTop={"60px"} alignItems={"center"} width={"40%"} >
+    <Box height={"50%"} textAlign={"center"} p="10px" border={"3px solid gray"} margin="auto" marginTop={"60px"} marginBottom={"20px"} alignItems={"center"} width={"30%"} >
         <Box m={5}>
-        <Heading>LOGIN / REGISTER</Heading>
+        <Heading fontSize={"18px"}>LOGIN / REGISTER</Heading>
         </Box>
          <Box m={5}>
-            <Input type="text" borderColor={"black"} value={num} onChange={(e)=> setNum(e.target.value)} placeholder='Enter Your Name' />
+            <Input type="text" borderColor={"black"} value={name} onChange={(e)=> setName(e.target.value)} placeholder='Enter Your Name' />
          </Box>
          <Box m={5}>
-            <Input type="number" borderColor={"black"} value={num} onChange={(e)=> setNum(e.target.value)} placeholder='Enter Mobile Number' />
+            <Input type="number" borderColor={"black"} value={phone} onChange={(e)=> setPhone(e.target.value)} placeholder='Enter Mobile Number' />
          </Box>
          <Box m={5}>
-            <Input type="email" borderColor={"black"} value={num} onChange={(e)=> setNum(e.target.value)} placeholder='Enter Email ID' />
+            <Input type="email" borderColor={"black"} value={email} onChange={(e)=> setEmail(e.target.value)} placeholder='Enter Email ID' />
          </Box> 
          <Box m={5}>
-            <Input type="password" borderColor={"black"} value={num} onChange={(e)=> setNum(e.target.value)} placeholder='Enter Password' />
+         <InputGroup size='md'>
+      <Input
+        pr='4.5rem'
+        type={show ? 'text' : 'password'}
+        placeholder='Enter password'
+        value={password}
+        onChange={(e)=> setPassword(e.target.value)}
+      />
+      <InputRightElement width='4.5rem'>
+        <Button h='1.75rem' size='sm' onClick={handlePass}>
+          {show ? 'Hide' : 'Show'}
+        </Button>
+      </InputRightElement>
+    </InputGroup>
          </Box>
          <Box m={5} >
             <Button bg={'pink.600'} border={"2px solid"} borderColor={"black"} onClick= {handleClick} >

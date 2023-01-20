@@ -5,8 +5,8 @@ const { adminRouter } = require('./Admin/Controllers/admin.routes')
 const { faceRouter } = require('./Admin/Controllers/face.routes')
 const { skinRouter } = require('./Users/Controllers/skin.routes')
 const { userRouter } = require('./Users/Controllers/users.routes')
-
 const app=express()
+
 
 app.use(express.json())
 app.use('/users',userRouter)
