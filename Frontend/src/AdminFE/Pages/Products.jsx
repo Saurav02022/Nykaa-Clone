@@ -17,7 +17,7 @@ const Products = () => {
   const toast = useToast()
 
   const getprods = () => {
-    return axios.get(`http://localhost:5000/face/`)
+    return axios.get(`https://fair-pear-salmon-suit.cyclic.app/face/`)
       .then((res) => setData(res.data))
       .then((err) => console.log(err))
   }
@@ -42,7 +42,7 @@ console.log(optval)
  
   const handleSubmit=(e)=>{
     e.preventDefault();
-    axios.post('http://localhost:5000/face/addjson',(JSON.parse(jsdata)))
+    axios.post('https://fair-pear-salmon-suit.cyclic.app/face/addjson',(JSON.parse(jsdata)))
     .then((res)=>{
       setChange(!change)
       toast({

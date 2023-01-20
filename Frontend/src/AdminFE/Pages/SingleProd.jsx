@@ -12,7 +12,7 @@ export const SingleProd = (el) => {
   },[change])
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:5000/face/delete/${id}`)
+    axios.delete(`https://fair-pear-salmon-suit.cyclic.app/face/delete/${id}`)
       .then((res) => {
         setChange(!change)
         toast({
