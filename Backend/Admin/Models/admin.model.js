@@ -4,7 +4,8 @@ const adminSchema=mongoose.Schema({
     name:String,
     phone:Number,
     email:String,
-    password:String
+    password:String,
+    blockeduser:Array
 })
 
 const AdminModel = mongoose.model('admin',adminSchema)

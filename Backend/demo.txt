@@ -11,3 +11,22 @@
   "imgurl": "https://cdn14.nnnow.com/web-images/medium/styles/S5RJAITHOQ8/1654579261125/1.jpg",
   "mrp":500
 }
+
+{
+    "imgsrc": "https://images-static.nykaa.com/media/catalog/product/tr:w-220,h-220,cm-pad_resize/c/1/c1801d422769_H-8901030366086.jpg",
+    "title": "Lakme Absolute Skin Natural Mousse Mattreal Foundation",
+    "price": 850,
+    "discountedprice": 680,
+    "discount":" 20% Off",
+    "spanned": "",
+    "rating": "( 25639 )",
+    "shades": "8 shades",
+    "preview": "Preview Shade"
+  }
+
+cart page : get/post/delete
+address page: get/post/delete
+
+
+
+ 
