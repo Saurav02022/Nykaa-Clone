@@ -2,6 +2,7 @@ Project Name :- prickly-example-4760
 <br/>
 Website Name:- https://www.nykaa.com/ 
 <br/>
+backend Deployed Link:- https://fair-pear-salmon-suit.cyclic.app/
 <br/>
 ![image](https://user-images.githubusercontent.com/104342116/212825641-5331b014-f50f-4e45-8364-d2956f9258c7.png)
 

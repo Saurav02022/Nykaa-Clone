@@ -23,7 +23,7 @@ console.log(auth)
     const handleSubmit=async(e)=>{
         e.preventDefault();
         console.log(data)
-       await axios.post('http://localhost:5000/admins/login',data)
+       await axios.post('https://fair-pear-salmon-suit.cyclic.app/admins/login',data)
         .then((res)=>{
             if(res.data.token){
                 console.log(res.data)

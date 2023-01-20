@@ -1,20 +1,20 @@
 
 const mongoose = require('mongoose')
 
-const faceSchema = mongoose.Schema({
+const skinSchema = mongoose.Schema({
     imgsrc:String,
     title:String,
     price:Number,
     discountedprice:Number,
     discount:String,
     spanned:String,
-    rating:String,
+    rating:Number,
     shades:String,
     preview:String
 })
 
-const FaceModel = mongoose.model('face',faceSchema)
+const SkinModel = mongoose.model('skin',skinSchema)
 
 module.exports = {
-    FaceModel
+    SkinModel
 }

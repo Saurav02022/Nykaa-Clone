@@ -1,12 +1,12 @@
-// import { Footer } from "./Components/Footer/Footer";
-
-import Routers from "./routes/routers";
+import AdminRoutes from "./routes/admin.routes";
+import UserRoutes from "./routes/user.routes";
 function App() {
   return (
     <div>
-      <Routers/>
+      <UserRoutes />
+      <AdminRoutes />
     </div>
-  )
+  );
 }
 
 export default App;

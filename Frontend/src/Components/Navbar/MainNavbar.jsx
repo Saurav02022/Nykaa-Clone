@@ -42,18 +42,6 @@ export default function MainNavbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <InputGroup
-        display={{ md: "none" }}
-        width={"md"}
-        margin="auto"
-        marginTop="3.5"
-      >
-        <InputLeftElement
-          pointerEvents="none"
-          children={<Search2Icon color="gray.300" />}
-        />
-        <Input type="tel" placeholder="Search on Nykaa" />
-      </InputGroup>
       <Flex justifyContent="space-evenly" borderBottom={"1px solid grey"}>
         <Flex justifyContent="space-evenly" gap="5">
           <Box paddingTop="5">
