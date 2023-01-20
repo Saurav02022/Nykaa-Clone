@@ -7,10 +7,6 @@ const { faceRouter } = require('./Users/Routes/face.routes')
 const { skinRouter } = require('./Users/Routes/skin.routes')
 const { userRouter } = require('./Users/Routes/users.routes')
 require('dotenv').config()
-const { adminRouter } = require('./Admin/Controllers/admin.routes')
-const { faceRouter } = require('./Admin/Controllers/face.routes')
-const { skinRouter } = require('./Users/Controllers/skin.routes')
-const { userRouter } = require('./Users/Controllers/users.routes')
 const app=express()
 
 
