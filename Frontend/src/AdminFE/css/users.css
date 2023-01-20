@@ -1,0 +1,6 @@
+.user-table{
+    margin-top: 10%;
+}
+.user-table>thead{
+    border: 1px solid blue;
+}

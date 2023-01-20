@@ -14,14 +14,24 @@ const Products = () => {
   const [data, setData] = useState([])
   const [jsdata,setJsdata] = useState([])
   const [change,setChange] = useState(false)
+  const [prod,setProd] = useState('face')
   const toast = useToast()
 
   const getprods = () => {
-    return axios.get(`http://localhost:5000/face/`)
+    return axios.get(`http://localhost:5000/${prod}/`)
       .then((res) => setData(res.data))
       .then((err) => console.log(err))
   }
 console.log(optval)
+  const changeProduct=(e)=>{
+    if(e.target.value==="skin"){
+      setProd("skin")
+    }else{
+      setProd("face")
+    }
+  }
+  console.log(prod)
+
   useEffect(() => {
     getprods()
     if(query===""){
@@ -38,11 +48,11 @@ console.log(optval)
       .map((el)=>el)
       setSuggest(newSuggest)
     }
-  }, [change,query,optval])
+  }, [change,query,optval,prod])
  
   const handleSubmit=(e)=>{
     e.preventDefault();
-    axios.post('http://localhost:5000/face/addjson',(JSON.parse(jsdata)))
+    axios.post(`http://localhost:5000/${prod}/addjson`,(JSON.parse(jsdata)))
     .then((res)=>{
       setChange(!change)
       toast({
@@ -82,6 +92,10 @@ console.log(optval)
         <div>
           <form onSubmit={handleSubmit}>
           <label >You Have JSON File !!!</label>
+          <select id=""  onChange={changeProduct}>
+            <option value="face">Make up</option>
+            <option value="skin">Skin</option>
+          </select>
           <Textarea
             placeholder='You Have JSON File ! Paste or Drop Here !!!'
             size='sm'
