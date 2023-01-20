@@ -1,4 +1,4 @@
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Navbar from "../Components/Navbar/index";
 import Footer from "../Components/Footer/footer.jsx";
@@ -10,6 +10,7 @@ import UserSignUp from "../Pages/Authentication/SignUp";
 import CartPage from "../Pages/CartPage";
 import Address from "../Pages/AddressPage/Address";
 import PaymentPage from "../Pages/PaymentPage";
+
 import { Box } from "@chakra-ui/layout";
 
 const UserRoutes = () => {

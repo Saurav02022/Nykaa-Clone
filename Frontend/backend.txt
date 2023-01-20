@@ -1,0 +1,44 @@
+      Ali Product Pages ke liye
+
+face product data = /face/
+
+face product data price in asc= /face/priceasc
+
+face product data price in desc = /face/pricedesc
+
+face product data rating in asc= /face/ratingasc
+
+face product data rating in desc = /face/ratingdesc
+
+skin product data = /skin/
+
+skin product data price in asc= /face/priceasc
+
+skin product data price in desc = /face/pricedesc
+
+skin product data rating in asc= /face/ratingasc
+
+skin product data rating in desc = /face/ratingdesc
+
+
+        Aditya signup and login ke liye
+
+signup = /users/register
+
+login = /users/login
+
+        Cart Page ke liye Saurav Kumar
+
+Cart page Data = /cart/:id  (get data)
+
+Cart Page added to cart = /cart/:id  (post data)
+
+Delete the data from cart page = /cart/:id/:num
+
+        address page ke liye
+
+get address data = /address/:id  (get data)
+
+post address data = /address/:id (post data)
+
+delete address data = /address/:id/:num (delete data)
