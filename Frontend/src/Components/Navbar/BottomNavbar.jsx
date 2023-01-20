@@ -41,6 +41,7 @@ const BottomNavbar = () => {
         <NavLink>
           {Links.map((link) => (
             <Link
+              key={link}
               to={
                 link === "Make up" ? "/face" : link === "Skin" ? "/skin" : "/"
               }
