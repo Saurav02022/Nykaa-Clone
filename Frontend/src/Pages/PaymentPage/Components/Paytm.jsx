@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Heading, Input, Button } from "@chakra-ui/react";
-const GiftCard = () => {
+const Paytm = () => {
   return (
     <Flex
       gap="2"
@@ -16,14 +16,11 @@ const GiftCard = () => {
       }}
     >
       <Heading as="h1" fontFamily="Inter" fontSize="20px" fontWeight="600">
-        Gift Card
+        Paytm Wallet
       </Heading>
       <hr />
-      <Input placeholder="Gift Card Number" type="number" required />
-      <Flex gap="2">
-        <Input placeholder="PIN" type="number" required width='40%'/>
+        <Input placeholder="Phone Number" type="number" required />
         <Button
-          width='60%'
           color="#FFFFFF"
           fontFamily="Inter"
           fontSize="16px"
@@ -36,11 +33,10 @@ const GiftCard = () => {
             backgroundColor: "#E80080",
           }}
         >
-          Submit
+          Link
         </Button>
       </Flex>
-    </Flex>
   );
 };
 
-export default GiftCard;
+export default Paytm;

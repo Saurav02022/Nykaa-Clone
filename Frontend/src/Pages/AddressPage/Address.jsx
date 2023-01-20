@@ -34,7 +34,7 @@ const initialAddress = {
   email: "",
 };
 
- const Address = ({
+const Address = ({
   count = 2,
   item = {},
   rs = 200,
@@ -307,7 +307,7 @@ const initialAddress = {
                 <Text display={"flex"} justifyContent="space-between">
                   <span>Shipping</span>
                   <span>
-                    {shipping == 0 ? (
+                    {shipping === 0 ? (
                       <span
                         style={{
                           fontWeight: "bold",
@@ -351,4 +351,4 @@ const initialAddress = {
   );
 };
 
-export default Address
+export default Address;

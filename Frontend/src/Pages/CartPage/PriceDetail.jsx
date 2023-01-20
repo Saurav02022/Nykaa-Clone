@@ -1,12 +1,12 @@
-import { Box, Button, Flex, Heading } from "@chakra-ui/react";
+import { Button, Flex, Heading } from "@chakra-ui/react";
 function PriceDetail() {
   return (
     <Flex
       flexDirection={"column"}
-      boxShadow='xl'
-      border='1px solid grey'
-      borderRadius={'10px'}
-      margin='auto'
+      boxShadow="xl"
+      border="1px solid grey"
+      borderRadius={"10px"}
+      margin="auto"
       gap="3"
       padding={"10px"}
     >

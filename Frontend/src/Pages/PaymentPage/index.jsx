@@ -10,11 +10,13 @@ import {
   AccordionPanel,
   Image,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { AiOutlineCreditCard } from "react-icons/ai";
 import { BsArrowRightCircle, BsCashCoin, BsGift } from "react-icons/bs";
 import { SiPaytm } from "react-icons/si";
-import { MdOutlineQrCode2 } from "react-icons/md";
+import Paytm from "./Components/Paytm";
 import CreditCard from "./Components/CreditCard";
+import GiftCard from "./Components/GiftCard";
 import Cod from "./Components/Cod";
 
 function PaymentPage({
@@ -24,6 +26,8 @@ function PaymentPage({
   discount = 25,
   shipping = 0,
 }) {
+  const [method, setMethod] = useState("Card");
+
   return (
     <Flex
       direction={{
@@ -94,7 +98,7 @@ function PaymentPage({
             borderRight="1px solid grey"
             borderLeft="1px solid grey"
             borderRadius="1rem"
-            gap="10"
+            justifyContent={"space-around"}
             padding="5px"
           >
             <Flex
@@ -104,10 +108,20 @@ function PaymentPage({
               marginLeft="10px"
             >
               <Flex
+                _hover={{
+                  cursor: "pointer",
+                }}
+                onClick={() => setMethod("Card")}
                 border="1px solid grey"
+                borderLeft={method === "Card" && "5px solid #E80071"}
                 padding="2"
                 boxShadow="md"
                 borderRadius="10px"
+                width={{
+                  lg: "298px",
+                  "2xl": "298px",
+                  md: "298px",
+                }}
               >
                 <Box border="0px solid red">
                   <AiOutlineCreditCard size="25" />
@@ -123,13 +137,20 @@ function PaymentPage({
                   </Heading>
                   <Text color="grey">Visa,Mastercard,Rupay & more</Text>
                 </Flex>
-                <Box border="0px solid red" margin="auto">
-                  <BsArrowRightCircle size="25" />
-                </Box>
+                {method === "Card" && (
+                  <Box border="0px solid red" margin="auto">
+                    <BsArrowRightCircle size="25" />
+                  </Box>
+                )}
               </Flex>
               <Flex
+                _hover={{
+                  cursor: "pointer",
+                }}
+                onClick={() => setMethod("Cod")}
                 gap="1"
                 border="1px solid grey"
+                borderLeft={method === "Cod" && "5px solid #E80071"}
                 padding="2"
                 boxShadow="md"
                 borderRadius="10px"
@@ -148,13 +169,20 @@ function PaymentPage({
                   </Heading>
                   <Text color="grey">Pay at your doorstep</Text>
                 </Flex>
-                <Box border="0px solid red" margin="auto">
-                  <BsArrowRightCircle size="25" />
-                </Box>
+                {method === "Cod" && (
+                  <Box border="0px solid red" margin="auto">
+                    <BsArrowRightCircle size="25" />
+                  </Box>
+                )}
               </Flex>
               <Flex
+                _hover={{
+                  cursor: "pointer",
+                }}
+                onClick={() => setMethod("Gift")}
                 gap="1"
                 border="1px solid grey"
+                borderLeft={method === "Gift" && "5px solid #E80071"}
                 padding="2"
                 boxShadow="md"
                 borderRadius="10px"
@@ -173,13 +201,20 @@ function PaymentPage({
                   </Heading>
                   <Text color="grey">One card for all Nykaa apps</Text>
                 </Flex>
-                <Box border="0px solid red" margin="auto">
-                  <BsArrowRightCircle size="25" />
-                </Box>
+                {method === "Gift" && (
+                  <Box border="0px solid red" margin="auto">
+                    <BsArrowRightCircle size="25" />
+                  </Box>
+                )}
               </Flex>
               <Flex
+                _hover={{
+                  cursor: "pointer",
+                }}
+                onClick={() => setMethod("Paytm")}
                 gap="1"
                 border="1px solid grey"
+                borderLeft={method === "Paytm" && "5px solid #E80071"}
                 padding="2"
                 boxShadow="md"
                 borderRadius="10px"
@@ -198,40 +233,24 @@ function PaymentPage({
                   </Heading>
                   <Text color="grey">Link your Paytm wallet and pay</Text>
                 </Flex>
-                <Box border="0px solid red" margin="auto">
-                  <BsArrowRightCircle size="25" />
-                </Box>
-              </Flex>
-              <Flex
-                gap="1"
-                border="1px solid grey"
-                padding="2"
-                boxShadow="md"
-                borderRadius="10px"
-              >
-                <Box border="0px solid red">
-                  <MdOutlineQrCode2 size="25" />
-                </Box>
-                <Flex border="0px solid red" flexDirection="column">
-                  <Heading
-                    as="h6"
-                    fontSize="16px"
-                    fontWeight="500"
-                    fontFamily="sans-serif"
-                  >
-                    UPI
-                  </Heading>
-                  <Text color="grey"> Google Pay, PhonePe, Paytm & more</Text>
-                </Flex>
-                <Box border="0px solid red" margin="auto">
-                  <BsArrowRightCircle size="25" />
-                </Box>
+                {method === "Paytm" && (
+                  <Box border="0px solid red" margin="auto">
+                    <BsArrowRightCircle size="25" />
+                  </Box>
+                )}
               </Flex>
             </Flex>
             <Box border="0px solid black" marginTop="5px">
               {" "}
-              <CreditCard />
-              {/* <Cod /> */}
+              {method === "Card" ? (
+                <CreditCard />
+              ) : method === "Cod" ? (
+                <Cod />
+              ) : method === "Gift" ? (
+                <GiftCard />
+              ) : method === "Paytm" ? (
+                <Paytm />
+              ) : null}
             </Box>
           </Flex>
         </Flex>
@@ -340,7 +359,7 @@ function PaymentPage({
                 <Text display={"flex"} justifyContent="space-between">
                   <span>Shipping</span>
                   <span>
-                    {shipping == 0 ? (
+                    {shipping === 0 ? (
                       <span
                         style={{
                           fontWeight: "bold",
