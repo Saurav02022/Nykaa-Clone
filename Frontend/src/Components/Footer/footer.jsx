@@ -55,7 +55,7 @@ const FootMid = [
     },
 ]
 
-export const Footer = () =>{
+const Footer = () =>{
     const [email,setEmail] = useState('');
     const [screen,setScreen] = useState('');
 
@@ -200,3 +200,5 @@ export const Footer = () =>{
         </SimpleGrid>
     </SimpleGrid>
 }
+
+export default Footer
