@@ -87,8 +87,8 @@ export const login =({email, password})=>(dispatch)=> {
     return axios.post("https://fair-pear-salmon-suit.cyclic.app/users/login", data)
     .then((r)=>{
         console.log(r.data);
-        const user = r.data.id;
-        localStorage.setItem("user", JSON.stringify(user));
+        // const user = r.data.id;
+        // localStorage.setItem("user", JSON.stringify(user));
         return dispatch(loginSuccess(r.data))
     })
     .catch((e)=>(

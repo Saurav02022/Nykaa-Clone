@@ -12,13 +12,11 @@ import {
   FormErrorMessage,
   Box
 
-  useToast
-
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import {RotatingLines} from "react-loader-spinner";
 import { useState } from "react";
-
+import { useToast } from "@chakra-ui/react";
 import { postdata, signupReq } from "../../Redux/LogReducer/action";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +28,7 @@ const UserSignUp = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+ const toast = useToast();
   const [show, setShow] = React.useState(false);
 
   const handlePass = () => setShow(!show);
@@ -45,11 +43,23 @@ const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
 const handleClick = () => {
   dispatch(signupReq());
 
-    dispatch(postdata({ email, name, password, phone })).then((res) => {
-      console.log("User Registered Successfully");
-
+    dispatch(postdata({ email, name, password, phone }))
+    .then((res) => {
+      console.log(res)
+      console.log("Registered Successfully");
+    //  console.log(res.payload);
+      toast({
+        // title: 'Login Successfull.',
+        render: () => (
+          <Box color="white" p={3} bg="pink.500">
+            Registration Successfull.
+          </Box>
+        ),
+      });
       navigate("/user/login");
-    });
+    }).catch((err)=>
+    console.log(err)
+    );
   };
 
   if(isLoading){
