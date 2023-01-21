@@ -43,7 +43,8 @@ const reducer = (state=initialState , action) => {
 
             case types.USER_SIGNUP_SUCCESS:
                 return {
-                    ...state,isSignUp:payload,
+                    ...state,
+                    isSignUp:payload,
                     isAuthLoading: false,
                 }
                 case types.USER_SIGNUP_FAILURE:
