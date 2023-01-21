@@ -13,6 +13,7 @@ const Login = () => {
     useEffect(()=>{
       if(auth!==''){
         navigate('/admin/panel')
+        setAuth('')
     }
     },[auth])
 console.log(auth)
@@ -25,9 +26,10 @@ console.log(auth)
         console.log(data)
        await axios.post('https://fair-pear-salmon-suit.cyclic.app/admins/login',data)
         .then((res)=>{
-            if(res.data.token){
+            if(res.data.token!==null){
                 console.log(res.data)
                 setAuth(res.data.token)
+                localStorage.setItem('adminname',res.data.adminname)
             }else{
                 alert("Invalid cred !")
             }

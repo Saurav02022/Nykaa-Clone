@@ -8,6 +8,8 @@ import "./adminNavbar.css"
 import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
+  const adminname = localStorage.getItem('adminname')
+  // console.log(adminname)
   return (
     <div className='adminNavbar'>
     <div className='navicon-cont'>
@@ -24,7 +26,7 @@ const Navbar = () => {
     </div>
     <div className='user-admin'>
         <div>
-            <h3>Sammyak</h3>
+            <h3>{adminname}</h3>
         </div>
         <div>
         <Icon as={MdAdminPanelSettings} w={8} h={8} />
