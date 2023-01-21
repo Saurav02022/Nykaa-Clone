@@ -61,6 +61,7 @@ export const postdata = ({email, name, password, phone}) => (dispatch) => {
       phone: phone,
      
     };
+    
     console.log("params", data);
     dispatch(signupReq());
     

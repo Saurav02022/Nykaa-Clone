@@ -6,7 +6,7 @@ import { GrLocation } from "react-icons/gr";
 const HeaderNavbar = () => {
   return (
     <Flex
-      backgroundColor={"#fb94bc"}
+      backgroundColor={"#FC2779"}
       justifyContent="space-around"
       flexDirection={{
         base: "column",
@@ -20,9 +20,10 @@ const HeaderNavbar = () => {
         <Heading
           as={"p"}
           fontSize="sm"
-          textAlign={{ sm: "center",base:"center" }}
+          textAlign={{ sm: "center", base: "center" }}
           marginBottom="3"
           marginTop={2}
+          color="#FFFFFF"
         >
           BEAUTY BONANZA Get Your Daily Dose Of Amazing Deals
         </Heading>
@@ -33,14 +34,26 @@ const HeaderNavbar = () => {
         marginTop={2}
         marginBottom="3"
       >
-        <Flex gap={1}>
+        <Flex
+          gap={1}
+          _hover={{
+            color: " #FFFFFF",
+            cursor: "pointer",
+          }}
+        >
           <IoIosApps size={20} />
           <Heading as={"p"} fontSize="sm" fontWeight={"normal"}>
             {" "}
             Get App
           </Heading>
         </Flex>
-        <Flex gap={1}>
+        <Flex
+          gap={1}
+          _hover={{
+            color: " #FFFFFF",
+            cursor: "pointer",
+          }}
+        >
           {" "}
           <GrLocation size={20} />
           <Heading as={"p"} fontSize="sm" fontWeight={"normal"}>
@@ -48,14 +61,26 @@ const HeaderNavbar = () => {
             Store & Events
           </Heading>
         </Flex>
-        <Flex gap={1}>
+        <Flex
+          gap={1}
+          _hover={{
+            color: " #FFFFFF",
+            cursor: "pointer",
+          }}
+        >
           <IoMdGift size={20} />
           <Heading as={"p"} fontSize="sm" fontWeight={"normal"}>
             {" "}
             Gift Card
           </Heading>
         </Flex>
-        <Flex gap={1}>
+        <Flex
+          gap={1}
+          _hover={{
+            color: " #FFFFFF",
+            cursor: "pointer",
+          }}
+        >
           {" "}
           <IoIosHelpCircleOutline size={20} />
           Help
