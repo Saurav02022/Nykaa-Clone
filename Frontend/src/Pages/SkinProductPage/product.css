@@ -99,23 +99,27 @@
   .sort{
     width: 80%;
     margin: auto;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
     gap: 10px;
     margin: 30px auto;
   }
 
+  .sort button{
+    background-color: white;
+    border: 1px solid black;
+    width: 50%;
+    font-weight: 700;
+    }
+
   .sort>select{
-    padding: 10px 15px;
+    padding: 5px 10px;
     border: 2px solid black;
     border-radius: 40px;
     font-weight: 500;
   }
   
-   option{
-    font-size: 1rem;
-    font-weight:500;
-  }
+
   
   
   
@@ -163,6 +167,11 @@
     .sidebar{
       display: none;
     }
+
+    .sort{
+      width: 100%;
+      grid-template-columns: repeat(2,1fr);
+    }
   
   }
   @media only screen and (max-width: 500px) {
@@ -188,6 +197,11 @@
     }
     .second_bnr>div:nth-child(2){
       width: 100%;
+    }
+
+    .sort{
+      width: 100%;
+      grid-template-columns: repeat(2,1fr);
     }
   
   }

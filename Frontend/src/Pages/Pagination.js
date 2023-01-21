@@ -4,20 +4,26 @@ import { Button } from "@chakra-ui/react";
 function Pagination({ pageChangeHandle, currentPage, totalPages }) {
   const prev = (
     <>
-      <button background={"none"} border="none"   width="0px"
-      height={"30px"} disabled={currentPage===1} onClick={() => pageChangeHandle(-1)}>
+      <button
+        background={"none"}
+        border="none"
+        width="0px"
+        height={"30px"}
+        disabled={currentPage === 1}
+        onClick={() => pageChangeHandle(-1)}
+      >
         ←
       </button>
     </>
   );
   const current = (
     <>
-      <Button 
+      <Button
         width="20px"
         height={"30px"}
-      border="none"
-      background={"none"}
-      fontWeight="bold"
+        border="none"
+        background={"none"}
+        fontWeight="bold"
       >
         {currentPage}
       </Button>
@@ -26,10 +32,10 @@ function Pagination({ pageChangeHandle, currentPage, totalPages }) {
   const next = (
     <>
       <button
-      width="0px"
-      height={"30px"}
-      border="none"
-      background={"none"}
+        width="0px"
+        height={"30px"}
+        border="none"
+        background={"none"}
         disabled={currentPage === totalPages}
         onClick={() => pageChangeHandle(1)}
       >
