@@ -7,6 +7,7 @@ import {
   InputRightElement,
   Flex,
   Text,
+  useToast
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -32,7 +33,7 @@ const UserSignUp = () => {
   const handleClick = () => {
     dispatch(postdata({ email, name, password, phone })).then((res) => {
       console.log("User Registered Successfully");
-      navigate("/login");
+      navigate("/user/login");
     });
   };
 
