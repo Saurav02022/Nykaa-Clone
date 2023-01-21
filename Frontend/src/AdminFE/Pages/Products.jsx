@@ -8,27 +8,26 @@ import { SingleProd } from './SingleProd'
 
 
 const Products = () => {
-  const [optval,setOptval] =useState('')
-  const [query,setQuery] = useState('')
-  const [suggest,setSuggest] = useState([])
+  const [optval, setOptval] = useState('')
+  const [query, setQuery] = useState('')
+  const [suggest, setSuggest] = useState([])
   const [data, setData] = useState([])
-  const [jsdata,setJsdata] = useState([])
-  const [change,setChange] = useState(false)
-  const [prod,setProd] = useState('face')
+  const [jsdata, setJsdata] = useState([])
+  const [change, setChange] = useState(false)
+  const [prod, setProd] = useState('face')
   const toast = useToast()
 
   const getprods = () => {
-
-    return axios.get(`https://fair-pear-salmon-suit.cyclic.app/face/`)
-
+    setData([])
+    return axios.get(`https://fair-pear-salmon-suit.cyclic.app/${prod}/`)
       .then((res) => setData(res.data))
       .then((err) => console.log(err))
   }
-console.log(optval)
-  const changeProduct=(e)=>{
-    if(e.target.value==="skin"){
+  console.log(optval)
+  const changeProduct = (e) => {
+    if (e.target.value === "skin") {
       setProd("skin")
-    }else{
+    } else {
       setProd("face")
     }
   }
@@ -36,98 +35,99 @@ console.log(optval)
 
   useEffect(() => {
     getprods()
-    if(query===""){
+    if (query === "") {
       setSuggest([])
-    }else{
+    } else {
       let textQuery = query.trim().toLowerCase()
-     let newSuggest = data.filter((el)=>{
-        if(optval==="_id"){
-          return el._id.toLowerCase().indexOf(textQuery)!==-1?true:false
-        }else{
-          return el.title.toLowerCase().indexOf(textQuery)!==-1?true:false
+      let newSuggest = data.filter((el) => {
+        if (optval === "_id") {
+          return el._id.toLowerCase().indexOf(textQuery) !== -1 ? true : false
+        } else {
+          return el.title.toLowerCase().indexOf(textQuery) !== -1 ? true : false
         }
       })
-      .map((el)=>el)
+        .map((el) => el)
       setSuggest(newSuggest)
     }
-  }, [change,query,optval,prod])
- 
-  const handleSubmit=(e)=>{
+  }, [change, query, optval, prod])
+
+  const handleSubmit = (e) => {
     e.preventDefault();
+    axios.post(`https://fair-pear-salmon-suit.cyclic.app/${prod}/addjson`, (JSON.parse(jsdata)))
 
-    axios.post('https://fair-pear-salmon-suit.cyclic.app/face/addjson',(JSON.parse(jsdata)))
-
-    .then((res)=>{
-      setChange(!change)
-      toast({
-        title: 'Product Added.',
-        description: "added product to backend.",
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
+      .then((res) => {
+        setChange(!change)
+        toast({
+          title: 'Product Added.',
+          description: "added product to backend.",
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        })
       })
-    })
-    .catch((err)=>{
-      toast({
-        title: "error while posting product",
-        description: err.message,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
+      .catch((err) => {
+        toast({
+          title: "error while posting product",
+          description: err.message,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        })
       })
-    })
   }
-  const queryHandler=useCallback((val)=>{
+  const queryHandler = useCallback((val) => {
     setQuery(val)
-  },[])
-  const optionHandler=useCallback((val)=>{
+  }, [])
+  const optionHandler = useCallback((val) => {
     setOptval(val)
-  },[])
+  }, [])
   console.log(data)
   console.log(query)
 
   return (
     <div>
       <Navbar />
-      <h2>Query</h2>
-      <Searchbar queryHandler={queryHandler} optionHandler={optionHandler} suggest={suggest}/>  
-      <div className='admin-products'>
-      <div className='adding-product'>
-        <div>
-          <form onSubmit={handleSubmit}>
-          <label >You Have JSON File !!!</label>
-          <select id=""  onChange={changeProduct}>
-            <option value="face">Make up</option>
-            <option value="skin">Skin</option>
-          </select>
-          <Textarea
-            placeholder='You Have JSON File ! Paste or Drop Here !!!'
-            size='sm'
-            name='jsonfile'
-            onChange={(e)=>setJsdata((e.target.value))}
-            />
-          <input type="submit" />
-            </form>
+      <div className='complete-box'>
+        <div className='serachbar-box'>
+        <select id="" onChange={changeProduct}>
+                  <option value="face">Make up</option>
+                  <option value="skin">Skin</option>
+                </select>
+          <Searchbar queryHandler={queryHandler} optionHandler={optionHandler} suggest={suggest} /></div>
+        <div className='admin-products'>
+          <div className='adding-product'>
+            <div>
+              <form onSubmit={handleSubmit}>
+                <label >You Have JSON File !!!</label>
+                <Textarea className='txt-area'
+                  placeholder='You Have JSON File ! Paste or Drop Here !!!'
+                  size='sm'
+                  h={[50, 100, 200, 300]}
+                  name='jsonfile'
+                  onChange={(e) => setJsdata((e.target.value))}
+                />
+                <input className='submit-json-prods' type="submit" />
+              </form>
+            </div>
+
+          </div>
+          <div className='all-products'>
+            {
+              suggest.length > 0 ?
+                suggest.map((el) => {
+                  return (<div key={Date.now() + Math.random()}>
+                    <SingleProd {...el} />
+                  </div>)
+                }) :
+                data.map((el) => {
+                  return (<div key={Date.now() + Math.random()}>
+                    <SingleProd {...el} />
+                  </div>)
+                })
+            }
+          </div>
         </div>
-
       </div>
-      <div className='all-products'>
-        {
-          suggest.length>0 ?
-          suggest.map((el) => {
-            return (<div key={Date.now() + Math.random()}>
-              <SingleProd {...el} />
-            </div>)
-          }):
-          data.map((el) => {
-            return (<div key={Date.now() + Math.random()}>
-              <SingleProd {...el} />
-            </div>)
-          })
-        }
-      </div>
-
-    </div>
     </div>
   )
 }
