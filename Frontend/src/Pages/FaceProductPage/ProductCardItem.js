@@ -1,12 +1,13 @@
 import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { AiOutlineHeart } from "react-icons/ai";
+import axios from "axios";
 
 function ProductCartItem({_id,imgsrc,title,price,discountedprice,rating,discount}) {
 
 
-  let id = localStorage.getItem("")
-  const HandleAddtoBag = () => {
+  let {id} = localStorage.getItem("user")
+  const  HandleAddtoBag = async() => {
     const payload = {
       _id,
       imgsrc,
@@ -16,7 +17,7 @@ function ProductCartItem({_id,imgsrc,title,price,discountedprice,rating,discount
       rating,
       discount,
     };
-    console.log(payload);
+    console.log(id)
   }
   return (
     <Box

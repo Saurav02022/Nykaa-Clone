@@ -11,6 +11,8 @@ import Sidebar from "./Sidebar";
 import Pagination from "../Pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "../Loading";
+import { Box,Center } from "@chakra-ui/react";
 
 
 
@@ -68,12 +70,23 @@ function FaceProductPage() {
 
   const [data,setData]=useState([])
 
+  const [loading,setLoading] = useState(false)
+  const [error,setError] = useState(false)
+
+
   const getData=()=>{
+    
+    setLoading(true)
     axios.get("https://fair-pear-salmon-suit.cyclic.app/face").then((res)=>{
-      setData(res.data)
+      setTimeout(() => {
+        setLoading(false)
+        setData(res.data)
+        }, 2000);
+    
       // console.log(res.data)
     }).catch((err)=>{
       console.log(err)
+      setError(true)
     })
   }
 
@@ -85,43 +98,60 @@ function FaceProductPage() {
 
   
   const pricelh=()=>{
+    setLoading(true)
     axios.get("https://fair-pear-salmon-suit.cyclic.app/face/priceasc")
     .then((res)=>{
       setData(res.data)
+    setLoading(false)
       // console.log(res.data)
     }).catch((err)=>{
       console.log(err)
+    setError(true)
+
     })
   }
 
   const pricehl=()=>{
+    setLoading(true)
     axios.get("https://fair-pear-salmon-suit.cyclic.app/face/pricedesc")
     .then((res)=>{
       setData(res.data)
+    setLoading(false)
+
       // console.log(res.data)
     }).catch((err)=>{
       console.log(err)
+    setError(true)
+
     })
   }
 
 
   const ratinglh=()=>{
+    setLoading(true)
     axios.get("https://fair-pear-salmon-suit.cyclic.app/face/ratingasc")
     .then((res)=>{
       setData(res.data)
+    setLoading(false)
       // console.log(res.data)
     }).catch((err)=>{
       console.log(err)
+    setError(true)
+
     })
   }
 
   const ratinghl=()=>{
+    setLoading(true)
     axios.get("https://fair-pear-salmon-suit.cyclic.app/face/ratingdesc")
     .then((res)=>{
       setData(res.data)
+    setLoading(false)
       // console.log(res.data)
     }).catch((err)=>{
       console.log(err)
+    setError(true)
+
     })
   }
 
@@ -145,6 +175,10 @@ function FaceProductPage() {
     }
 
     const reset=()=>{
+      setLoading(true)
+      setTimeout(() => {
+        setLoading(false)
+      }, 2000);
       getData();
      let ptag= document.getElementById("priceSort")
       ptag.value=""
@@ -157,12 +191,13 @@ function FaceProductPage() {
     
     const [filter,setFilter]=useState("")
     const category=(e)=>{
-
+    setLoading(true)
       let filterData= data.filter
       ((el)=> {
         return el.title.indexOf(e.target.value) !== -1
         ? true:false;
       }).map((el) => el);
+    setLoading(false)
       setFilter(filterData)
 
     }
@@ -259,6 +294,12 @@ function FaceProductPage() {
             {/* <button onClick={category}>nyc</button> */}
                         
           </div>
+          {loading && <Loading/>}
+      {error && (<Box>
+        <Center>
+        <img width="150px" src="https://www.seekpng.com/png/full/360-3605845_dog-holding-paper-in-mouth.png" alt="" />
+        </Center>
+        </Box>)}
           <Flex
             display={"grid"}
             gridTemplateColumns={{

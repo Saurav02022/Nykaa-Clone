@@ -10,6 +10,8 @@ import Sidebar from "./Sidebar";
 import Pagination from "../Pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "../Loading";
+import { Box,Center } from "@chakra-ui/react";
 
 
 
@@ -69,12 +71,23 @@ function SkinProductPage() {
 
   const [data,setData]=useState([])
 
+  const [loading,setLoading] = useState(false)
+  const [error,setError] = useState(false)
+
+
   const getData=()=>{
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/skin").then((res)=>{
-      setData(res.data)
+    
+    setLoading(true)
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin").then((res)=>{
+      setTimeout(() => {
+        setLoading(false)
+        setData(res.data)
+        }, 2000);
+    
       // console.log(res.data)
     }).catch((err)=>{
       console.log(err)
+      setError(true)
     })
   }
 
@@ -86,43 +99,60 @@ function SkinProductPage() {
 
   
   const pricelh=()=>{
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/skin/priceasc")
+    setLoading(true)
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin/priceasc")
     .then((res)=>{
       setData(res.data)
+    setLoading(false)
       // console.log(res.data)
     }).catch((err)=>{
       console.log(err)
+    setError(true)
+
     })
   }
 
   const pricehl=()=>{
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/skin/pricedesc")
+    setLoading(true)
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin/pricedesc")
     .then((res)=>{
       setData(res.data)
+    setLoading(false)
+
       // console.log(res.data)
     }).catch((err)=>{
       console.log(err)
+    setError(true)
+
     })
   }
 
 
   const ratinglh=()=>{
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/skin/ratingasc")
+    setLoading(true)
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin/ratingasc")
     .then((res)=>{
       setData(res.data)
+    setLoading(false)
       // console.log(res.data)
     }).catch((err)=>{
       console.log(err)
+    setError(true)
+
     })
   }
 
   const ratinghl=()=>{
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/skin/ratingdesc")
+    setLoading(true)
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin/ratingdesc")
     .then((res)=>{
       setData(res.data)
+    setLoading(false)
       // console.log(res.data)
     }).catch((err)=>{
       console.log(err)
+    setError(true)
+
     })
   }
 
@@ -146,6 +176,10 @@ function SkinProductPage() {
     }
 
     const reset=()=>{
+      setLoading(true)
+      setTimeout(() => {
+        setLoading(false)
+      }, 2000);
       getData();
      let ptag= document.getElementById("priceSort")
       ptag.value=""
@@ -158,17 +192,16 @@ function SkinProductPage() {
     
     const [filter,setFilter]=useState("")
     const category=(e)=>{
-
+    setLoading(true)
       let filterData= data.filter
       ((el)=> {
         return el.title.indexOf(e.target.value) !== -1
         ? true:false;
       }).map((el) => el);
+    setLoading(false)
       setFilter(filterData)
 
-    }
-
-    
+    }    
 
 
 
@@ -197,7 +230,7 @@ function SkinProductPage() {
 
         <div className="first_bnr">
           <div>
-            <h2 style={{ fontSize: "25px", fontWeight: "500", textAlign: "center", marginBottom: "5px" }}>Face Makeup Collection</h2>
+            <h2 style={{ fontSize: "25px", fontWeight: "500", textAlign: "center", marginBottom: "5px" }}>Skin Makeup Collection</h2>
           </div>
           <Slider {...settings} >
             {banner.map((el) => (
@@ -258,6 +291,12 @@ function SkinProductPage() {
             </select>
                         
           </div>
+          {loading && <Loading/>}
+      {error && (<Box>
+        <Center>
+        <img width="150px" src="https://www.seekpng.com/png/full/360-3605845_dog-holding-paper-in-mouth.png" alt="" />
+        </Center>
+        </Box>)}
           <Flex
             display={"grid"}
             gridTemplateColumns={{
