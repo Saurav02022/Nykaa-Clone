@@ -31,10 +31,10 @@ const UserLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = useToast();
-  const isErrorE = email === ''
+  const isErrorE = email === '';
   const isErrorPa = password ==="";
 const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
-
+const disable = email === "" || password ==="";
   const handlePass = () => setShow(!show);
 
   const handleClick = () => {
@@ -105,7 +105,7 @@ const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
       gap="5"
     >
       <Heading fontSize={"18px"}>LOGIN / REGISTER</Heading>
-      <FormControl isInvalid={isErrorE}>
+      <FormControl>
 <Input
         required={true}
         type="email"
@@ -114,15 +114,15 @@ const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter Email ID"
       />
-{!isErrorE ? (
+{/* {!isErrorE ? (
         <FormHelperText>
           Enter the Email.
         </FormHelperText>
       ) : (
         <FormErrorMessage>Email is required.</FormErrorMessage>
-      )}
+      )} */}
 </FormControl>
-     <FormControl isInvalid ={isErrorPa}>
+     <FormControl >
      <InputGroup size="md">
         <Input
           required={true}
@@ -146,18 +146,18 @@ const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
           </Button>
         </InputRightElement>
       </InputGroup>
-      {!isErrorPa ? (
+      {/* {!isErrorPa ? (
         <FormHelperText>
           Enter the Password.
         </FormHelperText>
       ) : (
         <FormErrorMessage>Password is required.</FormErrorMessage>
-      )}
+      )} */}
      </FormControl>
       
 
       <Button
-      isDisabled={isLoading}
+      isDisabled={isLoading || disable}
         backgroundColor={"#FC2779"}
         color="#FFFFFF"
         _hover={{

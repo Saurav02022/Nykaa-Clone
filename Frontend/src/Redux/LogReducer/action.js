@@ -62,15 +62,15 @@ export const postdata = ({email, name, password, phone}) => (dispatch) => {
      
     };
     
-    console.log("params", data);
+    // console.log("params", data);
     dispatch(signupReq());
     
     return axios.post(
         `https://fair-pear-salmon-suit.cyclic.app/users/register`, data
       )
       .then((res) => {
-        console.log(res.data);
-       dispatch(signupSuccess(res.data));
+        // console.log(res.data);
+     return  dispatch(signupSuccess(res));
       })
       .catch((error) => {
         dispatch(signupFailure());
@@ -83,7 +83,7 @@ export const login =({email, password})=>(dispatch)=> {
         email: email,
         password: password
     }
-    console.log(data);
+    // console.log(data);
     return axios.post("https://fair-pear-salmon-suit.cyclic.app/users/login", data)
     .then((r)=>{
         console.log(r.data);

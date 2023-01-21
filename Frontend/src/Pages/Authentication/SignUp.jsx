@@ -34,29 +34,52 @@ const UserSignUp = () => {
   const handlePass = () => setShow(!show);
   const dispatch = useDispatch();
 
-  const isErrorE = email === ''
-  const isErrorP = phone=== ""
-  const isErrorN = name === "" 
-  const isErrorPa = password ==="";
+  const disable = email === "" || phone=== "" || name === "" || password ==="";
+
+  let isErrorE = email !== '';
+  const isErrorP = phone !== "";
+  const isErrorN = name !== "";
+  const isErrorPa = password !=="";
+   
+ const onEmailChange = (e)=>{
+    isErrorE = email === "";
+     setEmail(e.target.value)
+  }
+  
+
 const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
- 
+const signup = useSelector((state)=> state.LogReducer.isSignUp);
+// console.log(signup); 
 const handleClick = () => {
   dispatch(signupReq());
 
     dispatch(postdata({ email, name, password, phone }))
     .then((res) => {
       console.log(res)
-      console.log("Registered Successfully");
+      if(res.payload.status === 200){
+        toast({
+          // title: 'Login Successfull.',
+          render: () => (
+            <Box color="white" p={3} bg="pink.500">
+              {res.payload.data}
+            </Box>
+          ),
+        });
+        navigate("/user/login");
+      }else{
+        toast({
+          // title: 'Login Successfull.',
+          render: () => (
+            <Box color="white" p={3} bg="pink.500">
+             {res.payload.data}
+            </Box>
+          ),
+        });
+      }
+      //console.log(res)
+      // console.log("Registered Successfully");
     //  console.log(res.payload);
-      toast({
-        // title: 'Login Successfull.',
-        render: () => (
-          <Box color="white" p={3} bg="pink.500">
-            Registration Successfull.
-          </Box>
-        ),
-      });
-      navigate("/user/login");
+    
     }).catch((err)=>
     console.log(err)
     );
@@ -90,22 +113,24 @@ const handleClick = () => {
       gap="5"
     >
       <Heading fontSize={"18px"}>LOGIN / REGISTER</Heading>
-<FormControl isInvalid={isErrorN}>
+<FormControl >
 <Input
         required={true}
         type="text"
         borderColor={"black"}
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => 
+          // const isErrorN = name === "";
+          setName(e.target.value) }
         placeholder="Enter Your Name"
       />
-      {!isErrorN ? (
+      {/* {!disable ? (
         <FormHelperText>
           Enter the Name.
         </FormHelperText>
       ) : (
         <FormErrorMessage>Name is required.</FormErrorMessage>
-      )}
+      )} */}
 </FormControl>
       {/* <Input
         required={true}
@@ -115,7 +140,7 @@ const handleClick = () => {
         onChange={(e) => setName(e.target.value)}
         placeholder="Enter Your Name"
       /> */}
-<FormControl isInvalid={isErrorP}>
+<FormControl >
 <Input
         required={true}
         type="number"
@@ -124,39 +149,40 @@ const handleClick = () => {
         onChange={(e) => setPhone(e.target.value)}
         placeholder="Enter Mobile Number"
       />
-{!isErrorP ? (
+{/* {!isErrorP ? (
         <FormHelperText>
           Enter the Mobile Number.
         </FormHelperText>
       ) : (
         <FormErrorMessage>Mobile number is required.</FormErrorMessage>
-      )}
+      )} */}
 </FormControl>
      
 
-<FormControl isInvalid={isErrorE}>
+<FormControl >
 <Input
         required={true}
         type="email"
         borderColor={"black"}
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={onEmailChange}
         placeholder="Enter Email ID"
       />
-{!isErrorE ? (
+{/* {!isErrorE ? (
         <FormHelperText>
           Enter the Email.
         </FormHelperText>
       ) : (
         <FormErrorMessage>Email is required.</FormErrorMessage>
-      )}
+      )} */}
 </FormControl>
-<FormControl isInvalid={isErrorPa}>
+<FormControl >
 <Flex>
         <InputGroup>
           <Input
             type={show ? "text" : "password"}
             placeholder="Enter password"
+            borderColor={"black"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -177,17 +203,17 @@ const handleClick = () => {
         </InputGroup>
       
       </Flex>
-{!isErrorPa ? (
+{/* {!isErrorPa ? (
         <FormHelperText>
           Enter the Password.
         </FormHelperText>
       ) : (
         <FormErrorMessage>Password is required.</FormErrorMessage>
-      )}
+      )} */}
 </FormControl>
 
       <Button
-      isDisabled = {isLoading}
+      isDisabled = {isLoading || disable}
         backgroundColor={"#FC2779"}
         color="#FFFFFF"
         _hover={{
