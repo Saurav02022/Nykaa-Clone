@@ -95,6 +95,7 @@ const initialAddress = {
     <SimpleGrid
       w={screen === "sm" ? "90%" : screen === "md" ? "80%" : "60%"}
       margin="auto"
+      mt='30px' mb='30px'
     >
       <SimpleGrid
         display={screen === "sm" ? "grid" : "flex"}
