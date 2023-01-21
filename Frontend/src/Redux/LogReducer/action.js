@@ -2,7 +2,7 @@ import axios from "axios"
 import * as types from "./actionType"
 
 
-const signupReq= () => {
+export const signupReq= () => {
 
     return {
         type:types.USER_SIGNUP_REQUEST
@@ -11,14 +11,14 @@ const signupReq= () => {
 
 }
 
-const signupSuccess = (payload)=>{
+export const signupSuccess = (payload)=>{
     return {
         type: types.USER_SIGNUP_SUCCESS,
         payload: payload
     }
 }
 
-const signupFailure= () => {
+export const signupFailure= () => {
 
     return {
         type:types.USER_SIGNUP_FAILURE
@@ -26,7 +26,7 @@ const signupFailure= () => {
 
 }
 
-const loginRequest =() => {
+export const loginRequest =() => {
 
     return {
         type:types.USER_LOGIN_REQUEST
@@ -78,7 +78,7 @@ export const postdata = ({email, name, password, phone}) => (dispatch) => {
   };
 
 export const login =({email, password})=>(dispatch)=> {
-    dispatch(loginRequest)
+    dispatch(loginRequest())
     const data = {
         email: email,
         password: password
@@ -87,7 +87,9 @@ export const login =({email, password})=>(dispatch)=> {
     return axios.post("https://fair-pear-salmon-suit.cyclic.app/users/login", data)
     .then((r)=>{
         console.log(r.data);
-        return dispatch(loginSuccess(r.data.token))
+        const user = r.data.id;
+        localStorage.setItem("user", JSON.stringify(user));
+        return dispatch(loginSuccess(r.data))
     })
     .catch((e)=>(
         dispatch(loginFailure())
