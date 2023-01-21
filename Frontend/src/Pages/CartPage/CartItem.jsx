@@ -2,9 +2,10 @@ import React from "react";
 import { Flex, Box, Image, Heading, Select, Text } from "@chakra-ui/react";
 import { MdOutlineDelete } from "react-icons/md";
 
-const CartItem = () => {
+const CartItem = ({ _id, imgsrc, title, price }) => {
   return (
     <Flex
+      key={_id}
       border={"1px solid gray"}
       flexDirection="column"
       boxShadow={"md"}
@@ -40,13 +41,7 @@ const CartItem = () => {
           gap="2"
         >
           <Box>
-            <Image
-              src={
-                "https://images-static.nykaa.com/media/catalog/product/tr:h-800,w-800,cm-pad_resize/4/7/47aa49227568_H_8901030902321.jpg"
-              }
-              alt={"template"}
-              width="200px"
-            />
+            <Image src={ imgsrc} alt={"template"} width="200px" />
           </Box>
         </Flex>
         <Flex
@@ -78,9 +73,7 @@ const CartItem = () => {
               fontWeight="600"
               lineHeight={"1.1"}
             >
-              {
-                "Simple Protect N Glow Vitamin C Moisturising Glow Gel Simple Protect N Glow Vitamin C Moisturising Glow Gel"
-              }
+              {title}
             </Heading>
             <Box margin={"auto"}>
               <MdOutlineDelete size={30} />
@@ -109,7 +102,7 @@ const CartItem = () => {
         </Flex>
         <Flex width={"49%"} justifyContent="flex-end">
           <Text fontSize={"12px"} fontWeight="550" marginRight={"10px"}>
-            ₹764
+            {price}
           </Text>
         </Flex>
       </Flex>

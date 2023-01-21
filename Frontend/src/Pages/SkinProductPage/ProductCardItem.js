@@ -1,12 +1,59 @@
-import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Image, Text, useToast } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { AiOutlineHeart } from "react-icons/ai";
+import axios from "axios";
 
-function ProductCartItem({id,imgsrc,title,price,discountedprice,rating,discount}) {
+function ProductCartItem({ _id, imgsrc, title, price, discountedprice, rating, discount }) {
+  const toast = useToast();
+  let { id} = JSON.parse(localStorage.getItem("user"));
+
+  const HandleAddtoBag = async () => {
+    const payload = {
+      _id,
+      imgsrc,
+      title,
+      price,
+      discountedprice,
+      rating,
+      discount,
+    };
+    await axios
+      .post(`https://fair-pear-salmon-suit.cyclic.app/cart/${id}`, payload)
+      .then((res) =>
+        toast({
+          description: "Product added successfully",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        })
+      )
+      .catch((err) => {
+        toast({
+          description: err.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+  };
   return (
-    <Box key={id} display={"flex"} flexDirection="column" justifyContent={"space-between"} gap="10px" bg={"white"} border="0px solid black" boxShadow={"md"} borderRadius="md">
-      <Box border={'0px solid red'} justifyContent='center' alignItems={'center'}>
-        <Image src={imgsrc} margin='auto' />
+    <Box
+      key={id}
+      display={"flex"}
+      flexDirection="column"
+      justifyContent={"space-between"}
+      gap="10px"
+      bg={"white"}
+      border="0px solid black"
+      boxShadow={"md"}
+      borderRadius="md"
+    >
+      <Box
+        border={"0px solid red"}
+        justifyContent="center"
+        alignItems={"center"}
+      >
+        <Image src={imgsrc} margin="auto" />
       </Box>
       <Flex
         direction={"column"}
@@ -85,7 +132,11 @@ function ProductCartItem({id,imgsrc,title,price,discountedprice,rating,discount}
           <Button color={"white"} backgroundColor="#FC2779">
             <AiOutlineHeart />
           </Button>
-          <Button color={"white"} backgroundColor="#FC2779">
+          <Button
+            color={"white"}
+            backgroundColor="#FC2779"
+            onClick={HandleAddtoBag}
+          >
             Add to bag
           </Button>
         </Flex>

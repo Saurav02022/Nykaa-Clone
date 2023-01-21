@@ -1,12 +1,31 @@
-import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { AiOutlineHeart } from "react-icons/ai";
 
-function ProductCartItem({_id,imgsrc,title,price,discountedprice,rating,discount}) {
+import { useSelector } from "react-redux";
 
+import axios from "axios";
+function ProductCartItem({
+  _id,
+  imgsrc,
+  title,
+  price,
+  discountedprice,
+  rating,
+  discount,
+}) {
+  const toast = useToast();
+  let { id, usertoken } = JSON.parse(localStorage.getItem("user"));
 
-  let id = localStorage.getItem("")
-  const HandleAddtoBag = () => {
+  const HandleAddtoBag = async () => {
     const payload = {
       _id,
       imgsrc,
@@ -16,8 +35,26 @@ function ProductCartItem({_id,imgsrc,title,price,discountedprice,rating,discount
       rating,
       discount,
     };
-    console.log(payload);
-  }
+    await axios
+      .post(`https://fair-pear-salmon-suit.cyclic.app/cart/${id}`, payload)
+      .then((res) =>
+        toast({
+          description: "Product added successfully",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        })
+      )
+      .catch((err) => {
+        toast({
+          description: err.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+  };
+
   return (
     <Box
       key={_id}
