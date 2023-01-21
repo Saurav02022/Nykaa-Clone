@@ -289,6 +289,7 @@ function FaceProductPage() {
             data.length>0 && data.map(
               ((el) => (
                 <ProductCartItem key={el._id}
+                  _id={el._id}
                   imgsrc={el.imgsrc}
                   title={el.title}
                   price={el.price}
