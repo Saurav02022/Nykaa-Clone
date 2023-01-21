@@ -87,7 +87,14 @@ export default function MainNavbar() {
             <Input type="tel" placeholder="Search on Nykaa" />
           </InputGroup>
           <Link to="/user/login">
-            <Button backgroundColor={"#fc2779"} color="white">
+            <Button
+              backgroundColor={"#fc2779"}
+              color="white"
+              _hover={{
+                backgroundColor: "#FC2779",
+                color: "#FFFFFF",
+              }}
+            >
               Signin
             </Button>
           </Link>

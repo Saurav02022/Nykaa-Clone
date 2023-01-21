@@ -8,7 +8,8 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import "./product.css"
 import Sidebar from "./Sidebar";
 import Pagination from "../Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 
@@ -58,11 +59,118 @@ function PrevArrow(props) {
 }
 
 const banner = [
-  "https://images-static.nykaa.com/uploads/ab975057-cbec-4567-8077-2c2195410aec.jpg?tr=w-1200,cm-pad_resize",
-  "https://images-static.nykaa.com/uploads/56af97a6-e339-42f1-8add-cc4c3136014c.jpg?tr=w-1200,cm-pad_resize"
+  "https://images-static.nykaa.com/uploads/fd9d521f-7632-4e34-9d2f-10ae85db3dcc.jpg?tr=w-1200,cm-pad_resize",
+  "https://images-static.nykaa.com/uploads/e6866268-c34e-48e0-93e7-44b8f4100eb4.gif?tr=w-1200,cm-pad_resize",
+  "https://images-static.nykaa.com/uploads/a5ad9115-e671-4078-a989-db65cf5054fb.jpg?tr=w-1200,cm-pad_resize",
+  "https://images-static.nykaa.com/uploads/5a2bf765-8d79-4a1b-807b-fc4bfe62b66d.png?tr=w-1200,cm-pad_resize"
 ]
 
 function SkinProductPage() {
+
+  const [data,setData]=useState([])
+
+  const getData=()=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/skin").then((res)=>{
+      setData(res.data)
+      // console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+
+
+  useEffect(()=>{
+    getData()
+  },[])
+
+  
+  const pricelh=()=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/skin/priceasc")
+    .then((res)=>{
+      setData(res.data)
+      // console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  const pricehl=()=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/skin/pricedesc")
+    .then((res)=>{
+      setData(res.data)
+      // console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+
+  const ratinglh=()=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/skin/ratingasc")
+    .then((res)=>{
+      setData(res.data)
+      // console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  const ratinghl=()=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/skin/ratingdesc")
+    .then((res)=>{
+      setData(res.data)
+      // console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+
+
+    const handlePriceChange=(e)=>{
+      if(e.target.value==="Price low to high"){
+        pricelh()
+      }else if(e.target.value === "Price high to low"){
+        pricehl()
+      }
+      
+    }
+    const handleRatingChange=(e)=>{
+      if(e.target.value==="Rating low to high"){
+     ratinglh()
+      }else if(e.target.value === "Rating high to low"){
+     ratinghl()
+      }
+      
+    }
+
+    const reset=()=>{
+      getData();
+     let ptag= document.getElementById("priceSort")
+      ptag.value=""
+      let rtag=document.getElementById("ratingSort")
+       rtag.value=""
+       let ctag=document.getElementById("categorySort")
+       ctag.value=""
+       setFilter("")
+    }
+    
+    const [filter,setFilter]=useState("")
+    const category=(e)=>{
+
+      let filterData= data.filter
+      ((el)=> {
+        return el.title.indexOf(e.target.value) !== -1
+        ? true:false;
+      }).map((el) => el);
+      setFilter(filterData)
+
+    }
+
+    
+
+
 
   const total=Skinproducts.length;
   const [page,setPage]=useState(1)
@@ -117,6 +225,7 @@ function SkinProductPage() {
 
         </div>
 
+
       </div>
       <div className="product_section">
         <div className="sidebar">
@@ -124,26 +233,30 @@ function SkinProductPage() {
         </div>
         <div className="product_containor">
           <div className="sort">
-            <select id="sort" name="Price">
+
+          <button onClick={reset}>Reset : </button>
+           
+            <select onChange={(e)=>handlePriceChange(e)} id="priceSort" name="Price">
               <option value="">Price</option>
               <option value="Price low to high">Price low to high</option>
               <option value="Price high to low">Price high to low</option>
             </select>
 
-            <select id="sort" name="Rating">
+            <select onChange={(e)=>handleRatingChange(e)}  id="ratingSort" name="Rating">
               <option value="">Rating</option>
               <option value="Rating low to high">Rating low to high</option>
               <option value="Rating high to low">Rating high to low</option>
             </select>
 
-            <select id="sort" name="Category">
+            <select onChange={(e)=>category(e)} id="categorySort" name="Category">
               <option value="">Category</option>
-              <option value="Maybelline">Maybelline </option>
-              <option value="Kay ">Kay </option>
-              <option value="NYX ">NYX </option>
-              <option value="Lakme ">Lakme </option>
-              <option value="Garnier ">Garnier </option>
+              <option value="Olay">Olay </option>
+              <option value="Nykaa ">Nykaa </option>
+              <option value="Plum ">Plum </option>
+              <option value="Lotus ">Lotus </option>
+              <option value="Ponds ">Ponds </option>
             </select>
+                        
           </div>
           <Flex
             display={"grid"}
@@ -160,18 +273,30 @@ function SkinProductPage() {
             marginTop="20px"
             marginBottom={"20px"}
           >
-            {Skinproducts.map(
-              ({ imgsrc, title, price, discountedprice, discount, rating }) => (
-                <ProductCartItem key={title}
-                  imgsrc={imgsrc}
-                  title={title}
-                  price={price}
-                  discount={discount}
-                  discountPrice={discountedprice}
-                  rating={rating}
+             {filter.length>0 ? filter.map(
+              ((el) => (
+                <ProductCartItem key={el._id}
+                  imgsrc={el.imgsrc}
+                  title={el.title}
+                  price={el.price}
+                  discount={el.discount}
+                  discountedprice={el.discountedprice}
+                  rating={el.rating}
                 />
               )
-            )}
+            )) :
+            data.length>0 && data.map(
+              ((el) => (
+                <ProductCartItem key={el._id}
+                  imgsrc={el.imgsrc}
+                  title={el.title}
+                  price={el.price}
+                  discount={el.discount}
+                  discountedprice={el.discountedprice}
+                  rating={el.rating}
+                />
+              )
+            ))}
           </Flex>
           <Pagination
               pageChangeHandle={pageChangeHandle}

@@ -16,15 +16,15 @@ const get_request_face = ()=>({
     type : types.GET_REQUEST_DATA_FACE
 })
 
-export const getData = (payload, query)=>(dispatch)=> {
+export const getDataface = ()=>(dispatch)=> {
     dispatch(get_request_face)
     axios({
       method: "get",
-      baseURL: "",
-      url: `/face?_page=${payload}&_limit=20&_sort=price&_order=${query}`,
+      baseURL: "https://fair-pear-salmon-suit.cyclic.app",
+      url: `/face`,
     })
       .then((res) => {
-        console.log("kids", res);
+        console.log("facedata", res);
         dispatch(get_success_face(res.data));
       })
       .catch((err) => {
@@ -52,12 +52,12 @@ const get_request_skin = ()=>({
   type : types.GET_REQUEST_DATA_SKIN
 })
 
-export const getDataBeauty = (payload, query)=>(dispatch) => {
+export const getDataskin = ()=>(dispatch) => {
   dispatch(get_request_skin)
   axios({
     method: "get",
-    baseURL: "",
-    url: `/skin?_page=${payload}&_limit=20&_sort=price&_order=${query}`,
+    baseURL: "https://fair-pear-salmon-suit.cyclic.app",
+    url: `/skin`,
   })
     .then((res) => {
       console.log(res);

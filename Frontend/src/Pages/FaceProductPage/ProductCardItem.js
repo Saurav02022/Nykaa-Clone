@@ -2,12 +2,40 @@ import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { AiOutlineHeart } from "react-icons/ai";
 
-function ProductCartItem({imgsrc,title,price,discountedprice,rating,discount}) {
+function ProductCartItem({_id,imgsrc,title,price,discountedprice,rating,discount}) {
 
+
+  let id = localStorage.getItem("")
+  const HandleAddtoBag = () => {
+    const payload = {
+      _id,
+      imgsrc,
+      title,
+      price,
+      discountedprice,
+      rating,
+      discount,
+    };
+    console.log(payload);
+  }
   return (
-    <Box display={"flex"} flexDirection="column" justifyContent={"space-between"} gap="10px" bg={"white"} border="0px solid black" boxShadow={"md"} borderRadius="md">
-      <Box border={'0px solid red'} justifyContent='center' alignItems={'center'}>
-        <Image src={imgsrc} margin='auto' />
+    <Box
+      key={_id}
+      display={"flex"}
+      flexDirection="column"
+      justifyContent={"space-between"}
+      gap="10px"
+      bg={"white"}
+      border="0px solid black"
+      boxShadow={"md"}
+      borderRadius="md"
+    >
+      <Box
+        border={"0px solid red"}
+        justifyContent="center"
+        alignItems={"center"}
+      >
+        <Image src={imgsrc} margin="auto" />
       </Box>
       <Flex
         direction={"column"}
@@ -86,7 +114,11 @@ function ProductCartItem({imgsrc,title,price,discountedprice,rating,discount}) {
           <Button color={"white"} backgroundColor="#FC2779">
             <AiOutlineHeart />
           </Button>
-          <Button color={"white"} backgroundColor="#FC2779">
+          <Button
+            color={"white"}
+            backgroundColor="#FC2779"
+            onClick={HandleAddtoBag}
+          >
             Add to bag
           </Button>
         </Flex>
