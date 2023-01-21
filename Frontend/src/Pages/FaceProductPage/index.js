@@ -1,4 +1,5 @@
 import { Flex } from "@chakra-ui/react";
+// import { Skinproducts } from "./product";
 import { products } from "./product";
 import ProductCartItem from "./ProductCardItem";
 import Slider from "react-slick";
@@ -8,7 +9,8 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import "./product.css"
 import Sidebar from "./Sidebar";
 import Pagination from "../Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 
@@ -64,11 +66,117 @@ const banner = [
 
 function FaceProductPage() {
 
-  const [currentPage,setCurrentPage]=useState(1)
-  let totalPages=products.length
+  const [data,setData]=useState([])
+
+  const getData=()=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/face").then((res)=>{
+      setData(res.data)
+      // console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+
+
+  useEffect(()=>{
+    getData()
+  },[])
+
+  
+  const pricelh=()=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/face/priceasc")
+    .then((res)=>{
+      setData(res.data)
+      // console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  const pricehl=()=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/face/pricedesc")
+    .then((res)=>{
+      setData(res.data)
+      // console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+
+  const ratinglh=()=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/face/ratingasc")
+    .then((res)=>{
+      setData(res.data)
+      // console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  const ratinghl=()=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/face/ratingdesc")
+    .then((res)=>{
+      setData(res.data)
+      // console.log(res.data)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+
+
+    const handlePriceChange=(e)=>{
+      if(e.target.value==="Price low to high"){
+        pricelh()
+      }else if(e.target.value === "Price high to low"){
+        pricehl()
+      }
+      
+    }
+    const handleRatingChange=(e)=>{
+      if(e.target.value==="Rating low to high"){
+     ratinglh()
+      }else if(e.target.value === "Rating high to low"){
+     ratinghl()
+      }
+      
+    }
+
+    const reset=()=>{
+      getData();
+     let ptag= document.getElementById("priceSort")
+      ptag.value=""
+      let rtag=document.getElementById("ratingSort")
+       rtag.value=""
+       let ctag=document.getElementById("categorySort")
+       ctag.value=""
+       setFilter("")
+    }
+    
+    const [filter,setFilter]=useState("")
+    const category=(e)=>{
+
+      let filterData= data.filter
+      ((el)=> {
+        return el.title.indexOf(e.target.value) !== -1
+        ? true:false;
+      }).map((el) => el);
+      setFilter(filterData)
+
+    }
+
+    
+
+
+
+  const total=products.length;
+  const [page,setPage]=useState(1)
+
   const pageChangeHandle = (value) => {
-    setCurrentPage((prev) => prev + value);
-  }; 
+    setPage((prev) => prev + value);
+  };
 
   const settings = {
     infinite: true,
@@ -116,76 +224,94 @@ function FaceProductPage() {
 
         </div>
 
+
       </div>
       <div className="product_section">
         <div className="sidebar">
           <Sidebar />
         </div>
         <div className="product_containor">
-        <div className="sort">
-        <select id="sort" name="Price">
-  <option value="">Price</option>
-  <option value="Price low to high">Price low to high</option>
-  <option value="Price high to low">Price high to low</option>
-</select>
+          <div className="sort">
 
-<select id="sort" name="Rating">
-  <option value="">Rating</option>
-  <option value="Rating low to high">Rating low to high</option>
-  <option value="Rating high to low">Rating high to low</option>
-</select>
+          <button onClick={reset}>Reset : </button>
+           
+            <select onChange={(e)=>handlePriceChange(e)} id="priceSort" name="Price">
+              <option value="">Price</option>
+              <option value="Price low to high">Price low to high</option>
+              <option value="Price high to low">Price high to low</option>
+            </select>
 
-<select id="sort" name="Category">
-  <option value="">Category</option>
-  <option value="Maybelline">Maybelline </option>
-  <option value="Kay ">Kay </option>
-  <option value="NYX ">NYX </option>
-  <option value="Lakme ">Lakme </option>
-  <option value="Garnier ">Garnier </option>
-</select>
-        </div>
-      <Flex
-        display={"grid"}
-        gridTemplateColumns={{
-          base: "repeat(1,1fr)",
-          sm: "repeat(2,1fr)",
-          md: "repeat(2,1fr)",
-          lg: "repeat(3,1fr)",
-          xl: "repeat(3,1fr)",
-        }}
-        width="90%"
-        margin="auto"
-        gap={5}
-        marginTop="20px"
-        marginBottom={"20px"}
-      >
-        {products.map(
-          ({ imgsrc, title, price, discountedprice, discount, rating }) => (
-            <ProductCartItem key={title}
-              imgsrc={imgsrc}
-              title={title}
-              price={price}
-              discount={discount}
-              discountPrice={discountedprice}
-              rating={rating}
-            />
-          )
-        )}
-      </Flex>
-      <div style={{marginLeft:"50px",marginBottom:"20px"}}>
-      <Pagination
+            <select onChange={(e)=>handleRatingChange(e)}  id="ratingSort" name="Rating">
+              <option value="">Rating</option>
+              <option value="Rating low to high">Rating low to high</option>
+              <option value="Rating high to low">Rating high to low</option>
+            </select>
+
+            <select onChange={(e)=>category(e)} id="categorySort" name="Category">
+              <option value="">Category</option>
+              <option value="Maybelline">Maybelline </option>
+              <option value="Kay ">Kay </option>
+              <option value="NYX ">NYX </option>
+              <option value="Lakme ">Lakme </option>
+              <option value="Garnier ">Garnier </option>
+            </select>
+
+            {/* <button onClick={category}>nyc</button> */}
+                        
+          </div>
+          <Flex
+            display={"grid"}
+            gridTemplateColumns={{
+              base: "repeat(1,1fr)",
+              sm: "repeat(2,1fr)",
+              md: "repeat(2,1fr)",
+              lg: "repeat(3,1fr)",
+              xl: "repeat(3,1fr)",
+            }}
+            width="90%"
+            margin="auto"
+            gap={5}
+            marginTop="20px"
+            marginBottom={"20px"}
+          >
+               {filter.length>0 ? filter.map(
+              ((el) => (
+                <ProductCartItem key={el._id}
+                  imgsrc={el.imgsrc}
+                  title={el.title}
+                  price={el.price}
+                  discount={el.discount}
+                  discountedprice={el.discountedprice}
+                  rating={el.rating}
+                />
+              )
+            )) :
+            data.length>0 && data.map(
+              ((el) => (
+                <ProductCartItem key={el._id}
+                  imgsrc={el.imgsrc}
+                  title={el.title}
+                  price={el.price}
+                  discount={el.discount}
+                  discountedprice={el.discountedprice}
+                  rating={el.rating}
+                />
+              )
+            ))}
+          </Flex>
+          <Pagination
               pageChangeHandle={pageChangeHandle}
-              currentPage={currentPage}
-              totalPages={totalPages}
+              currentPage={page}
+              totalPages={total}
             />
-      </div>
-     
-     
+
         </div>
 
       </div>
-    
-    
+
+      
+
+
     </div>
   </>
 }
