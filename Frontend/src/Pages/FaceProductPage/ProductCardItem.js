@@ -9,10 +9,11 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { AiOutlineHeart } from "react-icons/ai";
+import axios from "axios";
 
 import { useSelector } from "react-redux";
 
-import axios from "axios";
+
 function ProductCartItem({
   _id,
   imgsrc,
@@ -25,7 +26,12 @@ function ProductCartItem({
   const toast = useToast();
   let { id, usertoken } = JSON.parse(localStorage.getItem("user"));
 
+
   const HandleAddtoBag = async () => {
+
+  let {id} = localStorage.getItem("user")
+  const  HandleAddtoBag = async() => {
+
     const payload = {
       _id,
       imgsrc,
@@ -35,6 +41,7 @@ function ProductCartItem({
       rating,
       discount,
     };
+
     await axios
       .post(`https://fair-pear-salmon-suit.cyclic.app/cart/${id}`, payload)
       .then((res) =>
@@ -54,6 +61,10 @@ function ProductCartItem({
         });
       });
   };
+
+
+    console.log(id)
+  }
 
   return (
     <Box
