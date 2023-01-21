@@ -70,3 +70,6 @@ export const reducer = (state = initialize, action) => {
     }
   }
 };
+
+
+// update the redux and connect with frontend 
