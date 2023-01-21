@@ -35,10 +35,23 @@ const reducer = (state=initialState , action) => {
                     token: "",
                     isAuthError: true,
                 };
+                case types.USER_SIGNUP_REQUEST:
+                return {
+                    ...state,
+                    isAuthLoading: true,
+                }
+
             case types.USER_SIGNUP_SUCCESS:
                 return {
                     ...state,isSignUp:payload,
+                    isAuthLoading: false,
                 }
+                case types.USER_SIGNUP_FAILURE:
+                    return {
+                        ...state,
+                        isAuthLoading: true,
+                        isAuthError: true,
+                    }
 
                 default :
                 return state ;

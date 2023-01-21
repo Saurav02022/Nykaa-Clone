@@ -7,14 +7,18 @@ import {
   InputRightElement,
   Flex,
   Text,
+  FormControl,
+  FormHelperText,
+  FormErrorMessage,
+  Box
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-
+import {RotatingLines} from "react-loader-spinner";
 import { useState } from "react";
 
-import { postdata } from "../../Redux/LogReducer/action";
+import { postdata, signupReq } from "../../Redux/LogReducer/action";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const UserSignUp = () => {
   const navigate = useNavigate();
@@ -29,12 +33,35 @@ const UserSignUp = () => {
   const handlePass = () => setShow(!show);
   const dispatch = useDispatch();
 
-  const handleClick = () => {
+  const isErrorE = email === ''
+  const isErrorP = phone=== ""
+  const isErrorN = name === "" 
+  const isErrorPa = password ==="";
+const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
+ 
+const handleClick = () => {
+  dispatch(signupReq());
+
     dispatch(postdata({ email, name, password, phone })).then((res) => {
       console.log("User Registered Successfully");
-      navigate("/login");
+
+      navigate("/user/login");
     });
   };
+
+  if(isLoading){
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <RotatingLines
+        strokeColor="grey"
+        strokeWidth="5"
+        animationDuration="1.75"
+        width="96"
+        visible={true}
+      />
+    </Box>
+  );
+  }
 
   return (
     <Flex
@@ -50,8 +77,8 @@ const UserSignUp = () => {
       gap="5"
     >
       <Heading fontSize={"18px"}>LOGIN / REGISTER</Heading>
-
-      <Input
+<FormControl isInvalid={isErrorN}>
+<Input
         required={true}
         type="text"
         borderColor={"black"}
@@ -59,8 +86,24 @@ const UserSignUp = () => {
         onChange={(e) => setName(e.target.value)}
         placeholder="Enter Your Name"
       />
-
-      <Input
+      {!isErrorN ? (
+        <FormHelperText>
+          Enter the Name.
+        </FormHelperText>
+      ) : (
+        <FormErrorMessage>Name is required.</FormErrorMessage>
+      )}
+</FormControl>
+      {/* <Input
+        required={true}
+        type="text"
+        borderColor={"black"}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Enter Your Name"
+      /> */}
+<FormControl isInvalid={isErrorP}>
+<Input
         required={true}
         type="number"
         borderColor={"black"}
@@ -68,8 +111,18 @@ const UserSignUp = () => {
         onChange={(e) => setPhone(e.target.value)}
         placeholder="Enter Mobile Number"
       />
+{!isErrorP ? (
+        <FormHelperText>
+          Enter the Mobile Number.
+        </FormHelperText>
+      ) : (
+        <FormErrorMessage>Mobile number is required.</FormErrorMessage>
+      )}
+</FormControl>
+     
 
-      <Input
+<FormControl isInvalid={isErrorE}>
+<Input
         required={true}
         type="email"
         borderColor={"black"}
@@ -77,8 +130,16 @@ const UserSignUp = () => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter Email ID"
       />
-
-      <Flex>
+{!isErrorE ? (
+        <FormHelperText>
+          Enter the Email.
+        </FormHelperText>
+      ) : (
+        <FormErrorMessage>Email is required.</FormErrorMessage>
+      )}
+</FormControl>
+<FormControl isInvalid={isErrorPa}>
+<Flex>
         <InputGroup>
           <Input
             type={show ? "text" : "password"}
@@ -101,9 +162,19 @@ const UserSignUp = () => {
             </Button>
           </InputRightElement>
         </InputGroup>
+      
       </Flex>
+{!isErrorPa ? (
+        <FormHelperText>
+          Enter the Password.
+        </FormHelperText>
+      ) : (
+        <FormErrorMessage>Password is required.</FormErrorMessage>
+      )}
+</FormControl>
 
       <Button
+      isDisabled = {isLoading}
         backgroundColor={"#FC2779"}
         color="#FFFFFF"
         _hover={{
