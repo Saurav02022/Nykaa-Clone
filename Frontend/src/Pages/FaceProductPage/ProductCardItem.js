@@ -11,7 +11,6 @@ import { StarIcon } from "@chakra-ui/icons";
 import { AiOutlineHeart } from "react-icons/ai";
 import axios from "axios";
 
-import { useSelector } from "react-redux";
 
 
 function ProductCartItem({
@@ -24,12 +23,7 @@ function ProductCartItem({
   discount,
 }) {
   const toast = useToast();
-  let { id, usertoken } = JSON.parse(localStorage.getItem("user"));
-
-
-  const HandleAddtoBag = async () => {
-
-  let {id} = localStorage.getItem("user")
+  let { id } = JSON.parse(localStorage.getItem("user"));
   const  HandleAddtoBag = async() => {
 
     const payload = {
@@ -44,7 +38,7 @@ function ProductCartItem({
 
     await axios
       .post(`https://fair-pear-salmon-suit.cyclic.app/cart/${id}`, payload)
-      .then((res) =>
+      .then(() =>
         toast({
           description: "Product added successfully",
           status: "success",
@@ -63,8 +57,6 @@ function ProductCartItem({
   };
 
 
-    console.log(id)
-  }
 
   return (
     <Box
