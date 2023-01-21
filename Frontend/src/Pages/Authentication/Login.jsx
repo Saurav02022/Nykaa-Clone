@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { USER_LOGIN_SUCCESS } from "../../Redux/LogReducer/actionType";
 import { useDispatch, useSelector } from "react-redux";
 import { login, loginRequest } from "../../Redux/LogReducer/action";
+import { RotatingLines } from "react-loader-spinner";
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
@@ -41,7 +42,14 @@ const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
     
     dispatch(login({ email, password }))
       .then((r) => {
-        toast({
+       
+        if (r.payload.usertoken) {
+          // console.log("Login Success");
+         const user = r.payload;
+         console.log(r.payload)
+         localStorage.setItem("user", JSON.stringify(user));
+         console.log(user, "user token");
+         toast({
           // title: 'Login Successfull.',
           render: () => (
             <Box color="white" p={3} bg="pink.500">
@@ -49,28 +57,39 @@ const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
             </Box>
           ),
         });
-        if (r.type === USER_LOGIN_SUCCESS) {
-          // console.log("Login Success");
-         const user = r.payload;
-         console.log(r.payload)
-         localStorage.setItem("user", JSON.stringify(user));
-         console.log(user, "user token");
           navigate("/");
+        }
+        else{
+          toast({
+            title: "Login Failed.",
+            //description: "We've created your account for you.",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
         }
       })
       .catch((err) => {
-        toast({
-          title: "Login Successfull.",
-          //description: "We've created your account for you.",
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
+       
         console.log(err);
       });
     //  setEmail("")
     //  setPassword("");
   };
+
+  if(isLoading){
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <RotatingLines
+          strokeColor="grey"
+          strokeWidth="5"
+          animationDuration="1.75"
+          width="96"
+          visible={true}
+        />
+      </Box>
+    );
+    }
 
   return (
     <Flex
