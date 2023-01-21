@@ -1,82 +1,128 @@
 import React from "react";
-import { Box, Heading, Input, Button } from "@chakra-ui/react";
+import {
+  Heading,
+  Input,
+  Button,
+  InputGroup,
+  InputRightElement,
+  Flex,
+  Text,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-// import {app as firebase} from './firebase.js';
+
 import { useState } from "react";
 
- const UserSignUp = () => {
-  const [num, setNum] = useState("");
+import { postdata } from "../../Redux/LogReducer/action";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-  const handleClick = (e) => {};
+const UserSignUp = () => {
+  const navigate = useNavigate();
 
-  console.log(num);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [show, setShow] = React.useState(false);
+
+  const handlePass = () => setShow(!show);
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(postdata({ email, name, password, phone })).then((res) => {
+      console.log("User Registered Successfully");
+      navigate("/login");
+    });
+  };
+
   return (
-    <Box
-      height={"50%"}
-      textAlign={"center"}
-      p="10px"
-      border={"3px solid gray"}
+    <Flex
+      maxWidth={"md"}
       margin="auto"
-      marginTop={"60px"}
-      alignItems={"center"}
-      width={"40%"}
+      direction={"column"}
+      border={"1px solid gray"}
+      boxShadow="md"
+      borderRadius="10px"
+      marginTop={"5"}
+      marginBottom={"5"}
+      padding="15px"
+      gap="5"
     >
-      <Box m={5}>
-        <Heading>LOGIN / REGISTER</Heading>
-      </Box>
-      <Box m={5}>
-        <Input
-          type="text"
-          borderColor={"black"}
-          value={num}
-          onChange={(e) => setNum(e.target.value)}
-          placeholder="Enter Your Name"
-        />
-      </Box>
-      <Box m={5}>
-        <Input
-          type="number"
-          borderColor={"black"}
-          value={num}
-          onChange={(e) => setNum(e.target.value)}
-          placeholder="Enter Mobile Number"
-        />
-      </Box>
-      <Box m={5}>
-        <Input
-          type="email"
-          borderColor={"black"}
-          value={num}
-          onChange={(e) => setNum(e.target.value)}
-          placeholder="Enter Email ID"
-        />
-      </Box>
-      <Box m={5}>
-        <Input
-          type="password"
-          borderColor={"black"}
-          value={num}
-          onChange={(e) => setNum(e.target.value)}
-          placeholder="Enter Password"
-        />
-      </Box>
-      <Box m={5}>
-        <Button
-          bg={"pink.600"}
-          border={"2px solid"}
-          borderColor={"black"}
-          onClick={handleClick}
-        >
-          PROCEED
-        </Button>
-      </Box>
-      <Box>
-        <Link to="/Login" color={"blue.500"}>
-          Sign in
+      <Heading fontSize={"18px"}>LOGIN / REGISTER</Heading>
+
+      <Input
+        required={true}
+        type="text"
+        borderColor={"black"}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Enter Your Name"
+      />
+
+      <Input
+        required={true}
+        type="number"
+        borderColor={"black"}
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        placeholder="Enter Mobile Number"
+      />
+
+      <Input
+        required={true}
+        type="email"
+        borderColor={"black"}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter Email ID"
+      />
+
+      <Flex>
+        <InputGroup>
+          <Input
+            type={show ? "text" : "password"}
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <InputRightElement width="4.5rem">
+            <Button
+              size="md"
+              onClick={handlePass}
+              backgroundColor={"#FC2779"}
+              color="#FFFFFF"
+              _hover={{
+                backgroundColor: "#FC2779",
+                color: "#FFFFFF",
+              }}
+            >
+              {show ? "Hide" : "Show"}
+            </Button>
+          </InputRightElement>
+        </InputGroup>
+      </Flex>
+
+      <Button
+        backgroundColor={"#FC2779"}
+        color="#FFFFFF"
+        _hover={{
+          backgroundColor: "#FC2779",
+          color: "#FFFFFF",
+        }}
+        onClick={handleClick}
+      >
+        PROCEED
+      </Button>
+
+      <Flex gap="1" justifyContent="center">
+        <Text>Already a user ?</Text>
+        <Link to="/user/login">
+          <Text color="#FC2779">Sign in</Text>
         </Link>
-      </Box>
-    </Box>
+      </Flex>
+    </Flex>
   );
 };
 
-export default UserSignUp
+export default UserSignUp;

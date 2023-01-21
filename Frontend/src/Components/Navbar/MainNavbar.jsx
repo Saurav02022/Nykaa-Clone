@@ -9,7 +9,7 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-// eslint-disable-next-line no-unused-vars
+
 import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { Link } from "react-router-dom";
@@ -55,7 +55,7 @@ export default function MainNavbar() {
           </Box>
 
           <Box border={"0px solid blue"}>
-            <Link to={'/'}>
+            <Link to={"/"}>
               <Image
                 src={
                   "https://cdn.iconscout.com/icon/free/png-256/nykaa-3384872-2822953.png"
@@ -86,9 +86,11 @@ export default function MainNavbar() {
             />
             <Input type="tel" placeholder="Search on Nykaa" />
           </InputGroup>
-          <Button backgroundColor={"#fc2779"} color="white">
-            Signin
-          </Button>
+          <Link to="/user/login">
+            <Button backgroundColor={"#fc2779"} color="white">
+              Signin
+            </Button>
+          </Link>
           <Link to={"/cart"}>
             {" "}
             <HiOutlineShoppingBag size={30} />
