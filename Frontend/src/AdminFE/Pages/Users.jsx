@@ -9,16 +9,21 @@ import Singleuser from './Singleuser'
 
 const Users = () => {
   const [data,setData]= useState([])
+  const [change,setChange] = useState(false)
 
-  const getprods = () => {
-    return axios.get(`https://fair-pear-salmon-suit.cyclic.app/users/`)
+  const getusers = () => {
+    return axios.get(`https://fair-pear-salmon-suit.cyclic.app/users`)
       .then((res) => setData(res.data))
       .then((err) => console.log(err))
   }
   useEffect(()=>{
-    getprods()
-  },[])
-  console.log(data)
+    getusers()
+  },[change])
+
+  const changingpage=()=>{
+    setChange(!change)
+  }
+
 
   return (
     <div>
@@ -40,7 +45,7 @@ const Users = () => {
       {
         data.length>0&&
         data.map((el)=>{
-          return<Singleuser key={Math.random()*100+Date.now()} {...el}/>
+          return<Singleuser key={Math.random()*100+Date.now()} {...el}  changingpage={changingpage} />
         })
       }
      
