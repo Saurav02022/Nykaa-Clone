@@ -34,17 +34,9 @@ const UserSignUp = () => {
   const handlePass = () => setShow(!show);
   const dispatch = useDispatch();
 
-  const disable = email === "" || phone=== "" || name === "" || password ==="";
+  const disable = email === "" || phone=== "" || name === "" || password ==="" || password.length<8;
 
-  let isErrorE = email !== '';
-  const isErrorP = phone !== "";
-  const isErrorN = name !== "";
-  const isErrorPa = password !=="";
-   
- const onEmailChange = (e)=>{
-    isErrorE = email === "";
-     setEmail(e.target.value)
-  }
+  l
   
 
 const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
@@ -203,6 +195,9 @@ const handleClick = () => {
         </InputGroup>
       
       </Flex>
+      <FormHelperText>
+          Password should have minimum 8 characters.
+        </FormHelperText>
 {/* {!isErrorPa ? (
         <FormHelperText>
           Enter the Password.

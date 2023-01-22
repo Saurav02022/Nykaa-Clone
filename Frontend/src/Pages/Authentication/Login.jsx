@@ -25,7 +25,7 @@ import { RotatingLines } from "react-loader-spinner";
 const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+        
   const [show, setShow] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -34,8 +34,12 @@ const UserLogin = () => {
   const isErrorE = email === '';
   const isErrorPa = password ==="";
 const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
-const disable = email === "" || password ==="";
+const disable = email === "" || password ==="" || password.length<8;
   const handlePass = () => setShow(!show);
+// const  [msg, setMsg] = useState("")
+//   if( password.length>=8){
+//          setMsg("Password should have 8 digit")
+//   }
 
   const handleClick = () => {
     dispatch(loginRequest())
@@ -129,6 +133,7 @@ const disable = email === "" || password ==="";
           type={show ? "text" : "password"}
           placeholder="Enter password"
           value={password}
+          // onKeyUp={()=>password.length>=8}
           onChange={(e) => setPassword(e.target.value)}
         />
         <InputRightElement width="4.5rem">
@@ -146,12 +151,15 @@ const disable = email === "" || password ==="";
           </Button>
         </InputRightElement>
       </InputGroup>
-      {/* {!isErrorPa ? (
+      <FormHelperText>
+          Password should have minimum 8 characters.
+        </FormHelperText>
+      {/* {password.length>=8 ? (
         <FormHelperText>
           Enter the Password.
         </FormHelperText>
       ) : (
-        <FormErrorMessage>Password is required.</FormErrorMessage>
+        <FormErrorMessage>{msg}</FormErrorMessage>
       )} */}
      </FormControl>
       
