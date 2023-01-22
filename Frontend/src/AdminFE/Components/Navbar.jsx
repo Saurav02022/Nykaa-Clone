@@ -43,7 +43,7 @@ const Navbar = () => {
               <Icon as={MdAdminPanelSettings} w={8} h={8} /> 
             </MenuButton>
             <MenuList color={'gray'} marginTop="1" bgColor={'#2a2f43'}>
-              <MenuItem bgColor={'#2a2f43'} color="white">{adminname}</MenuItem>
+              <MenuItem bgColor={'#2a2f43'} color="white"><NavLink to={'/'}>Nykaa Site</NavLink></MenuItem>
               <MenuDivider />
               {/* AiOutlinePoweroff */}
               <MenuItem bgColor={'#2a2f43'} color="white"><Icon as={AiOutlinePoweroff} w={4} h={4} marginTop="2px" marginRight={'3px'} /><button onClick={handlelogout}>Logout</button></MenuItem>
