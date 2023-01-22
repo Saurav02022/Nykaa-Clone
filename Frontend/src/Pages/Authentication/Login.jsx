@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Box,
   Heading,
   Input,
   Button,
@@ -8,19 +7,15 @@ import {
   InputRightElement,
   Flex,
   Text,
-  FormHelperText,
-  FormErrorMessage,
-  FormControl
+  FormControl,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { USER_LOGIN_SUCCESS } from "../../Redux/LogReducer/actionType";
 import { useDispatch, useSelector } from "react-redux";
-import { login, loginRequest } from "../../Redux/LogReducer/action";
-import { RotatingLines } from "react-loader-spinner";
+import { login } from "../../Redux/LogReducer/action";
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
@@ -31,65 +26,64 @@ const UserLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = useToast();
-  const isErrorE = email === '';
-  const isErrorPa = password ==="";
-const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
-const disable = email === "" || password ==="";
+
+  const { loginLoading, loginSuccess, loginError } = useSelector(
+    (state) => state.AuthenticationReducer
+  );
+
   const handlePass = () => setShow(!show);
 
   const handleClick = () => {
-    dispatch(loginRequest())
-    
-    dispatch(login({ email, password }))
-      .then((r) => {
-       
-        if (r.payload.usertoken) {
-          // console.log("Login Success");
-         const user = r.payload;
-         console.log(r.payload)
-         localStorage.setItem("user", JSON.stringify(user));
-         console.log(user, "user token");
-         toast({
-          // title: 'Login Successfull.',
-          render: () => (
-            <Box color="white" p={3} bg="pink.500">
-              Login Successfull.
-            </Box>
-          ),
-        });
-          navigate("/");
-        }
-        else{
-          toast({
-            title: "Login Failed.",
-            //description: "We've created your account for you.",
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-          });
-        }
-      })
-      .catch((err) => {
-       
-        console.log(err);
+    const data = {
+      email,
+      password,
+    };
+    if (email && password) {
+      dispatch(login(data));
+    } else {
+      toast({
+        description: "Please fill the required details",
+        status: "info",
+        duration: 4000,
+        isClosable: true,
       });
-    //  setEmail("")
-    //  setPassword("");
+    }
   };
 
-  if(isLoading){
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center">
-        <RotatingLines
-          strokeColor="grey"
-          strokeWidth="5"
-          animationDuration="1.75"
-          width="96"
-          visible={true}
-        />
-      </Box>
-    );
+  if (loginSuccess !== "") {
+    if (loginSuccess === "Wrong Credentials !") {
+      toast({
+        description: "Wrong Credentials !",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else if (loginSuccess === "Authentication Failed !") {
+      toast({
+        description: "Authentication Failed !",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        description: "login Successfully",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/");
     }
+  }
+
+  if (loginError !== "") {
+    toast({
+      description: loginError,
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+    });
+  }
 
   return (
     <Flex
@@ -106,58 +100,43 @@ const disable = email === "" || password ==="";
     >
       <Heading fontSize={"18px"}>LOGIN / REGISTER</Heading>
       <FormControl>
-<Input
-        required={true}
-        type="email"
-        borderColor={"black"}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter Email ID"
-      />
-{/* {!isErrorE ? (
-        <FormHelperText>
-          Enter the Email.
-        </FormHelperText>
-      ) : (
-        <FormErrorMessage>Email is required.</FormErrorMessage>
-      )} */}
-</FormControl>
-     <FormControl >
-     <InputGroup size="md">
         <Input
           required={true}
-          type={show ? "text" : "password"}
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          type="email"
+          borderColor={"black"}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter Email ID"
         />
-        <InputRightElement width="4.5rem">
-          <Button
-            size="sm"
-            backgroundColor={"#FC2779"}
-            color="#FFFFFF"
-            _hover={{
-              backgroundColor: "#FC2779",
-              color: "#FFFFFF",
-            }}
-            onClick={handlePass}
-          >
-            {show ? "Hide" : "Show"}
-          </Button>
-        </InputRightElement>
-      </InputGroup>
-      {/* {!isErrorPa ? (
-        <FormHelperText>
-          Enter the Password.
-        </FormHelperText>
-      ) : (
-        <FormErrorMessage>Password is required.</FormErrorMessage>
-      )} */}
-     </FormControl>
-      
-
+      </FormControl>
+      <FormControl>
+        <InputGroup size="md">
+          <Input
+            required={true}
+            type={show ? "text" : "password"}
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <InputRightElement width="4.5rem">
+            <Button
+              size="sm"
+              backgroundColor={"#FC2779"}
+              color="#FFFFFF"
+              _hover={{
+                backgroundColor: "#FC2779",
+                color: "#FFFFFF",
+              }}
+              onClick={handlePass}
+            >
+              {show ? "Hide" : "Show"}
+            </Button>
+          </InputRightElement>
+        </InputGroup>
+      </FormControl>
       <Button
-      isDisabled={isLoading || disable}
+        isLoading={loginLoading}
+        loadingText="Loading"
         backgroundColor={"#FC2779"}
         color="#FFFFFF"
         _hover={{

@@ -21,8 +21,12 @@ import {
   Stack,
   DrawerFooter,
   Switch,
+  useToast,
 } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AddAddress } from "../../Redux/AddressPage/action";
 
 const initialAddress = {
   pincode: "",
@@ -34,17 +38,23 @@ const initialAddress = {
   email: "",
 };
 
-const Address = ({
-  count = 2,
-  item = {},
-  rs = 200,
-  discount = 25,
-  shipping = 0,
-}) => {
+const Address = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const toast = useToast();
+  const { userid } = useSelector((state) => state.AuthenticationReducer);
+  const { ItemCount, Totalprice, Totaldiscountprice } = useSelector(
+    (state) => state.CartReducer
+  );
+
+  const { loading, success, error, Personaddress } = useSelector(
+    (state) => state.AddressReducer
+  );
+
   const {
     name = "watch",
     img = "https://i.pinimg.com/236x/bc/47/18/bc47182aa08ac60cf4270d87961d3018.jpg",
-  } = item;
+  } = ItemCount;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = useRef();
@@ -52,10 +62,32 @@ const Address = ({
   const [address, setAddress] = useState(initialAddress);
 
   // ******** Address *****************
+
   const handlePost = () => {
-    console.log("Address got submitted");
-    console.log(address);
-    setAddress(initialAddress);
+    if (
+      address.email &&
+      address.house &&
+      address.name &&
+      address.phone &&
+      address.pincode &&
+      address.road
+    ) {
+      dispatch(AddAddress(userid, address));
+      toast({
+        description: "address added successfully",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+      navigate("/payment");
+    } else {
+      toast({
+        description: "Please fill all the address detail",
+        status: "info",
+        duration: 4000,
+        isClosable: true,
+      });
+    }
   };
 
   const screenSizefn = () => {
@@ -95,7 +127,8 @@ const Address = ({
     <SimpleGrid
       w={screen === "sm" ? "90%" : screen === "md" ? "80%" : "60%"}
       margin="auto"
-      mt='30px' mb='30px'
+      mt="30px"
+      mb="30px"
     >
       <SimpleGrid
         display={screen === "sm" ? "grid" : "flex"}
@@ -260,7 +293,7 @@ const Address = ({
                     <Heading as="h1" fontSize="16px">
                       Bag
                     </Heading>
-                    {<Heading fontSize="14px">{count} Items</Heading>}
+                    {<Heading fontSize="14px">{ItemCount} Items</Heading>}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
@@ -287,40 +320,30 @@ const Address = ({
                     <Heading as="h1" fontSize="16px">
                       Price Details
                     </Heading>
-                    {
-                      <Heading fontSize="14px">
-                        ₹{rs * count - discount + shipping}
-                      </Heading>
-                    }
+                    {<Heading fontSize="14px">₹{Totaldiscountprice}</Heading>}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
                 <Text display={"flex"} justifyContent="space-between">
-                  <span>Bag MRP (1 items)</span>
-                  <span>₹{rs}</span>
+                  <span>Bag MRP ({ItemCount} items)</span>
+                  <span>₹{Totalprice}</span>
                 </Text>
                 <Text display={"flex"} justifyContent="space-between">
-                  <span>Bag Discount</span>
-                  <span>₹{discount}</span>
+                  <span>After Discount</span>
+                  <span>₹{Totaldiscountprice}</span>
                 </Text>
                 <Text display={"flex"} justifyContent="space-between">
-                  <span>Shipping</span>
-                  <span>
-                    {shipping === 0 ? (
-                      <span
-                        style={{
-                          fontWeight: "bold",
-                          fontSize: "16px",
-                          color: "#2de02d",
-                        }}
-                      >
-                        Free
-                      </span>
-                    ) : (
-                      "₹" + shipping
-                    )}
+                  <span>Saving At this Time</span>
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                      color: "#2de02d",
+                    }}
+                  >
+                    {Totalprice - Totaldiscountprice}
                   </span>
                 </Text>
                 <Heading
@@ -329,8 +352,7 @@ const Address = ({
                   as="h1"
                   fontSize="16px"
                 >
-                  <span>You Pay</span>{" "}
-                  <span>₹{rs * count - discount + shipping}</span>{" "}
+                  <span>You Pay</span> <span>₹{Totaldiscountprice}</span>{" "}
                 </Heading>
               </AccordionPanel>
             </AccordionItem>

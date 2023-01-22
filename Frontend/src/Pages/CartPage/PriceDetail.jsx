@@ -1,5 +1,26 @@
-import { Button, Flex, Heading } from "@chakra-ui/react";
+import { Button, Flex, Heading, useToast } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 function PriceDetail({ price, discountprice, length }) {
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  const { ItemCount } = useSelector((state) => state.CartReducer);
+
+  const handleProccessButton = () => {
+    if (ItemCount > 0) {
+      navigate("/address");
+    } else {
+      toast({
+        position: "top",
+        description: "Please add some products to your cart",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
   return (
     <Flex
       flexDirection={"column"}
@@ -54,7 +75,7 @@ function PriceDetail({ price, discountprice, length }) {
             fontWeight="500"
             fontFamily={"Inter"}
           >
-            Bag Discount
+            After Discount
           </Heading>
           <Heading
             as="p"
@@ -77,7 +98,7 @@ function PriceDetail({ price, discountprice, length }) {
             fontWeight="500"
             fontFamily={"Inter"}
           >
-            Shipping
+            Saving at this time
           </Heading>
           <Heading
             as="p"
@@ -85,9 +106,9 @@ function PriceDetail({ price, discountprice, length }) {
             fontWeight="500"
             fontFamily={"Inter"}
             justifyContent="flex-end"
-            color="green.900"
+            color="green"
           >
-            Free
+            {price - discountprice}
           </Heading>
         </Flex>
         <Flex
@@ -110,7 +131,7 @@ function PriceDetail({ price, discountprice, length }) {
             fontFamily={"Inter"}
             justifyContent="flex-end"
           >
-            ₹ {price - discountprice}
+            ₹ {discountprice}
           </Heading>
         </Flex>
         <Button
@@ -121,6 +142,7 @@ function PriceDetail({ price, discountprice, length }) {
           _hover={{
             color: "black",
           }}
+          onClick={handleProccessButton}
         >
           Process
         </Button>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Heading, Input, Button } from "@chakra-ui/react";
-const GiftCard = () => {
+const GiftCard = ({ Totaldiscountprice }) => {
   return (
     <Flex
       gap="2"
@@ -21,9 +21,9 @@ const GiftCard = () => {
       <hr />
       <Input placeholder="Gift Card Number" type="number" required />
       <Flex gap="2">
-        <Input placeholder="PIN" type="number" required width='40%'/>
+        <Input placeholder="PIN" type="number" required width="40%" />
         <Button
-          width='60%'
+          width="60%"
           color="#FFFFFF"
           fontFamily="Inter"
           fontSize="16px"

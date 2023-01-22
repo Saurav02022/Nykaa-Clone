@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { InfoIcon } from "@chakra-ui/icons";
 
-const CreditCard = () => {
+const CreditCard = ({ Totaldiscountprice }) => {
   return (
     <Flex
       gap="2"
@@ -106,7 +106,7 @@ const CreditCard = () => {
           backgroundColor: "#E80080",
         }}
       >
-        Pay ₹ 1040
+        Pay ₹ {Totaldiscountprice}
       </Button>
     </Flex>
   );

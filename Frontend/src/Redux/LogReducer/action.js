@@ -1,101 +1,72 @@
-import axios from "axios"
-import * as types from "./actionType"
+import axios from "axios";
+import {
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+} from "./actionType";
 
-
-export const signupReq= () => {
-
-    return {
-        type:types.USER_SIGNUP_REQUEST
-    }
-
-
-}
-
-export const signupSuccess = (payload)=>{
-    return {
-        type: types.USER_SIGNUP_SUCCESS,
-        payload: payload
-    }
-}
-
-export const signupFailure= () => {
-
-    return {
-        type:types.USER_SIGNUP_FAILURE
-    }
-
-}
-
-export const loginRequest =() => {
-
-    return {
-        type:types.USER_LOGIN_REQUEST
-    }
-
-}
-
-const loginSuccess =(payload) => {
-
-    return {
-        type:types.USER_LOGIN_SUCCESS,
-        payload:payload
-    }
-
-}
-
-const loginFailure =() => {
-
-    return {
-        type:types.USER_LOGIN_FAILURE
-    }
-
-}
-
-
-export const postdata = ({email, name, password, phone}) => (dispatch) => {
-    
-    let data = {
-      name: name,
-      email: email,
-      password: password,
-      phone: phone,
-     
-    };
-    
-    // console.log("params", data);
-    dispatch(signupReq());
-    
-    return axios.post(
-        `https://fair-pear-salmon-suit.cyclic.app/users/register`, data
-      )
-      .then((res) => {
-        // console.log(res.data);
-     return  dispatch(signupSuccess(res));
-      })
-      .catch((error) => {
-        dispatch(signupFailure());
-      });
+const signupRequest = () => {
+  return {
+    type: SIGNUP_REQUEST,
   };
+};
 
-export const login =({email, password})=>(dispatch)=> {
-    dispatch(loginRequest())
-    const data = {
-        email: email,
-        password: password
-    }
-    // console.log(data);
-    return axios.post("https://fair-pear-salmon-suit.cyclic.app/users/login", data)
-    .then((r)=>{
-        console.log(r.data);
-        // const user = r.data.id;
-        // localStorage.setItem("user", JSON.stringify(user));
-        return dispatch(loginSuccess(r.data))
-    })
-    .catch((e)=>(
-        dispatch(loginFailure())
-    ))
+const signupSuccess = (payload) => {
+  return {
+    type: SIGNUP_SUCCESS,
+    payload: payload,
+  };
+};
 
-}
+const signupFailure = (payload) => {
+  return {
+    type: SIGNUP_FAILURE,
+    payload: payload,
+  };
+};
 
+export const Signup = (data) => async (dispatch) => {
+  try {
+    dispatch(signupRequest());
+    await axios
+      .post(`https://fair-pear-salmon-suit.cyclic.app/users/register`, data)
+      .then((res) => dispatch(signupSuccess(res.data)));
+  } catch (e) {
+    dispatch(signupFailure(e.message));
+  }
+};
 
+const loginRequest = () => {
+  return {
+    type: LOGIN_REQUEST,
+  };
+};
+
+const loginSuccess = (payload) => {
+  return {
+    type: LOGIN_SUCCESS,
+    payload: payload,
+  };
+};
+
+const loginFailure = (payload) => {
+  return {
+    type: LOGIN_FAILURE,
+    payload: payload,
+  };
+};
+
+export const login = (data) => async (dispatch) => {
+  try {
+    dispatch(loginRequest());
+    await axios
+      .post("https://fair-pear-salmon-suit.cyclic.app/users/login", data)
+      .then((res) => dispatch(loginSuccess(res.data)));
+  } catch (e) {
+    dispatch(loginFailure(e.message));
+  }
+};
 

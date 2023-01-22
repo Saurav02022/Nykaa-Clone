@@ -10,8 +10,7 @@ import {
 import { StarIcon } from "@chakra-ui/icons";
 import { AiOutlineHeart } from "react-icons/ai";
 import axios from "axios";
-
-
+import { useSelector } from "react-redux";
 
 function ProductCartItem({
   _id,
@@ -22,10 +21,12 @@ function ProductCartItem({
   rating,
   discount,
 }) {
+  const { isAuth, userid } = useSelector(
+    (state) => state.AuthenticationReducer
+  );
   const toast = useToast();
-  let { id } = JSON.parse(localStorage.getItem("user"));
-  const  HandleAddtoBag = async() => {
 
+  const HandleAddtoBag = async () => {
     const payload = {
       _id,
       imgsrc,
@@ -35,28 +36,37 @@ function ProductCartItem({
       rating,
       discount,
     };
-
-    await axios
-      .post(`https://fair-pear-salmon-suit.cyclic.app/cart/${id}`, payload)
-      .then(() =>
-        toast({
-          description: "Product added successfully",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        })
-      )
-      .catch((err) => {
-        toast({
-          description: err.message,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
+    if (isAuth) {
+      await axios
+        .post(
+          `https://fair-pear-salmon-suit.cyclic.app/cart/${userid}`,
+          payload
+        )
+        .then((res) =>
+          toast({
+            description: "Product added successfully",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          })
+        )
+        .catch((err) => {
+          toast({
+            description: err.message,
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          });
         });
+    } else {
+      toast({
+        description: "Please login first",
+        status: "info",
+        duration: 5000,
+        isClosable: true,
       });
+    }
   };
-
-
 
   return (
     <Box

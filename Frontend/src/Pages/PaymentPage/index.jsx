@@ -18,6 +18,7 @@ import Paytm from "./Components/Paytm";
 import CreditCard from "./Components/CreditCard";
 import GiftCard from "./Components/GiftCard";
 import Cod from "./Components/Cod";
+import { useSelector } from "react-redux";
 
 function PaymentPage({
   count = 2,
@@ -26,6 +27,11 @@ function PaymentPage({
   discount = 25,
   shipping = 0,
 }) {
+  const { ItemCount, Totalprice, Totaldiscountprice } = useSelector(
+    (state) => state.CartReducer
+  );
+  const { Personaddress } = useSelector((state) => state.AddressReducer);
+  const { pincode, house, road, name, phone, email } = Personaddress[0];
   const [method, setMethod] = useState("Card");
 
   return (
@@ -243,13 +249,13 @@ function PaymentPage({
             <Box border="0px solid black" marginTop="5px">
               {" "}
               {method === "Card" ? (
-                <CreditCard />
+                <CreditCard Totaldiscountprice={Totaldiscountprice} />
               ) : method === "Cod" ? (
-                <Cod />
+                <Cod Totaldiscountprice={Totaldiscountprice} />
               ) : method === "Gift" ? (
-                <GiftCard />
+                <GiftCard Totaldiscountprice={Totaldiscountprice} />
               ) : method === "Paytm" ? (
-                <Paytm />
+                <Paytm Totaldiscountprice={Totaldiscountprice} />
               ) : null}
             </Box>
           </Flex>
@@ -285,7 +291,7 @@ function PaymentPage({
                     <Heading as="h1" fontSize="16px">
                       Bag
                     </Heading>
-                    {<Heading fontSize="14px">{count} Items</Heading>}
+                    {<Heading fontSize="14px">{ItemCount} Items</Heading>}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
@@ -295,8 +301,7 @@ function PaymentPage({
                 display="flex"
                 justifyContent={"space-between"}
               >
-                <Image src={""} alt="Image" boxSize="90px" objectFit="cover" />
-                <Text>{"demo"}</Text>
+                <Text>{ItemCount} items in the Cart</Text>
               </AccordionPanel>
             </AccordionItem>
             <AccordionItem>
@@ -312,16 +317,28 @@ function PaymentPage({
                     <Heading as="h1" fontSize="16px">
                       Deliver To
                     </Heading>
-                    {<Heading fontSize="14px">Saurav, 811106 </Heading>}
+                    {
+                      <Heading fontSize="14px">
+                        {name}, {pincode}{" "}
+                      </Heading>
+                    }
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4} display="flex">
                 <Text width="200px">
-                  at Naya tola chakshivganj po ps Surajgarha district lakhisarai
-                  pincode 811106 state bihar Landmark: near mantu dial centre,
-                  Bihar Surajgarha-811106 9572365331
+                  Name:-{name}
+                  <br />
+                  Phone:-{phone}
+                  <br />
+                  Email:-{email}
+                  <br />
+                  House no:-{house}
+                  <br />
+                  Road no:-{road}
+                  <br />
+                  PinCode :-{pincode}
                 </Text>
               </AccordionPanel>
             </AccordionItem>
@@ -338,41 +355,23 @@ function PaymentPage({
                     <Heading as="h1" fontSize="16px">
                       Price Details
                     </Heading>
-                    {
-                      <Heading fontSize="14px">
-                        ₹{rs * count - discount + shipping}
-                      </Heading>
-                    }
+                    {<Heading fontSize="14px">₹{Totaldiscountprice}</Heading>}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
                 <Text display={"flex"} justifyContent="space-between">
-                  <span>Bag MRP (1 items)</span>
-                  <span>₹{rs}</span>
+                  <span>Bag MRP ({ItemCount} items)</span>
+                  <span>₹{Totalprice}</span>
                 </Text>
                 <Text display={"flex"} justifyContent="space-between">
-                  <span>Bag Discount</span>
-                  <span>₹{discount}</span>
+                  <span>After Discount</span>
+                  <span>₹{Totaldiscountprice}</span>
                 </Text>
                 <Text display={"flex"} justifyContent="space-between">
-                  <span>Shipping</span>
-                  <span>
-                    {shipping === 0 ? (
-                      <span
-                        style={{
-                          fontWeight: "bold",
-                          fontSize: "16px",
-                          color: "#2de02d",
-                        }}
-                      >
-                        Free
-                      </span>
-                    ) : (
-                      "₹" + shipping
-                    )}
-                  </span>
+                  <span>Saving at this Time</span>
+                  <span>{Totalprice - Totaldiscountprice}</span>
                 </Text>
                 <Heading
                   display={"flex"}
@@ -380,8 +379,7 @@ function PaymentPage({
                   as="h1"
                   fontSize="16px"
                 >
-                  <span>You Pay</span>{" "}
-                  <span>₹{rs * count - discount + shipping}</span>{" "}
+                  <span>You Pay</span> <span>₹{Totaldiscountprice}</span>{" "}
                 </Heading>
               </AccordionPanel>
             </AccordionItem>

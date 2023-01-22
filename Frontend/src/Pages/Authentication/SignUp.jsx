@@ -8,16 +8,11 @@ import {
   Flex,
   Text,
   FormControl,
-  FormHelperText,
-  FormErrorMessage,
-  Box
-
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import {RotatingLines} from "react-loader-spinner";
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
-import { postdata, signupReq } from "../../Redux/LogReducer/action";
+import { Signup } from "../../Redux/LogReducer/action";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -28,75 +23,61 @@ const UserSignUp = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
- const toast = useToast();
+
+  const toast = useToast();
   const [show, setShow] = React.useState(false);
 
   const handlePass = () => setShow(!show);
   const dispatch = useDispatch();
 
-  const disable = email === "" || phone=== "" || name === "" || password ==="";
+  const { signupLoading, signupSuccess, signupError } = useSelector(
+    (store) => store.AuthenticationReducer
+  );
 
-  let isErrorE = email !== '';
-  const isErrorP = phone !== "";
-  const isErrorN = name !== "";
-  const isErrorPa = password !=="";
-   
- const onEmailChange = (e)=>{
-    isErrorE = email === "";
-     setEmail(e.target.value)
-  }
-  
-
-const isLoading = useSelector((state)=> state.LogReducer.isAuthLoading);
-const signup = useSelector((state)=> state.LogReducer.isSignUp);
-// console.log(signup); 
-const handleClick = () => {
-  dispatch(signupReq());
-
-    dispatch(postdata({ email, name, password, phone }))
-    .then((res) => {
-      console.log(res)
-      if(res.payload.status === 200){
+  const handleClick = () => {
+    const data = {
+      name,
+      phone,
+      email,
+      password,
+    };
+    if (name && phone && email) {
+      if (password.length > 8) {
+        dispatch(Signup(data));
+      } else {
         toast({
-          // title: 'Login Successfull.',
-          render: () => (
-            <Box color="white" p={3} bg="pink.500">
-              {res.payload.data}
-            </Box>
-          ),
-        });
-        navigate("/user/login");
-      }else{
-        toast({
-          // title: 'Login Successfull.',
-          render: () => (
-            <Box color="white" p={3} bg="pink.500">
-             {res.payload.data}
-            </Box>
-          ),
+          description: "password length should be greater than 8 characters",
+          status: "info",
+          duration: 3000,
+          isClosable: true,
         });
       }
-      //console.log(res)
-      // console.log("Registered Successfully");
-    //  console.log(res.payload);
-    
-    }).catch((err)=>
-    console.log(err)
-    );
+    } else {
+      toast({
+        description: "Please fill all details",
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
+  if (signupSuccess !== "") {
+    toast({
+      description: signupSuccess,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+    navigate("/user/login");
+  }
 
-  if(isLoading){
-  return (
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <RotatingLines
-        strokeColor="grey"
-        strokeWidth="5"
-        animationDuration="1.75"
-        width="96"
-        visible={true}
-      />
-    </Box>
-  );
+  if (signupError !== "") {
+    toast({
+      description: signupError,
+      status: "error",
+      duration: 4000,
+      isClosable: true,
+    });
   }
 
   return (
@@ -113,113 +94,74 @@ const handleClick = () => {
       gap="5"
     >
       <Heading fontSize={"18px"}>LOGIN / REGISTER</Heading>
-<FormControl >
-<Input
-        required={true}
-        type="text"
-        borderColor={"black"}
-        value={name}
-        onChange={(e) => 
-          // const isErrorN = name === "";
-          setName(e.target.value) }
-        placeholder="Enter Your Name"
-      />
-      {/* {!disable ? (
-        <FormHelperText>
-          Enter the Name.
-        </FormHelperText>
-      ) : (
-        <FormErrorMessage>Name is required.</FormErrorMessage>
-      )} */}
-</FormControl>
-      {/* <Input
-        required={true}
-        type="text"
-        borderColor={"black"}
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Enter Your Name"
-      /> */}
-<FormControl >
-<Input
-        required={true}
-        type="number"
-        borderColor={"black"}
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-        placeholder="Enter Mobile Number"
-      />
-{/* {!isErrorP ? (
-        <FormHelperText>
-          Enter the Mobile Number.
-        </FormHelperText>
-      ) : (
-        <FormErrorMessage>Mobile number is required.</FormErrorMessage>
-      )} */}
-</FormControl>
-     
+      <FormControl>
+        <Input
+          required={true}
+          type="text"
+          borderColor={"black"}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter Your Name"
+        />
+      </FormControl>
+      <FormControl>
+        <Input
+          required={true}
+          type="number"
+          borderColor={"black"}
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Enter Mobile Number"
+        />
+      </FormControl>
 
-<FormControl >
-<Input
-        required={true}
-        type="email"
-        borderColor={"black"}
-        value={email}
-        onChange={onEmailChange}
-        placeholder="Enter Email ID"
-      />
-{/* {!isErrorE ? (
-        <FormHelperText>
-          Enter the Email.
-        </FormHelperText>
-      ) : (
-        <FormErrorMessage>Email is required.</FormErrorMessage>
-      )} */}
-</FormControl>
-<FormControl >
-<Flex>
-        <InputGroup>
-          <Input
-            type={show ? "text" : "password"}
-            placeholder="Enter password"
-            borderColor={"black"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <InputRightElement width="4.5rem">
-            <Button
-              size="md"
-              onClick={handlePass}
-              backgroundColor={"#FC2779"}
-              color="#FFFFFF"
-              _hover={{
-                backgroundColor: "#FC2779",
-                color: "#FFFFFF",
-              }}
-            >
-              {show ? "Hide" : "Show"}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      
-      </Flex>
-{/* {!isErrorPa ? (
-        <FormHelperText>
-          Enter the Password.
-        </FormHelperText>
-      ) : (
-        <FormErrorMessage>Password is required.</FormErrorMessage>
-      )} */}
-</FormControl>
+      <FormControl>
+        <Input
+          required={true}
+          type="email"
+          borderColor={"black"}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter Email ID"
+        />
+      </FormControl>
+      <FormControl>
+        <Flex>
+          <InputGroup>
+            <Input
+              type={show ? "text" : "password"}
+              placeholder="Enter password"
+              borderColor={"black"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <InputRightElement width="4.5rem">
+              <Button
+                size="md"
+                onClick={handlePass}
+                backgroundColor={"#FC2779"}
+                color="#FFFFFF"
+                _hover={{
+                  backgroundColor: "#FC2779",
+                  color: "#FFFFFF",
+                }}
+              >
+                {show ? "Hide" : "Show"}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+        </Flex>
+      </FormControl>
 
       <Button
-      isDisabled = {isLoading || disable}
         backgroundColor={"#FC2779"}
         color="#FFFFFF"
         _hover={{
           backgroundColor: "#FC2779",
           color: "#FFFFFF",
         }}
+        isLoading={signupLoading}
+        loadingText="Submitting"
         onClick={handleClick}
       >
         PROCEED

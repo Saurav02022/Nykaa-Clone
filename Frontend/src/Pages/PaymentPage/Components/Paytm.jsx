@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Heading, Input, Button } from "@chakra-ui/react";
-const Paytm = () => {
+const Paytm = ({ Totaldiscountprice }) => {
   return (
     <Flex
       gap="2"
@@ -19,23 +19,23 @@ const Paytm = () => {
         Paytm Wallet
       </Heading>
       <hr />
-        <Input placeholder="Phone Number" type="number" required />
-        <Button
-          color="#FFFFFF"
-          fontFamily="Inter"
-          fontSize="16px"
-          fontWeight="600"
-          height="49px"
-          padding="12px 12px 12px 12px"
-          backgroundColor="#E80071"
-          _hover={{
-            color: "#FFFFFF",
-            backgroundColor: "#E80080",
-          }}
-        >
-          Link
-        </Button>
-      </Flex>
+      <Input placeholder="Phone Number" type="number" required />
+      <Button
+        color="#FFFFFF"
+        fontFamily="Inter"
+        fontSize="16px"
+        fontWeight="600"
+        height="49px"
+        padding="12px 12px 12px 12px"
+        backgroundColor="#E80071"
+        _hover={{
+          color: "#FFFFFF",
+          backgroundColor: "#E80080",
+        }}
+      >
+        Link
+      </Button>
+    </Flex>
   );
 };
 

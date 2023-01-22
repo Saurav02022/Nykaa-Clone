@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Heading, Button } from "@chakra-ui/react";
 
-const Cod = () => {
+const Cod = ({ Totaldiscountprice }) => {
   return (
     <Flex
       gap="2"
@@ -33,7 +33,7 @@ const Cod = () => {
           backgroundColor: "#E80080",
         }}
       >
-        Place order
+        Place order  
       </Button>
     </Flex>
   );

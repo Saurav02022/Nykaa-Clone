@@ -8,11 +8,15 @@ import {
   InputLeftElement,
   Input,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 
 import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import { Logout } from "../../Redux/LogReducer/actionType";
 
 const Links = [
   "Categories",
@@ -39,7 +43,21 @@ const NavLink = ({ children }) => (
 );
 
 export default function MainNavbar() {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const { isAuth } = useSelector((state) => state.AuthenticationReducer);
+
+  const handleLogout = () => {
+    dispatch({ type: Logout });
+    toast({
+      description: "logout successfully",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
+    window.location.href='/'
+  };
   return (
     <>
       <Flex justifyContent="space-evenly" borderBottom={"1px solid grey"}>
@@ -86,7 +104,7 @@ export default function MainNavbar() {
             />
             <Input type="tel" placeholder="Search on Nykaa" />
           </InputGroup>
-          <Link to="/user/login">
+          {isAuth ? (
             <Button
               backgroundColor={"#fc2779"}
               color="white"
@@ -94,10 +112,24 @@ export default function MainNavbar() {
                 backgroundColor: "#FC2779",
                 color: "#FFFFFF",
               }}
+              onClick={handleLogout}
             >
-              Signin
+              Sign out
             </Button>
-          </Link>
+          ) : (
+            <Link to="/user/login">
+              <Button
+                backgroundColor={"#fc2779"}
+                color="white"
+                _hover={{
+                  backgroundColor: "#FC2779",
+                  color: "#FFFFFF",
+                }}
+              >
+                Signin
+              </Button>
+            </Link>
+          )}
           <Link to={"/cart"}>
             {" "}
             <HiOutlineShoppingBag size={30} />

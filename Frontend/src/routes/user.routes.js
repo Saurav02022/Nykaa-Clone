@@ -13,6 +13,8 @@ import PaymentPage from "../Pages/PaymentPage";
 
 import { Box } from "@chakra-ui/layout";
 
+import PrivateRoute from "../PrivateRoutes/PrivateRoute.jsx";
+
 const UserRoutes = () => {
   var url = window.location.href;
   var path = url.match(/\/([^\/]+)/g)[1];
@@ -27,9 +29,30 @@ const UserRoutes = () => {
         <Route path="/skin" element={<SkinProductPage />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="/user/login" element={<UserLogin />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/address" element={<Address />} />
-        <Route path="/payment" element={<PaymentPage />} />
+        <Route
+          path="/cart"
+          element={
+            <PrivateRoute>
+              <CartPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/address"
+          element={
+            <PrivateRoute>
+              <Address />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            <PrivateRoute>
+              <PaymentPage />
+            </PrivateRoute>
+          }
+        />
       </Routes>
       <Box display={path === "/admin" ? "none" : "block"}>
         <Footer />

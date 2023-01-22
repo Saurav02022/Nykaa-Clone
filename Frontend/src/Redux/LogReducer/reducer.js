@@ -1,63 +1,91 @@
-import * as types from "./actionType"
+import {
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  Logout,
+} from "./actionType";
 
-const initialState={
-    isAuth:false,
-    isSignUp: "",
-    token:"",
-    isAuthError:false,
-    isAuthLoading:false
-}
+const initialState = {
+  isAuth: false,
+  signupLoading: false,
+  signupSuccess: "",
+  signupError: "",
+  loginLoading: false,
+  loginSuccess: "",
+  loginError: "",
+  token: "",
+  userid: "",
+};
 
-const reducer = (state=initialState , action) => {
+const AuthenticationReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case SIGNUP_REQUEST:
+      return {
+        ...state,
+        signupLoading: true,
+      };
+    case SIGNUP_SUCCESS:
+      return {
+        ...state,
+        signupSuccess: payload,
+        signupLoading: false,
+      };
+    case SIGNUP_FAILURE:
+      return {
+        ...state,
+        isAuth: false,
+        signupLoading: false,
+        signupSuccess: "",
+        signupError:payload,
+      };
+    case LOGIN_REQUEST:
+      return {
+        ...state,
+        isAuth: false,
+        loginLoading: true,
+      };
 
-    const {type,payload} = action;
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isAuth: true,
+        loginSuccess: payload.msg,
+        loginLoading: false,
+        token: payload.usertoken,
+        userid: payload.id,
+      };
 
-    switch(type){
-        case types.USER_LOGIN_REQUEST:
-            return {
-                ...state,
-                isAuthLoading:true
-            };
-
-            case types.USER_LOGIN_SUCCESS:
-            return {
-                ...state,
-                token:payload,
-                isAuth:true,
-                isAuthLoading:false
-            };
-
-            case types.USER_LOGIN_FAILURE:
-                return {
-                    ...state,
-                    isAuth: false,
-                    isAuthLoading: false,
-                    token: "",
-                    isAuthError: true,
-                };
-                case types.USER_SIGNUP_REQUEST:
-                return {
-                    ...state,
-                    isAuthLoading: true,
-                }
-
-            case types.USER_SIGNUP_SUCCESS:
-                return {
-                    ...state,
-                    isSignUp:payload,
-                    isAuthLoading: false,
-                }
-                case types.USER_SIGNUP_FAILURE:
-                    return {
-                        ...state,
-                        isAuthLoading: true,
-                        isAuthError: true,
-                    }
-
-                default :
-                return state ;
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+        isAuth: false,
+        loginLoading: false,
+        loginSuccess: "",
+        loginError: payload,
+        token: "",
+        userid: "",
+      };
+    case Logout: {
+      return {
+        ...state,
+        isAuth: false,
+        signupLoading: false,
+        signupSuccess: "",
+        signupError: "",
+        loginLoading: false,
+        loginSuccess: "",
+        loginError: "",
+        token: "",
+        userid: "",
+      };
     }
-}
 
-export {reducer};
+    default:
+      return state;
+  }
+};
 
+export { AuthenticationReducer };

@@ -38,7 +38,7 @@ const HomePage = () => {
         }}
       >
         {after_Carousel_images.map((image) => (
-          <Box>
+          <Box key={image}>
             <Image src={image} />
           </Box>
         ))}
@@ -74,6 +74,7 @@ const HomePage = () => {
       >
         {TopBrands_Images.map(({ src, pink, grey }) => (
           <CardItem
+            key={pink}
             src={src}
             h1Size={"20px"}
             h1Weight={"600"}
@@ -102,7 +103,7 @@ const HomePage = () => {
         }}
       >
         {afterTopBrands.map((image) => (
-          <Box>
+          <Box key={image}>
             <Image src={image} />
           </Box>
         ))}
@@ -127,6 +128,7 @@ const HomePage = () => {
         >
           {OnlyAtNykaa.map(({ src, h1, h3 }) => (
             <CardItem
+              key={h1}
               src={src}
               h1Size={"20px"}
               h1Weight={"600"}
@@ -165,7 +167,7 @@ const HomePage = () => {
           marginTop="20px"
         >
           {afterOnlyatNaykaa.map(({ src, text }) => (
-            <TransParentCard src={src} text={text} />
+            <TransParentCard src={src} text={text} key={text} />
           ))}
         </Flex>
         <Heading
@@ -193,6 +195,7 @@ const HomePage = () => {
         >
           {FeaturedBrands.map(({ src, text, disc }) => (
             <CardItem
+              key={text}
               src={src}
               h1Size={"20px"}
               h1Weight={"600"}
@@ -222,6 +225,7 @@ const HomePage = () => {
         >
           {afterFeatureBrand.map(({ src, text, disc }) => (
             <CardItem
+              key={text}
               src={src}
               h1Size={"20px"}
               h1Weight={"600"}
@@ -294,6 +298,7 @@ const HomePage = () => {
         >
           {BeautyAdvice.map(({ src, text, disc }) => (
             <CardItem
+              key={text}
               h1Size={"16px"}
               h1Weight={"600"}
               h1color="black"
