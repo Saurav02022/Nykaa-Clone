@@ -11,6 +11,7 @@ import { StarIcon } from "@chakra-ui/icons";
 import { AiOutlineHeart } from "react-icons/ai";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function ProductCartItem({
   _id,
@@ -25,7 +26,7 @@ function ProductCartItem({
     (state) => state.AuthenticationReducer
   );
   const toast = useToast();
-
+  const navigate = useNavigate();
   const HandleAddtoBag = async () => {
     const payload = {
       _id,
@@ -68,6 +69,20 @@ function ProductCartItem({
     }
   };
 
+  const HandleProduct = (id) => {
+    const data = {
+      _id,
+      imgsrc,
+      title,
+      price,
+      discountedprice,
+      rating,
+      discount,
+    };
+    localStorage.setItem("singleProduct", JSON.stringify(data));
+    navigate("/singleproduct");
+  };
+
   return (
     <Box
       key={_id}
@@ -81,6 +96,10 @@ function ProductCartItem({
       borderRadius="md"
     >
       <Box
+        onClick={() => HandleProduct(_id)}
+        _hover={{
+          cursor: "pointer",
+        }}
         border={"0px solid red"}
         justifyContent="center"
         alignItems={"center"}

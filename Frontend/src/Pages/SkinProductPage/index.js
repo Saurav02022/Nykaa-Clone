@@ -224,134 +224,159 @@ function SkinProductPage() {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };
-  return <>
-    <div className="prod_main_div">
-      <div className="prod_top">
-
-        <div className="first_bnr">
-          <div>
-            <h2 style={{ fontSize: "25px", fontWeight: "500", textAlign: "center", marginBottom: "5px" }}>Skin Makeup Collection</h2>
+  return (
+    <>
+      <div className="prod_main_div">
+        <div className="prod_top">
+          <div className="first_bnr">
+            <div>
+              <h2
+                style={{
+                  fontSize: "25px",
+                  fontWeight: "500",
+                  textAlign: "center",
+                  marginBottom: "5px",
+                }}
+              >
+                Skin Makeup Collection
+              </h2>
+            </div>
+            <Slider {...settings}>
+              {banner.map((el) => (
+                <div className="popup" key={el}>
+                  <img className="bnr_img" src={el} alt="banner" />
+                </div>
+              ))}
+            </Slider>
           </div>
-          <Slider {...settings} >
-            {banner.map((el) => (
-              <div className="popup" key={el}>
-                <img className="bnr_img" src={el} alt="banner" />
-              </div>
-            ))}
-          </Slider>
-        </div>
 
-        <div className="second_bnr">
-          <div>
-            <div className="top_txt">
-              <h3>Luxe Essentials That You Should Grab Ahead Of The Year End Celebrations</h3>
-              <p>Bask In The Festive Spirit With These Luxe Essentials</p>
-              <a href="/" >Read More on Nykaa's Beauty Book &gt;</a>
-              <br />
-              <br />
+          <div className="second_bnr">
+            <div>
+              <div className="top_txt">
+                <h3>
+                  Luxe Essentials That You Should Grab Ahead Of The Year End
+                  Celebrations
+                </h3>
+                <p>Bask In The Festive Spirit With These Luxe Essentials</p>
+                <a href="/">Read More on Nykaa's Beauty Book &gt;</a>
+                <br />
+                <br />
+              </div>
+            </div>
+
+            <div>
+              <img
+                src="https://www.nykaa.com/media/categoryInfo/art_banner_image/luxeessentialsthatyoushouldgrabaheadoftheyearendcelebrationscb.jpg"
+                alt="img"
+              />
             </div>
           </div>
-
-          <div>
-            <img src="https://www.nykaa.com/media/categoryInfo/art_banner_image/luxeessentialsthatyoushouldgrabaheadoftheyearendcelebrationscb.jpg" alt="img" />
-          </div>
-
         </div>
-
-
-      </div>
-      <div className="product_section">
-        <div className="sidebar">
-          <Sidebar />
-        </div>
-        <div className="product_containor">
-          <div className="sort">
-
-          <button onClick={reset}>Reset : </button>
-           
-            <select onChange={(e)=>handlePriceChange(e)} id="priceSort" name="Price">
-              <option value="">Price</option>
-              <option value="Price low to high">Price low to high</option>
-              <option value="Price high to low">Price high to low</option>
-            </select>
-
-            <select onChange={(e)=>handleRatingChange(e)}  id="ratingSort" name="Rating">
-              <option value="">Rating</option>
-              <option value="Rating low to high">Rating low to high</option>
-              <option value="Rating high to low">Rating high to low</option>
-            </select>
-
-            <select onChange={(e)=>category(e)} id="categorySort" name="Category">
-              <option value="">Category</option>
-              <option value="Olay">Olay </option>
-              <option value="Nykaa ">Nykaa </option>
-              <option value="Plum ">Plum </option>
-              <option value="Lotus ">Lotus </option>
-              <option value="Ponds ">Ponds </option>
-            </select>
-                        
+        <div className="product_section">
+          <div className="sidebar">
+            <Sidebar />
           </div>
-          {loading && <Loading/>}
-      {error && (<Box>
-        <Center>
-        <img width="150px" src="https://www.seekpng.com/png/full/360-3605845_dog-holding-paper-in-mouth.png" alt="" />
-        </Center>
-        </Box>)}
-          <Flex
-            display={"grid"}
-            gridTemplateColumns={{
-              base: "repeat(1,1fr)",
-              sm: "repeat(2,1fr)",
-              md: "repeat(2,1fr)",
-              lg: "repeat(3,1fr)",
-              xl: "repeat(3,1fr)",
-            }}
-            width="90%"
-            margin="auto"
-            gap={5}
-            marginTop="20px"
-            marginBottom={"20px"}
-          >
-             {filter.length>0 ? filter.map(
-              ((el) => (
-                <ProductCartItem key={el._id}
-                  imgsrc={el.imgsrc}
-                  title={el.title}
-                  price={el.price}
-                  discount={el.discount}
-                  discountedprice={el.discountedprice}
-                  rating={el.rating}
-                />
-              )
-            )) :
-            data.length>0 && data.map(
-              ((el) => (
-                <ProductCartItem key={el._id}
-                  imgsrc={el.imgsrc}
-                  title={el.title}
-                  price={el.price}
-                  discount={el.discount}
-                  discountedprice={el.discountedprice}
-                  rating={el.rating}
-                />
-              )
-            ))}
-          </Flex>
-          <Pagination
+          <div className="product_containor">
+            <div className="sort">
+              <button onClick={reset}>Reset : </button>
+
+              <select
+                onChange={(e) => handlePriceChange(e)}
+                id="priceSort"
+                name="Price"
+              >
+                <option value="">Price</option>
+                <option value="Price low to high">Price low to high</option>
+                <option value="Price high to low">Price high to low</option>
+              </select>
+
+              <select
+                onChange={(e) => handleRatingChange(e)}
+                id="ratingSort"
+                name="Rating"
+              >
+                <option value="">Rating</option>
+                <option value="Rating low to high">Rating low to high</option>
+                <option value="Rating high to low">Rating high to low</option>
+              </select>
+
+              <select
+                onChange={(e) => category(e)}
+                id="categorySort"
+                name="Category"
+              >
+                <option value="">Category</option>
+                <option value="Olay">Olay </option>
+                <option value="Nykaa ">Nykaa </option>
+                <option value="Plum ">Plum </option>
+                <option value="Lotus ">Lotus </option>
+                <option value="Ponds ">Ponds </option>
+              </select>
+            </div>
+            {loading && <Loading />}
+            {error && (
+              <Box>
+                <Center>
+                  <img
+                    width="150px"
+                    src="https://www.seekpng.com/png/full/360-3605845_dog-holding-paper-in-mouth.png"
+                    alt=""
+                  />
+                </Center>
+              </Box>
+            )}
+            <Flex
+              display={"grid"}
+              gridTemplateColumns={{
+                base: "repeat(1,1fr)",
+                sm: "repeat(2,1fr)",
+                md: "repeat(2,1fr)",
+                lg: "repeat(3,1fr)",
+                xl: "repeat(3,1fr)",
+              }}
+              width="90%"
+              margin="auto"
+              gap={5}
+              marginTop="20px"
+              marginBottom={"20px"}
+            >
+              {filter.length > 0
+                ? filter.map((el) => (
+                    <ProductCartItem
+                      key={el._id}
+                      _id={el._id}
+                      imgsrc={el.imgsrc}
+                      title={el.title}
+                      price={el.price}
+                      discount={el.discount}
+                      discountedprice={el.discountedprice}
+                      rating={el.rating}
+                    />
+                  ))
+                : data.length > 0 &&
+                  data.map((el) => (
+                    <ProductCartItem
+                      key={el._id}
+                      _id={el._id}
+                      imgsrc={el.imgsrc}
+                      title={el.title}
+                      price={el.price}
+                      discount={el.discount}
+                      discountedprice={el.discountedprice}
+                      rating={el.rating}
+                    />
+                  ))}
+            </Flex>
+            <Pagination
               pageChangeHandle={pageChangeHandle}
               currentPage={page}
               totalPages={total}
             />
-
+          </div>
         </div>
-
       </div>
-
-      
-
-
-    </div>
-  </>
+    </>
+  );
 }
 
 export default SkinProductPage;

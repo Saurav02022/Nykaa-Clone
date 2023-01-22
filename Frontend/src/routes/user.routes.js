@@ -10,6 +10,7 @@ import UserSignUp from "../Pages/Authentication/SignUp";
 import CartPage from "../Pages/CartPage";
 import Address from "../Pages/AddressPage/Address";
 import PaymentPage from "../Pages/PaymentPage";
+import SingleProduct from "../Pages/SingleProductPage/SingleProduct";
 
 import { Box } from "@chakra-ui/layout";
 
@@ -29,6 +30,7 @@ const UserRoutes = () => {
         <Route path="/skin" element={<SkinProductPage />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="/user/login" element={<UserLogin />} />
+        <Route path="/singleproduct" element={<SingleProduct />} />
         <Route
           path="/cart"
           element={
