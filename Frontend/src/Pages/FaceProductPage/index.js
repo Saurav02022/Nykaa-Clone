@@ -40,6 +40,7 @@ function NextArrow(props) {
 
 function PrevArrow(props) {
   const { className, style, onClick } = props;
+
   return (
     <BsArrowLeft
       className={className}
@@ -72,12 +73,17 @@ function FaceProductPage() {
 
   const [loading,setLoading] = useState(false)
   const [error,setError] = useState(false)
+  const [page,setPage] = useState(1)
 
-
-  const getData=()=>{
+  const getData=(page)=>{
     
     setLoading(true)
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/face").then((res)=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/face",{
+      params:{
+        _limit:12,
+        _page:page
+      }
+    }).then((res)=>{
       setTimeout(() => {
         setLoading(false)
         setData(res.data)
@@ -93,8 +99,8 @@ function FaceProductPage() {
 
 
   useEffect(()=>{
-    getData()
-  },[])
+    getData(page)
+  },[page])
 
   
   const pricelh=()=>{
@@ -206,8 +212,7 @@ function FaceProductPage() {
 
 
 
-  const total=products.length;
-  const [page,setPage]=useState(1)
+
 
   const pageChangeHandle = (value) => {
     setPage((prev) => prev + value);
@@ -341,11 +346,11 @@ function FaceProductPage() {
               )
             ))}
           </Flex>
-          <Pagination
-              pageChangeHandle={pageChangeHandle}
-              currentPage={page}
-              totalPages={total}
-            />
+          <div className='page-btn'>
+          <button disabled={page<2} onClick={() => setPage(page - 1)}>Prev</button>
+            <button>{page}</button>
+            <button  onClick={() => setPage(page + 1)}>Next</button>
+          </div>
 
         </div>
 
