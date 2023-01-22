@@ -19,6 +19,7 @@ export const ImageBar = ({size}) => {
                 boxSize={size}
                 width = '100%'
                 height='100%'
+                pl='30px'
                 src={el}
                 alt='AD'
               />
