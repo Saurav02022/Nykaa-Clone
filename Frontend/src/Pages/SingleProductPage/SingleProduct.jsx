@@ -1,9 +1,10 @@
 import {SimpleGrid , Image, Box, Heading, Text, Button, Input } from '@chakra-ui/react';
+import axios from 'axios';
 import {useState,useEffect} from 'react';
 import { Comments } from './components/Comments';
 import { ImageBar } from './components/ImageBar';
-import data from './components/skin.json'
-
+import data from './components/skin.json';
+import './components/styles.css'
 const headStyle = {
   m:'36px 0px 24px',
   as:'h1',
@@ -13,42 +14,42 @@ const headStyle = {
 const rating = 4.5;
 const custImage = [
   "https://images-static.nykaa.com/prod-review/1673414644978_41873378-8ea0-4d2e-a914-2b595326e4e0_1.jpg?tr=w-145,h-145,cm-pad_resize",
-  "https://images-static.nykaa.com/prod-review/1672054577960_1bfb7d65-f3ac-4a20-b898-fe2544ed90f7_1.jpg?tr=w-145,h-145,cm-pad_resize",
-  "https://images-static.nykaa.com/prod-review/1673414644978_41873378-8ea0-4d2e-a914-2b595326e4e0_1.jpg?tr=w-145,h-145,cm-pad_resize",
-  "https://images-static.nykaa.com/prod-review/1672054577960_1bfb7d65-f3ac-4a20-b898-fe2544ed90f7_1.jpg?tr=w-145,h-145,cm-pad_resize",
-  "https://images-static.nykaa.com/prod-review/1673414644978_41873378-8ea0-4d2e-a914-2b595326e4e0_1.jpg?tr=w-145,h-145,cm-pad_resize",
-  "https://images-static.nykaa.com/prod-review/1672054577960_1bfb7d65-f3ac-4a20-b898-fe2544ed90f7_1.jpg?tr=w-145,h-145,cm-pad_resize"
+  "https://images-static.nykaa.com/prod-review/1669786857771_0eba8edc-2ec4-433a-906a-d379df26e7e8_1.jpg?tr=w-145,h-145,cm-pad_resize",
+  "https://images-static.nykaa.com/prod-review/1662780738810_ad628cc8-f1e0-43b0-a61f-acd1886137b3_1.jpg?tr=w-145,h-145,cm-pad_resize",
+  "https://images-static.nykaa.com/prod-review/1668004416556_7253af69-6ef2-4beb-87e0-47877494116f_1.jpg?tr=w-145,h-145,cm-pad_resize",
+  "https://images-static.nykaa.com/prod-review/1668581144345_9025415a-91dc-467a-8305-b27a5cd325af_1.jpg?tr=w-145,h-145,cm-pad_resize",
+  "https://images-static.nykaa.com/prod-review/1672204206064_b1e5a14d-e375-4e1a-a415-892d6cb85cfa_1.jpg?tr=w-145,h-145,cm-pad_resize",
 ]
 const comments = [
   {
     name : 'ravi',
     rating : '4.5',
-    title : 'Love it' ,
-    body : 'sfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd f'
+    title : "Satisfied" ,
+    body : "Good TNx nykaa "
+  },
+  {
+    name : 'hari',
+    rating : '4.5',
+    title : "Omg I love it!" ,
+    body : "smells like ittar so if you're not into such smells do not go for it. I have tried Coco vanilla, vanilla 28, juicy apple, deja vu, cherry."
   },
   {
     name : 'hari',
     rating : '4.5',
     title : 'Love it' ,
-    body : 'sfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd f'
+    body : "Impressive one compared to other products"
   },
   {
     name : 'hari',
     rating : '4.5',
-    title : 'Love it' ,
-    body : 'sfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd fsfsdfjdlsfkds;lfjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdk fsdf;dskf sdkfdsk fskflkkfgsd f'
+    title : 'Good product' ,
+    body : 'Love the Product'
   },
   {
     name : 'hari',
     rating : '4.5',
-    title : 'Love it' ,
-    body : 'sfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd f'
-  },
-  {
-    name : 'hari',
-    rating : '4.5',
-    title : 'Love it' ,
-    body : 'sfsdfjdlsfkds;lfk;lsdk fsdf;dskf sdkfdsk fskflkkfgsd f'
+    title :  "Perfect",
+    body : 'Every thing is perfect ? but the gift nykaa omg ? nail lacquer ?? i love it.'
   },
 ]
 
@@ -57,9 +58,37 @@ const shadow = "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 
 
 const SingleProduct = () => {
   const [products,setProducts] = useState(data);
+  const [item,SetItem] = useState(products[5])
   const [like,setLike] = useState(false);
-    const [screen, setScreen] = useState("");
-console.log(products,typeof(Skinproducts))
+  const [screen, setScreen] = useState("");
+  const [pincode,setPincode] = useState('')
+  const [select,setSelect] = useState(true);
+
+// Local Storage => id
+const id = JSON.parse(localStorage.getItem("id")) ; 
+console.log("\nid:",id,"\n");
+
+// Item :::: Get request
+const getItem = () => {
+  axios.get(``)
+  .then(res=>res.json())
+  .then(res=>{
+    setProducts(res);
+  })
+  .catch(err=>console.log('err::',err));
+  
+}
+
+// ADD to bag :::: Post request
+const handlePost = () => {
+  axios.post(`       /${id}`)
+  .then(res=>{
+
+  })
+  .catch(err=>console.log('err::',err)); 
+}
+
+
     const screenSizefn = () => {
         const screenSize = window.outerWidth;
         if (screenSize >= 1440) {
@@ -79,7 +108,6 @@ console.log(products,typeof(Skinproducts))
         screenSizefn();
       });
 
-     const item = products[5];
     return <SimpleGrid  margin='auto' mt='30px' mb='30px' >
         <SimpleGrid m='auto'>
             <SimpleGrid display={(screen=='lg')? 'flex' : 'grid'} >
@@ -105,7 +133,7 @@ console.log(products,typeof(Skinproducts))
                         <pre><Text fontSize='18px' >MRP:<span style={{fontSize:'20px',fontStyle:'bold'}}  >₹{item.price}</span>    <span style={{color: "#008945"}} >{item.discount}</span></Text></pre>
                         <Text fontSize="18px">inclusive of all taxes</Text>
                         <Box display={(screen=='sm')? 'grid' : 'flex' } p='0px 0px 40px' marginTop='100px' >
-                            <button style={{
+                            <button onClick={handlePost} style={{
                                 margin : 'auto' ,
                                 backgroundColor : '#fc2779',
                                 color : 'white',
@@ -116,7 +144,7 @@ console.log(products,typeof(Skinproducts))
                             <Box m='0px 0px 0px 24px'>
                                 <Text display='flex'><Image boxSize='20px' src='https://i.pinimg.com/564x/ed/09/b9/ed09b94a7b0a68292129677eebf9bd7e.jpg' alt='Image' /> Delivery Options</Text>
                                 
-                                <pre style={{display:'flex'}}><Input w='180px' placeholder="Enter pincode"/> <button style={{color:'#fc2779',padding:'0px 10px'}}>Check</button></pre>
+                                <pre style={{display:'flex'}}><Input w='180px' value={pincode} type='number' onChange={(e)=>{ setPincode(e.target.value) }} placeholder="Enter pincode"/> <button onClick={()=>setPincode('')} style={{color:'#fc2779',padding:'0px 10px'}}>Check</button></pre>
                             </Box>   
                         </Box>
                     </SimpleGrid>
@@ -133,8 +161,8 @@ console.log(products,typeof(Skinproducts))
             <Heading {...headStyle} pl='15px'>Product Details</Heading>
             <SimpleGrid pt='20px' boxShadow={"rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px" } >
               <Box display="flex" gap='40px' >
-                <Text ml='30px'>Ratings & reviews</Text>
-                <Text>Product Q&A</Text>
+                <Text ml='30px' className={`${select?"selected":""}  subNavbar `}  >Ratings & reviews</Text>
+                <Text className={`${!select?"selected":""}  subNavbar `}>Product Q&A</Text>
               </Box>
               <Box p='32px 32px 24px 16px' display='flex'>
                 <Box display='inline-block'  fontSize='36px' fontFamily='sans-serif' p='8px 12px' mr='8px' >
@@ -142,7 +170,7 @@ console.log(products,typeof(Skinproducts))
                 </Box>
                 <Box m='0px 24px' display={"grid"} gap='20px'>
                   <Text>Write a review and win 100 reward points !</Text>
-                  <Button color='#fc2779' border='1px solid'>Write Review</Button>
+                  <Button m='auto' w='140px' color='#fc2779' border='1px solid'>Write Review</Button>
                 </Box>
               </Box>
               {line}

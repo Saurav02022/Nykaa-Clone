@@ -1,4 +1,5 @@
-import { Box,Image } from "@chakra-ui/react"
+import './styles.css'
+import { Box,Image } from "@chakra-ui/react";
 
 const ImageArr=[
     "https://images-static.nykaa.com/uploads/ff03841c-6806-4ca8-bced-0730b620436b.jpg?tr=w-400,cm-pad_resize",
@@ -11,18 +12,19 @@ const ImageArr=[
 ]
 
 export const ImageBar = ({size}) => {
-    return <Box display='inline-grid' gap='50px' overflow='hidden'>
+    return <Box display='inline-grid' gap='5px' overflow='hidden'>
         {
             ImageArr.map((el,i)=>{
-                return <Image
-                key={i}
-                boxSize={size}
-                width = '100%'
-                height='100%'
-                pl='30px'
-                src={el}
-                alt='AD'
-              />
+                return <Box className="adImage" key={i} p=' 10px 25px'>
+                     <Image
+                        borderRadius='10px' 
+                        boxSize={size}
+                        width = '100%'
+                        height='100%'
+                        src={el}
+                        alt='AD'
+                    />
+                </Box>
             })
         }
     </Box>
