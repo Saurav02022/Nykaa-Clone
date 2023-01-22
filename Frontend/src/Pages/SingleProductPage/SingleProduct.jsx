@@ -52,7 +52,7 @@ const comments = [
   },
 ]
 
-const line = <Box bg='rgb(0 0 0 / 45%)' w='100%' h='1px'></Box>
+const line = <Box bg='rgb(0 0 0 / 25%)' w='100%' h='1px'></Box>
 const shadow = "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;"
 
 const SingleProduct = () => {
@@ -80,10 +80,10 @@ console.log(products,typeof(Skinproducts))
       });
 
      const item = products[5];
-    return <SimpleGrid  mt='30px' mb='30px'>
-        {/* <SimpleGrid m='auto' border='1px solid red' > */}
-            <SimpleGrid margin={"auto"}  display="inline-flex" >
-                <SimpleGrid p='0px 16px' w='426px'  boxShadow={shadow} >
+    return <SimpleGrid  margin='auto' mt='30px' mb='30px' >
+        <SimpleGrid m='auto'>
+            <SimpleGrid display={(screen=='lg')? 'flex' : 'grid'} >
+                <SimpleGrid p='0px 16px' w={(screen=='sm')? '100%' : '426px'}  boxShadow={shadow} m='auto' >
                     <Box display="flex" justifyContent="flex-end">
                       <Image m='15px' onClick={()=>{
                         setLike(pre=>!pre)
@@ -98,20 +98,20 @@ console.log(products,typeof(Skinproducts))
                     </Box>
                 </SimpleGrid>            
                 <Box>
-                    <SimpleGrid display='inline-block' lineHeight='40px' w='713px' m='12px 0px' p='16px'  boxShadow="rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;">    
+                    <SimpleGrid display='inline-block' lineHeight='40px' w={(screen=='sm')? '100%' : '713px'} m= {(screen=='sm')? 'auto' : '12px 0px'} p='16px'  boxShadow="rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;">    
                     {/* display="inline-block" */}
                         <Heading as='h1' fontSize='22px' ><div>{item.title}</div></Heading>
                         <Text>{item.rating} ratings </Text>
                         <pre><Text fontSize='18px' >MRP:<span style={{fontSize:'20px',fontStyle:'bold'}}  >₹{item.price}</span>    <span style={{color: "#008945"}} >{item.discount}</span></Text></pre>
                         <Text fontSize="18px">inclusive of all taxes</Text>
-                        <Box display='flex' p='0px 0px 40px' marginTop='100px' >
+                        <Box display={(screen=='sm')? 'grid' : 'flex' } p='0px 0px 40px' marginTop='100px' >
                             <button style={{
-                                width : '222px',
                                 margin : 'auto' ,
                                 backgroundColor : '#fc2779',
                                 color : 'white',
-                                padding : '10px',
-                                fontSize : '22px',
+                                padding :  ' 2px 35px',
+                                fontSize : '16px',
+                                marginBottom : '20px'
                             }} >Add to Bag</button> 
                             <Box m='0px 0px 0px 24px'>
                                 <Text display='flex'><Image boxSize='20px' src='https://i.pinimg.com/564x/ed/09/b9/ed09b94a7b0a68292129677eebf9bd7e.jpg' alt='Image' /> Delivery Options</Text>
@@ -122,19 +122,15 @@ console.log(products,typeof(Skinproducts))
                     </SimpleGrid>
                 </Box>
             </SimpleGrid>
-        {/* </SimpleGrid> */}
+        </SimpleGrid>
 
-        <Box  margin={"auto"}  display="inline-flex" >
-          <SimpleGrid  w='858px' mt='30px' >
-            {/* <Heading {...headStyle}>Product Description</Heading> */}
+        <Box  display={(screen=='lg')? 'inline-flex' : 'grid'} m='auto' >
+          <SimpleGrid  w={(screen=='lg')? '848px' : '100%'} display="inline-block" mr='auto'>
+          <SimpleGrid  w={screen=='lg' ? '858px' : '100%'} mt='30px' >
+            
             <Image pl='20px' w='95%' src='https://images-static.nykaa.com/uploads/12ea9993-f29d-4732-aa66-2de20275f641.jpg?tr=w-600,cm-pad_resize' alt='ad' />
           </SimpleGrid>
-          <Box w='282px'></Box>
-        </Box>
-
-        <Box  margin={"auto"}  display="inline-flex" >
-          <SimpleGrid  w='848px' display="inline-block" mr='20px'>
-            <Heading {...headStyle}>Product Details</Heading>
+            <Heading {...headStyle} pl='15px'>Product Details</Heading>
             <SimpleGrid pt='20px' boxShadow={"rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px" } >
               <Box display="flex" gap='40px' >
                 <Text ml='30px'>Ratings & reviews</Text>
@@ -151,7 +147,7 @@ console.log(products,typeof(Skinproducts))
               </Box>
               {line}
               <Heading as='h2' fontSize='16px' p='24px 16px 0px'>Photos From Customers</Heading>
-              <Box display="flex" gap='20px' p='20px'  >
+              <Box display="flex" gap='20px' p='20px' w='100%' overflow={'scroll'} >
                 {
                   custImage.map((el,i)=>{
                     return <Image
@@ -169,14 +165,24 @@ console.log(products,typeof(Skinproducts))
               {
                 (comments.length > 0) ?
                 comments.map((el,i)=>{
-                  return <Comments key={i} {...el} />
+                  return <Comments key={i} {...el} screen={screen}/>
                 }) :
                 <Text m='auto' margin='20px 20px' >comments are not available</Text>
               }
             </SimpleGrid>
           </SimpleGrid>
-          <Box w='262px' ml='20px' overflow='hidden'>
-            <ImageBar size={'282px'} />
+          <Box w={(screen=='lg')?'262px':'100%'}   pt='30px' overflow='hidden' >
+            {
+              screen=='lg' ?
+              <ImageBar  size={'282px'} screen={screen} />
+              :
+              <Image
+                width = '95%'
+                m='auto'
+                src='https://images-static.nykaa.com/uploads/d26cd3cc-addd-432d-ae9b-0fc7a1271ca0.jpg?tr=w-1200,cm-pad_resize'
+                alt='AD'
+              />
+            }
           </Box>
         </Box>
     </SimpleGrid>
@@ -193,3 +199,5 @@ export default SingleProduct;
 // rating:11670
 // spanned:"Enjoy Free Gift"
 // title :Plum Green Tea Mattifying Moistur"
+
+{/* <Heading {...headStyle}>Product Description</Heading> */}
