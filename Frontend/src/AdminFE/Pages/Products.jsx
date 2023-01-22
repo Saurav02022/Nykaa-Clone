@@ -1,13 +1,20 @@
-import { Textarea, useToast } from '@chakra-ui/react'
+import { Textarea, useToast, Icon } from '@chakra-ui/react'
+import { HiOutlineHome } from 'react-icons/hi'
+import { IoIosArrowForward } from 'react-icons/io'
 import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import Loading from '../../Pages/Loading'
 import Navbar from '../Components/Navbar'
 import Searchbar from '../Components/Searchbar'
 import "../css/Products.css"
 import { SingleProd } from './SingleProd'
+import Pagination from '../../Pages/Pagination'
 
 
 const Products = () => {
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const [optval, setOptval] = useState('')
   const [query, setQuery] = useState('')
   const [suggest, setSuggest] = useState([])
@@ -16,15 +23,31 @@ const Products = () => {
   const [change, setChange] = useState(false)
   const [prod, setProd] = useState('face')
   const toast = useToast()
+  const [page, setPage] = useState(1)
 
-  const getprods = () => {
-    setData([])
-    return axios.get(`https://fair-pear-salmon-suit.cyclic.app/${prod}/`)
-      .then((res) => setData(res.data))
-      .then((err) => console.log(err))
+  const getprods = (page) => {
+    // setData([])
+    setLoading(true)
+    return axios.get(`https://fair-pear-salmon-suit.cyclic.app/${prod}/`, {
+      params: {
+        _limit: 12,
+        _page: page
+      }
+    })
+      .then((res) => {
+        setTimeout(() => {
+          setLoading(false)
+          setData(res.data)
+        }, 1500)
+      })
+      .then((err) => {
+        setError(true)
+        console.log(err)
+      })
   }
   console.log(optval)
   const changeProduct = (e) => {
+    setPage(1)
     if (e.target.value === "skin") {
       setProd("skin")
     } else {
@@ -34,7 +57,7 @@ const Products = () => {
   console.log(prod)
 
   useEffect(() => {
-    getprods()
+    getprods(page)
     if (query === "") {
       setSuggest([])
     } else {
@@ -49,7 +72,7 @@ const Products = () => {
         .map((el) => el)
       setSuggest(newSuggest)
     }
-  }, [change, query, optval, prod])
+  }, [change, query, optval, prod, page])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,18 +110,22 @@ const Products = () => {
   return (
     <div>
       <Navbar />
+      <div className='page-heading'><NavLink to={'/admin/panel'}><Icon color={'green'} as={HiOutlineHome} w={6} h={6} /><Icon as={IoIosArrowForward} w={6} h={6} /></NavLink><h3 style={{ marginTop: "1.5px" }}>ＰＲＯＤＵＣＴＳ  ＭＡＮＡＧＥＭＥＮＴ</h3></div>
       <div className='complete-box'>
         <div className='serachbar-box'>
-        <select id="" onChange={changeProduct}>
-                  <option value="face">Make up</option>
-                  <option value="skin">Skin</option>
-                </select>
+          <div className='changeProduct'>
+            <label className='head-titles'>Change Products :</label>
+            <select id="" onChange={changeProduct}>
+              <option value="face">Make up</option>
+              <option value="skin">Skin</option>
+            </select>
+          </div>
           <Searchbar queryHandler={queryHandler} optionHandler={optionHandler} suggest={suggest} /></div>
         <div className='admin-products'>
           <div className='adding-product'>
             <div>
               <form onSubmit={handleSubmit}>
-                <label >You Have JSON File !!!</label>
+                <label className='head-titles' >Add Products Here</label>
                 <Textarea className='txt-area'
                   placeholder='You Have JSON File ! Paste or Drop Here !!!'
                   size='sm'
@@ -111,8 +138,10 @@ const Products = () => {
             </div>
 
           </div>
+          <div className='right-allp-div'>
           <div className='all-products'>
-            {
+            {loading ? <div className='loading-ind'><Loading /></div> :
+
               suggest.length > 0 ?
                 suggest.map((el) => {
                   return (<div key={Date.now() + Math.random()}>
@@ -125,6 +154,12 @@ const Products = () => {
                   </div>)
                 })
             }
+            </div>
+          <div className='page-btn'>
+          <button  onClick={() => setPage(page - 1)}>Prev</button>
+            <button>{page}</button>
+            <button  onClick={() => setPage(page + 1)}>Next</button>
+          </div>
           </div>
         </div>
       </div>

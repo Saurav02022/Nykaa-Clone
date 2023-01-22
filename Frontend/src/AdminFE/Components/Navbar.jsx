@@ -25,9 +25,9 @@ const Navbar = () => {
         </div>
     </div>
     <div className='user-admin'>
-        <div>
+        
             <h3>{adminname}</h3>
-        </div>
+       
         <div>
         <Icon as={MdAdminPanelSettings} w={8} h={8} />
         </div>

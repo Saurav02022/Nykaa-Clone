@@ -18,8 +18,8 @@ const Searchbar = ({queryHandler,optionHandler}) => {
 
   return (
     <div className='searchbarcomp'>
-        <label>Search By title or ID: </label>
-        <div style={{border:"2px solid grey",borderRadius:"4px"}}><input type="text" value={input} onChange={handleInputChange} placeholder='Search here' /></div>
+        <label className='head-titles'>Search By title or ID: </label>
+        <div><input style={{border:"2px solid grey",borderRadius:"4px"}} type="text" value={input} onChange={handleInputChange} placeholder='Search here' /></div>
         <div>
         <select style={{border:"2px solid grey",borderRadius:"4px"}} name="" onChange={handleOptionChange}>
             <option value="title">Title</option>
