@@ -2,109 +2,48 @@ import React from "react";
 import { Flex, Box, Image, Heading, Select, Text } from "@chakra-ui/react";
 import { MdOutlineDelete } from "react-icons/md";
 
-const CartItem = ({ _id, imgsrc, title, price }) => {
+const CartItem = ({ _id, imgsrc, title, price, discountedprice }) => {
   return (
     <Flex
       key={_id}
-      border={"1px solid gray"}
+      width={"95%"}
+      margin="auto"
       flexDirection="column"
       boxShadow={"md"}
+      border={"1px solid gray"}
       borderRadius="10px"
-      width={"90%"}
-      margin="auto"
-      padding="10px"
+      gap='5'
+      padding='10px'
     >
       <Flex
-        flexDirection={{
-          base: "column",
-          sm: "column",
-          md: "column",
-          lg: "row",
-          xl: "row",
-          "2xl": "row",
-        }}
-        justifyContent={{ sm: "center", base: "center" }}
-        alignItems={{
-          sm: "center",
-          md: "normal",
-          lg: "normal",
-          xl: "normal",
-          "2xl": "normal",
-        }}
-        gap={{ sm: "8px", base: "7px" }}
+        flexDirection="column"
+        justifyContent={"center"}
+        alignItems={"center"}
+        gap="5"
       >
-        <Flex
-          flexDirection="column"
-          border={"0px solid blue"}
-          justifyContent="center"
-          alignItems={"center"}
-          gap="2"
-        >
+        <Image src={imgsrc} alt={title} minWidth="min-content" />
+        <Flex justifyContent="space-between" textAlign="center">
+          <Heading
+            fontSize="14px"
+            color={"grey"}
+            fontWeight="600"
+            lineHeight={"1.1"}
+            width="80%"
+          >
+            {title}
+          </Heading>
           <Box>
-            <Image src={ imgsrc} alt={"template"} width="200px" />
+            <MdOutlineDelete size={30} />
           </Box>
         </Flex>
-        <Flex
-          flexDirection={"column"}
-          textAlign={{
-            sm: "center",
-            md: "left",
-            lg: "left",
-            xl: "left",
-            "2xl": "left",
-          }}
-          justifyContent="center"
-          alignContent={"center"}
-        >
-          <Flex
-            gap="1"
-            paddingX="10px"
-            flexDirection={{
-              base: "column",
-              sm: "column",
-              md: "column",
-              lg: "row",
-              xl: "row",
-            }}
-          >
-            <Heading
-              fontSize="14px"
-              color={"grey"}
-              fontWeight="600"
-              lineHeight={"1.1"}
-            >
-              {title}
-            </Heading>
-            <Box margin={"auto"}>
-              <MdOutlineDelete size={30} />
-            </Box>
-          </Flex>
-        </Flex>
       </Flex>
-      <Flex
-        justifyContent={"space-between"}
-        alignItems="center"
-        borderTop={"1px solid rgb(224, 224, 225)"}
-        background="transparent"
-        textAlign={"center"}
-      >
-        <Flex width={"49%"} margin="auto" gap={2}>
-          <Heading as={"p"} fontSize="14px" fontWeight={"550"}>
-            Quantity :
-          </Heading>
-          <Select size={"sm"} width="40%">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </Select>
-        </Flex>
-        <Flex width={"49%"} justifyContent="flex-end">
-          <Text fontSize={"12px"} fontWeight="550" marginRight={"10px"}>
-            {price}
-          </Text>
-        </Flex>
+      <Flex justifyContent={"space-around"}>
+        <Text fontSize={"16px"} fontWeight="550" textDecoration='line-through' >
+          MRP Price :- {price}
+        </Text>
+        <Text fontSize={"16px"} fontWeight="550">
+          discounted Price :- {discountedprice}
+        </Text>
       </Flex>
     </Flex>
   );

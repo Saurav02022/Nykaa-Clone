@@ -1,5 +1,5 @@
 import { Button, Flex, Heading } from "@chakra-ui/react";
-function PriceDetail() {
+function PriceDetail({ price, discountprice, length }) {
   return (
     <Flex
       flexDirection={"column"}
@@ -35,7 +35,7 @@ function PriceDetail() {
             fontWeight="500"
             fontFamily={"Inter"}
           >
-            Bag MRP (3 items)
+            Bag MRP ({length} items)
           </Heading>
           <Heading
             as="p"
@@ -44,7 +44,7 @@ function PriceDetail() {
             fontFamily={"Inter"}
             justifyContent="flex-end"
           >
-            ₹ 1368
+            ₹ {price}
           </Heading>
         </Flex>
         <Flex gap="50px" border="0px solid blue" justifyContent="space-between">
@@ -63,7 +63,7 @@ function PriceDetail() {
             fontFamily={"Inter"}
             justifyContent="flex-end"
           >
-            ₹ 195
+            ₹ {discountprice}
           </Heading>
         </Flex>
         <Flex
@@ -110,7 +110,7 @@ function PriceDetail() {
             fontFamily={"Inter"}
             justifyContent="flex-end"
           >
-            ₹ 1173
+            ₹ {price - discountprice}
           </Heading>
         </Flex>
         <Button

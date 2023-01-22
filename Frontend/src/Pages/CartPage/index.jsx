@@ -8,6 +8,10 @@ function CartPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [data, setData] = useState([]);
+
+  const [totalprice, setTotalprice] = useState(0);
+  const [totaldiscountprice, setTotaldiscountprice] = useState(0);
+
   let { id } = JSON.parse(localStorage.getItem("user"));
 
   const getData = async () => {
@@ -16,12 +20,21 @@ function CartPage() {
     );
   };
 
+  const amount = (array) => {
+    array.map(({ price, discountedprice }) => {
+      if (price !== "" && discountedprice !== "") {
+        setTotalprice((pre) => pre + price);
+        setTotaldiscountprice((pre) => pre + discountedprice);
+      }
+    });
+  };
+
   useEffect(() => {
     setLoading(true);
     getData()
       .then((res) => {
-        console.log(res.data.cartdata);
         setData(res.data.cartdata);
+        amount(res.data.cartdata);
         setLoading(false);
       })
       .catch((err) => {
@@ -37,11 +50,12 @@ function CartPage() {
         lg: "row",
         xl: "row",
       }}
-      gap="5"
-      width="90%"
+      justifyContent="space-around"
+      width="75%"
       margin="auto"
       marginTop="5"
       marginBottom="5"
+      border="0px solid black"
     >
       <Flex flexDirection="column" gap="5" border="0px solid red">
         {data.map((el) => (
@@ -49,7 +63,11 @@ function CartPage() {
         ))}
       </Flex>
       <Box border="0px solid blue">
-        <PriceDetail />
+        <PriceDetail
+          price={totalprice}
+          discountprice={totaldiscountprice}
+          length={data.length}
+        />
       </Box>
     </Flex>
   );
