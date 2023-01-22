@@ -70,15 +70,21 @@ const banner = [
 function SkinProductPage() {
 
   const [data,setData]=useState([])
-
+  const [page,setPage] = useState(1)
   const [loading,setLoading] = useState(false)
   const [error,setError] = useState(false)
 
 
-  const getData=()=>{
+  const getData=(page)=>{
     
     setLoading(true)
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin").then((res)=>{
+    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin",{
+      params:
+      {
+        _limit:12,
+        _page:page
+      }
+    }).then((res)=>{
       setTimeout(() => {
         setLoading(false)
         setData(res.data)
@@ -94,8 +100,8 @@ function SkinProductPage() {
 
 
   useEffect(()=>{
-    getData()
-  },[])
+    getData(page)
+  },[page])
 
   
   const pricelh=()=>{
@@ -205,8 +211,6 @@ function SkinProductPage() {
 
 
 
-  const total=Skinproducts.length;
-  const [page,setPage]=useState(1)
 
   const pageChangeHandle = (value) => {
     setPage((prev) => prev + value);
@@ -367,11 +371,11 @@ function SkinProductPage() {
                     />
                   ))}
             </Flex>
-            <Pagination
-              pageChangeHandle={pageChangeHandle}
-              currentPage={page}
-              totalPages={total}
-            />
+            <div className='page-btn'>
+          <button disabled={page<2} onClick={() => setPage(page - 1)}>Prev</button>
+            <button>{page}</button>
+            <button  onClick={() => setPage(page + 1)}>Next</button>
+          </div>
           </div>
         </div>
       </div>

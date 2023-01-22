@@ -4,36 +4,6 @@ import React, { useEffect, useState } from 'react'
 import "../css/Singleprod.css"
 
 export const SingleProd = (el) => {
-  const [change, setChange] = useState(false)
-  const toast = useToast()
-
-  // useEffect(()=>{
-  //   setChange(change)
-  // },[change])
-
-  // const handleDelete = (id) => {
-  //   axios.delete(`https://fair-pear-salmon-suit.cyclic.app/face/delete/${id}`)
-  //     .then((res) => {
-  //       setChange(!change)
-  //       toast({
-  //         title: 'Product Deleted !',
-  //         description: "Delete product from backend.",
-  //         status: 'success',
-  //         duration: 5000,
-  //         isClosable: true,
-  //       })
-  //     })
-  //     .catch((err) => {
-  //       toast({
-  //         title: "error while Deleting product",
-  //         description: err.message,
-  //         status: 'error',
-  //         duration: 5000,
-  //         isClosable: true,
-  //       })
-  //     })
-  // }
-  // console.log(el)
   const handle=(id)=>{
     el.handleDelete(id)
   }
