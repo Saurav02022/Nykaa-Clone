@@ -2,6 +2,8 @@
 import { Box, color, Flex, Heading } from "@chakra-ui/react";
 import { IoIosApps, IoMdGift, IoIosHelpCircleOutline } from "react-icons/io";
 import { GrLocation } from "react-icons/gr";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const HeaderNavbar = () => {
   return (
@@ -74,16 +76,18 @@ const HeaderNavbar = () => {
             Gift Card
           </Heading>
         </Flex>
+
         <Flex
           gap={1}
           _hover={{
             color: " #FFFFFF",
             cursor: "pointer",
           }}
+          onClick={() => (window.location.href = "/admin/login")}
         >
           {" "}
-          <IoIosHelpCircleOutline size={20} />
-          Help
+          <MdAdminPanelSettings size={20} />
+          Admin
         </Flex>
       </Flex>
     </Flex>

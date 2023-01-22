@@ -1,7 +1,21 @@
 import React from "react";
-import { Flex, Heading, Button } from "@chakra-ui/react";
+import { Flex, Heading, Button, useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const Cod = ({ Totaldiscountprice }) => {
+  const toast = useToast()
+  const navigate = useNavigate()
+  const HandleClick = () => {
+    if (Totaldiscountprice > 0) {
+      toast({
+        description: "Payment Successful",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      navigate("/")
+    }
+  }
   return (
     <Flex
       gap="2"
@@ -32,8 +46,9 @@ const Cod = ({ Totaldiscountprice }) => {
           color: "white",
           backgroundColor: "#E80080",
         }}
+        onClick={HandleClick}
       >
-        Place order  
+        Place order
       </Button>
     </Flex>
   );

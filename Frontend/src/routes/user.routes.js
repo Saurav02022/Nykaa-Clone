@@ -30,7 +30,14 @@ const UserRoutes = () => {
         <Route path="/skin" element={<SkinProductPage />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="/user/login" element={<UserLogin />} />
-        <Route path="/singleproduct" element={<SingleProduct />} />
+        <Route
+          path="/singleproduct"
+          element={
+            <PrivateRoute>
+              <SingleProduct />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/cart"
           element={

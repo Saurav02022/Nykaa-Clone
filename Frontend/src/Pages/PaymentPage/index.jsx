@@ -20,18 +20,10 @@ import GiftCard from "./Components/GiftCard";
 import Cod from "./Components/Cod";
 import { useSelector } from "react-redux";
 
-function PaymentPage({
-  count = 2,
-  item = {},
-  rs = 200,
-  discount = 25,
-  shipping = 0,
-}) {
+function PaymentPage() {
   const { ItemCount, Totalprice, Totaldiscountprice } = useSelector(
     (state) => state.CartReducer
   );
-  const { Personaddress } = useSelector((state) => state.AddressReducer);
-  const { pincode, house, road, name, phone, email } = Personaddress;
   const [method, setMethod] = useState("Card");
 
   return (
@@ -304,44 +296,7 @@ function PaymentPage({
                 <Text>{ItemCount} items in the Cart</Text>
               </AccordionPanel>
             </AccordionItem>
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box
-                    as="span"
-                    display="flex"
-                    justifyContent="space-between"
-                    flex="1"
-                    textAlign="left"
-                  >
-                    <Heading as="h1" fontSize="16px">
-                      Deliver To
-                    </Heading>
-                    {
-                      <Heading fontSize="14px">
-                        {name}, {pincode}{" "}
-                      </Heading>
-                    }
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4} display="flex">
-                <Text width="200px">
-                  Name:-{name}
-                  <br />
-                  Phone:-{phone}
-                  <br />
-                  Email:-{email}
-                  <br />
-                  House no:-{house}
-                  <br />
-                  Road no:-{road}
-                  <br />
-                  PinCode :-{pincode}
-                </Text>
-              </AccordionPanel>
-            </AccordionItem>
+            <AccordionItem></AccordionItem>
             <AccordionItem>
               <h2>
                 <AccordionButton>
@@ -371,7 +326,7 @@ function PaymentPage({
                 </Text>
                 <Text display={"flex"} justifyContent="space-between">
                   <span>Saving at this Time</span>
-                  <span>{Totalprice - Totaldiscountprice}</span>
+                  <span color="green">{Totalprice - Totaldiscountprice}</span>
                 </Text>
                 <Heading
                   display={"flex"}
