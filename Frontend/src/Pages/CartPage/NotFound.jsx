@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from  "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 
 const ErrorPage = () => {
   return (

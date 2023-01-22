@@ -1,0 +1,15 @@
+.subNavbar:hover , .selected {
+    color : #fc2779;
+    text-decoration-line: underline;
+    text-underline-offset: 15px;
+}
+
+.adImage:hover{
+    padding-left: 20px;
+    padding-right: 10px;
+    /* border: 2px solid red; */
+}
+
+.adImage{
+    transition:all 0.3s linear;
+}

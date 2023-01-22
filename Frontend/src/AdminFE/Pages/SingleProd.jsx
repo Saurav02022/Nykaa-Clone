@@ -7,31 +7,35 @@ export const SingleProd = (el) => {
   const [change, setChange] = useState(false)
   const toast = useToast()
 
-  useEffect(()=>{
-    setChange(change)
-  },[change])
+  // useEffect(()=>{
+  //   setChange(change)
+  // },[change])
 
-  const handleDelete = (id) => {
-    axios.delete(`https://fair-pear-salmon-suit.cyclic.app/face/delete/${id}`)
-      .then((res) => {
-        setChange(!change)
-        toast({
-          title: 'Product Deleted !',
-          description: "Delete product from backend.",
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-        })
-      })
-      .catch((err) => {
-        toast({
-          title: "error while Deleting product",
-          description: err.message,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        })
-      })
+  // const handleDelete = (id) => {
+  //   axios.delete(`https://fair-pear-salmon-suit.cyclic.app/face/delete/${id}`)
+  //     .then((res) => {
+  //       setChange(!change)
+  //       toast({
+  //         title: 'Product Deleted !',
+  //         description: "Delete product from backend.",
+  //         status: 'success',
+  //         duration: 5000,
+  //         isClosable: true,
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       toast({
+  //         title: "error while Deleting product",
+  //         description: err.message,
+  //         status: 'error',
+  //         duration: 5000,
+  //         isClosable: true,
+  //       })
+  //     })
+  // }
+  // console.log(el)
+  const handle=(id)=>{
+    el.handleDelete(id)
   }
 
   return (
@@ -49,7 +53,7 @@ export const SingleProd = (el) => {
         >Update</button>
         <button
            className='single-prod-delete'
-          onClick={() => handleDelete(el._id)}
+          onClick={() => handle(el._id)}
         >Delete</button>
       </div>
     </div>
