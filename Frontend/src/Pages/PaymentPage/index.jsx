@@ -31,7 +31,7 @@ function PaymentPage({
     (state) => state.CartReducer
   );
   const { Personaddress } = useSelector((state) => state.AddressReducer);
-  const { pincode, house, road, name, phone, email } = Personaddress[0];
+  const { pincode, house, road, name, phone, email } = Personaddress;
   const [method, setMethod] = useState("Card");
 
   return (
