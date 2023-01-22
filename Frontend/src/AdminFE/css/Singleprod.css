@@ -26,29 +26,71 @@
 @media only screen and (max-width: 1200px) {
     .sing-prod{
         /* border: 1px solid red; */
-        height: 170px;
+        height: 290px;
         display: grid;
         grid-column: auto;
         padding: 5px;
+    }
+    .prod-img-single{
+        /* border: 1px solid blue; */
+        width: 100px;
+        margin-left: 35px;
+    }
+    .single-prod-delete{
+        width: 40%;
+        background-color: rgb(212, 78, 15);
+        color: white;
+    
+    }
+    .single-prod-update{
+        width: 40%;
+        background-color: rgb(214, 220, 31);
+    }
+    .sing-prod>div{
+        width: 90%;
+        font-size: 13px;
+        font-weight: 500;
     }
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
     .sing-prod{
         /* border: 1px solid red; */
-        height: 170px;
+        height: 240px;
         display: grid;
         grid-column: auto;
         padding: 5px;
+        width: 200px;
     }
+    .prod-img-single{
+        /* border: 1px solid blue; */
+        width: 100px;
+        margin-left: 35px;
+    }
+    .single-prod-delete{
+        width: 40%;
+        background-color: rgb(212, 78, 15);
+        color: white;
+    
+    }
+    .single-prod-update{
+        width: 40%;
+        background-color: rgb(214, 220, 31);
+    }
+    .sing-prod>div{
+        width: 90%;
+        font-size: 13px;
+        font-weight: 500;
+    }
+    
 }
 
 @media only screen and (max-width: 420px) {
     .sing-prod{
-        border: 1px solid red;
+        /* border: 1px solid red; */
         height: 270px;
         display: grid;
         grid-column: auto;
-        padding: 5px;
+        padding: 7px;
         width: 160px;
         margin: auto;
     }
@@ -57,7 +99,7 @@
     }
     .sing-prod>div{
         width: 90%;
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 500;
     }
     .prod-img-single{
@@ -65,7 +107,7 @@
         width: 80px;
     }
     .single-prod-title{
-        border: 1px solid grey;
+        /* border: 1px solid grey; */
         height: 45px;
         overflow: hidden;
     }

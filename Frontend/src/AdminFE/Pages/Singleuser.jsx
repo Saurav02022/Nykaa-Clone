@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 
 const Singleuser = (el) => {
   const [change,setChange] = useState(false)
+  console.log(el)
   useEffect(()=>{
 
   },[change])
@@ -25,7 +26,7 @@ const blockUser = (id) => {
 console.log(change)
   return (
       <Tr>
-        <Td>{}</Td>  
+        <Td>{el.index+1}</Td>  
         <Td>{el._id}</Td>
         <Td>{el.name}</Td>
         <Td><Button onClick={()=>blockUser(el._id)}>Block</Button></Td>
