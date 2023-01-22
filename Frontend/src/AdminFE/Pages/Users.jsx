@@ -1,8 +1,8 @@
-import { Table, TableCaption, TableContainer, Tbody,Icon, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react'
+import { Table, TableCaption, TableContainer, Tbody,Icon, Td, Tfoot, Th, Thead, Tr,useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import { HiOutlineHome } from 'react-icons/hi'
 import { IoIosArrowForward } from 'react-icons/io'
-import React from 'react'
+import React,{useCallback} from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import Navbar from '../Components/Navbar'
@@ -17,6 +17,7 @@ const Users = () => {
   const [data,setData]= useState([])
   const [change,setChange] = useState(false)
   const [page,setPage] = useState(1)
+  const toast = useToast()
 
   const getusers = (page) => {
     setLoading(true)
@@ -43,8 +44,36 @@ const Users = () => {
   const changingpage=()=>{
     setChange(!change)
   }
+  const deleteuser=useCallback((id)=>{
+    axios.delete(`https://fair-pear-salmon-suit.cyclic.app/users/delete/${id}`)
+    .then((res)=>{
+      setChange(!change)
+      getusers()
+      toast({
+        title: 'User Deleted From System !',
+        description: "User Deleted From System !",
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+      })  
+    })
+    .then((err)=>console.log(err))
+  },[])
+  const blockUser = useCallback((id) => {
+    axios.delete(`https://fair-pear-salmon-suit.cyclic.app/admins/${id}`)
+    .then((res)=>{
+      setChange(!change)
+      getusers()
+      toast({
+        title: 'User Blocked From System !',
+        description: "User Blocked From System !",
+        status: 'warning',
+        duration: 3000,
+        isClosable: true,
+      }) })
+    .then((err)=>console.log(err))
+  },[])
 
-// IoIosArrowForward
   return (
     <div>                            
       <Navbar />
@@ -52,7 +81,7 @@ const Users = () => {
       <div className='user-table'>
       <TableContainer>
   <Table variant='striped' colorScheme='teal'>
-    <TableCaption>Imperial to metric conversion factors</TableCaption>
+    <TableCaption>All User Data</TableCaption>
     <Thead>
       <Tr>
       <Th>sr.no.</Th>
@@ -66,16 +95,16 @@ const Users = () => {
       {loading ? <div className='loading-ind-users'><Loading /></div>:
         data.length>0&&
         data.map((el,index)=>{
-          return<Singleuser key={Math.random()*100+Date.now()} {...el} index={index}  />
+          return<Singleuser key={Math.random()*100+Date.now()} {...el} index={index} blockUser={blockUser} deleteuser={deleteuser} />
         })
       }
      
     </Tbody>
   </Table>
 </TableContainer>
-<button style={{backgroundColor:"grey",color:"white"}} onClick={()=>setPage(page-1)}>Prev</button>
-            <button>{page}</button>
-            <button style={{backgroundColor:"grey",color:"white"}} onClick={()=>setPage(page+1)}>Next</button>
+            <button disabled={page<2} style={{backgroundColor:"grey",color:"white",padding:'4px', borderRadius:"6px"}} onClick={()=>setPage(page-1)}>Prev</button>
+            <button style={{width:"20px"}}>{page}</button>
+            <button disabled={data.length===0} style={{backgroundColor:"grey",color:"white",padding:'4px', borderRadius:"6px"}} onClick={()=>setPage(page+1)}>Next</button>
       </div>
       </div>
   )

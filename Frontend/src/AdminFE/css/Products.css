@@ -74,11 +74,13 @@
     width: 30%;
     background-color: rgb(161, 159, 159);
     color: white;
+    border-radius:6px;
 }
 .page-btn>button:nth-child(3){
     width: 30%;
     background-color: rgb(161, 159, 159);
     color: white;
+    border-radius:6px;
 }
 .loading-ind{
     margin: auto;

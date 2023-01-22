@@ -84,7 +84,7 @@ const Products = () => {
           title: 'Product Added.',
           description: "added product to backend.",
           status: 'success',
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
         })
       })
@@ -93,7 +93,7 @@ const Products = () => {
           title: "error while posting product",
           description: err.message,
           status: 'error',
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
         })
       })
@@ -106,6 +106,31 @@ const Products = () => {
   }, [])
   console.log(data)
   console.log(query)
+
+  const handleDelete = useCallback((id) => {
+    axios.delete(`https://fair-pear-salmon-suit.cyclic.app/face/delete/${id}`)
+      .then((res) => {
+        setChange(!change)
+        getprods()
+        toast({
+          title: 'Product Deleted !',
+          description: "Delete product from backend.",
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        })
+      })
+      .catch((err) => {
+        toast({
+          title: "error while Deleting product",
+          description: err.message,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        })
+      })
+    
+  },[])
 
   return (
     <div>
@@ -145,18 +170,18 @@ const Products = () => {
               suggest.length > 0 ?
                 suggest.map((el) => {
                   return (<div key={Date.now() + Math.random()}>
-                    <SingleProd {...el} />
+                    <SingleProd {...el}  />
                   </div>)
                 }) :
                 data.map((el) => {
                   return (<div key={Date.now() + Math.random()}>
-                    <SingleProd {...el} />
+                    <SingleProd {...el}  handleDelete={handleDelete}/>
                   </div>)
                 })
             }
             </div>
           <div className='page-btn'>
-          <button  onClick={() => setPage(page - 1)}>Prev</button>
+          <button disabled={page<2} onClick={() => setPage(page - 1)}>Prev</button>
             <button>{page}</button>
             <button  onClick={() => setPage(page + 1)}>Next</button>
           </div>
