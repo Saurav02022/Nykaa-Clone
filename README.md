@@ -49,7 +49,7 @@ step 3 :- npm start <br/>
  <br/>
 7.Payment :- Saurav Kumar
  <br/>
-8.AdminPage :- Sammyak Deosale 
+8.Admin side :- Sammyak Deosale 
  <br/>
  
  <h3>Home Page</h3>
