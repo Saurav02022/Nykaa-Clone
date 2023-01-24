@@ -18,6 +18,7 @@ step 3 :- npm start <br/>
 7.axios <br/>
 8.@chakra-ui/icons <br/>
 9.react-responsive-carousel
+<br/>
 10.react-slick 
 <hr/>
 <h1>Backend folder structure</h1>
@@ -34,21 +35,21 @@ step 3 :- npm start <br/>
 
 <h1>Pages</h1>
 
-1.HomePage
+1.HomePage :- Saurav Kumar
 <br/>
-2.Login and Signup
+2.Login and Signup :- Aditya Singh Ghosh
  <br/>
-3.ProductsPages 
+3.ProductsPages :- Md Ali
  <br/>
-4.single ProductPage
+4.single ProductPage :- Raghavendra
  <br/>
-5.Bag (Cart)
+5.Bag (Cart) :- Saurav Kumar
  <br/>
-6.Address
+6.Address :- Raghavendra
  <br/>
-7.Payment
+7.Payment :- Saurav Kumar
  <br/>
-8.AdminPage CRUD
+8.AdminPage :- Sammyak Deosale 
  <br/>
  
  <h3>Home Page</h3>
