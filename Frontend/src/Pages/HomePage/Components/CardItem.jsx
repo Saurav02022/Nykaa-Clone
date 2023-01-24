@@ -15,13 +15,13 @@ const CardItem = ({
   return (
     <Flex
       direction={"column"}
-      boxShadow={'md'}
+      boxShadow={"md"}
       justifyContent="center"
       alignContent={"center"}
       borderRadius="md"
     >
-      <Image src={src} />
-      <Flex direction={"column"} gap="1" paddingY={paddingY} marginLeft='5'>
+      <Image src={src} alt={h1} width="" height="" />
+      <Flex direction={"column"} gap="1" paddingY={paddingY} marginLeft="5">
         <Heading
           as={"h1"}
           fontSize={h1Size}

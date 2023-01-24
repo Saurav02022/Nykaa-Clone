@@ -1,36 +1,39 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import CartItem from "./CartItem";
-import PriceDetail from "./PriceDetail";
+import CartItem from "./Components/CartItem";
+import PriceDetail from "./Components/PriceDetail";
+import CartEmpty from "./Components/CartEmpty";
 
 import { useSelector, useDispatch } from "react-redux";
 
 import { getData } from "../../Redux/CartPage/action";
 
 import Loading from "../Loading";
-import ErrorPage from "./NotFound";
+import { useNavigate } from "react-router-dom";
 
 function CartPage() {
   const [change, setChange] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { userid } = useSelector((state) => state.AuthenticationReducer);
   const { data, loading, error, ItemCount, Totalprice, Totaldiscountprice } =
     useSelector((state) => state.CartReducer);
 
   useEffect(() => {
+    if (error) {
+      navigate("/error");
+    }
     setTimeout(() => {
       dispatch(getData(userid));
     }, 1000);
   }, [change]);
   return (
     <>
-      {error ? (
-        <ErrorPage />
-      ) : loading ? (
+      {loading ? (
         <Loading />
-      ) : (
+      ) : data.length > 0 ? (
         <Flex
           flexDirection={{
             base: "column",
@@ -68,6 +71,8 @@ function CartPage() {
             />
           </Box>
         </Flex>
+      ) : (
+        <CartEmpty />
       )}
     </>
   );
