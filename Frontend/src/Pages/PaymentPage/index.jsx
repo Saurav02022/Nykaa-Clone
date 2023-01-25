@@ -10,14 +10,18 @@ import {
   AccordionPanel,
   Image,
 } from "@chakra-ui/react";
+
 import { useState } from "react";
+
 import { AiOutlineCreditCard } from "react-icons/ai";
 import { BsArrowRightCircle, BsCashCoin, BsGift } from "react-icons/bs";
 import { SiPaytm } from "react-icons/si";
+
 import Paytm from "./Components/Paytm";
 import CreditCard from "./Components/CreditCard";
 import GiftCard from "./Components/GiftCard";
 import Cod from "./Components/Cod";
+
 import { useSelector } from "react-redux";
 
 function PaymentPage() {

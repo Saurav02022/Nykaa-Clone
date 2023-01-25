@@ -1,6 +1,8 @@
 import React from "react";
 import { Flex, Heading, Input, Button } from "@chakra-ui/react";
-const GiftCard = ({ Totaldiscountprice }) => {
+import { useSelector } from "react-redux";
+const GiftCard = () => {
+  const { Totaldiscountprice } = useSelector((state) => state.CartReducer);
   return (
     <Flex
       gap="2"
@@ -19,9 +21,15 @@ const GiftCard = ({ Totaldiscountprice }) => {
         Gift Card
       </Heading>
       <hr />
-      <Input placeholder="Gift Card Number" type="number" required />
+      <Input placeholder="Gift Card Number" type="number" isRequired={true} />
       <Flex gap="2">
-        <Input placeholder="PIN" type="number" required width="40%" />
+        <Input
+          placeholder="PIN"
+          type="number"
+          required
+          width="40%"
+          isRequired={true}
+        />
         <Button
           width="60%"
           color="#FFFFFF"

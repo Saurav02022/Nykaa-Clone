@@ -4,14 +4,13 @@ import {
   combineReducers,
   compose,
 } from "redux";
-import { reducer as ProductReducer } from "./ProductReducer/reducer";
+
 import { AuthenticationReducer } from "./LogReducer/reducer";
 import { CartReducer } from './CartPage/reducer'
 import {AddressReducer} from './AddressPage/reducer'
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
-  ProductReducer,
   AuthenticationReducer,
   CartReducer,
   AddressReducer

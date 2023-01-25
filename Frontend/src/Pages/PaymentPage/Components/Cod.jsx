@@ -1,8 +1,12 @@
 import React from "react";
 import { Flex, Heading, Button, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const Cod = ({ Totaldiscountprice }) => {
+const Cod = () => {
+    const { Totaldiscountprice } = useSelector(
+      (state) => state.CartReducer
+    );
   const toast = useToast()
   const navigate = useNavigate()
   const HandleClick = () => {
@@ -10,7 +14,7 @@ const Cod = ({ Totaldiscountprice }) => {
       toast({
         description: "Payment Successful",
         status: "success",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
       });
       navigate("/")

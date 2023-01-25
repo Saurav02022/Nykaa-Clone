@@ -1,6 +1,8 @@
 import React from "react";
 import { Flex, Heading, Input, Button } from "@chakra-ui/react";
-const Paytm = ({ Totaldiscountprice }) => {
+import { useSelector } from "react-redux";
+const Paytm = () => {
+  const { Totaldiscountprice } = useSelector((state) => state.CartReducer);
   return (
     <Flex
       gap="2"
@@ -19,7 +21,7 @@ const Paytm = ({ Totaldiscountprice }) => {
         Paytm Wallet
       </Heading>
       <hr />
-      <Input placeholder="Phone Number" type="number" required />
+      <Input placeholder="Phone Number" type="number" isRequired={true} />
       <Button
         color="#FFFFFF"
         fontFamily="Inter"

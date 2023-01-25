@@ -2,10 +2,10 @@ import { Button, Flex, useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import MainHeading from "./SmallParts/MainHeading";
-import UseFlex from "./SmallParts/UseFlex";
-import FirstText from "./SmallParts/FirstText";
-import SecondText from "./SmallParts/SecondText";
+import MainHeading from "./PriceDetailSmallParts/MainHeading";
+import UseFlex from "./PriceDetailSmallParts/UseFlex";
+import FirstText from "./PriceDetailSmallParts/FirstText";
+import SecondText from "./PriceDetailSmallParts/SecondText";
 
 function PriceDetail() {
   const navigate = useNavigate();

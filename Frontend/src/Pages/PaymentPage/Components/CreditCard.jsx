@@ -13,7 +13,12 @@ import {
 } from "@chakra-ui/react";
 import { InfoIcon } from "@chakra-ui/icons";
 
-const CreditCard = ({ Totaldiscountprice }) => {
+import { useSelector } from "react-redux";
+
+import { CardImages } from "./Data/CardImages";
+
+const CreditCard = () => {
+  const { Totaldiscountprice } = useSelector((state) => state.CartReducer);
   return (
     <Flex
       gap="2"
@@ -42,45 +47,24 @@ const CreditCard = ({ Totaldiscountprice }) => {
           WE ACCEPT
         </Text>
         <HStack spacing="2">
-          <Image
-            src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/VISA.svg"
-            width=""
-            height=""
-            alt="visa card image"
-          />
-          <Image
-            src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/mastercard.svg"
-            width=""
-            height=""
-            alt="master card image"
-          />
-          <Image
-            src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/Rupay.svg"
-            width=""
-            height=""
-            alt="rupay card image"
-          />
-          <Image
-            src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/AMEX.svg"
-            width=""
-            height=""
-            alt="american card image"
-          />
+          {CardImages.map(({ id, src, alt }) => (
+            <Image key={id} src={src} width="" height="" alt={alt} />
+          ))}
         </HStack>
       </Flex>
-      <Input placeholder="Card Number" type="number" required />
+      <Input placeholder="Card Number" type="number" isRequired={true} />
       <Flex gap="2">
-        <Input placeholder="Expiry (MM/YY)" type="text" required />
+        <Input placeholder="Expiry (MM/YY)" type="text" isRequired={true} />
         <InputGroup>
           <InputRightElement
             pointerEvents="none"
             children={<InfoIcon color="gray.300" />}
           />
-          <Input type="text" placeholder="CVV" isRequired />
+          <Input type="text" placeholder="CVV" isRequired={true} />
         </InputGroup>
       </Flex>
       <Flex gap="1">
-        <Checkbox colorScheme="pink" isRequired>
+        <Checkbox colorScheme="pink" isRequired={true}>
           Save this card securely for future
         </Checkbox>
         <Text
