@@ -114,7 +114,7 @@ const Products = () => {
         getprods()
         toast({
           title: 'Product Deleted !',
-          description: "Delete product from backend.",
+          description: "Deleted product from backend.",
           status: 'success',
           duration: 5000,
           isClosable: true,

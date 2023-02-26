@@ -18,6 +18,13 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+.suj-login{
+    width: 290px;
+    margin: auto;
+    padding: 8px;
+    border-radius: 9px;
+    background-color: white;
+}
 
 @media only screen and(max-width: 430px){
     .lgnpg{
