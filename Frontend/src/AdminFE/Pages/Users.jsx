@@ -50,7 +50,7 @@ const Users = () => {
       setChange(!change)
       getusers()
       toast({
-        title: 'User Deleted From System !',
+        title: 'User Deleted !',
         description: "User Deleted From System !",
         status: 'info',
         duration: 3000,
@@ -65,7 +65,7 @@ const Users = () => {
       setChange(!change)
       getusers()
       toast({
-        title: 'User Blocked From System !',
+        title: 'User Blocked !',
         description: "User Blocked From System !",
         status: 'warning',
         duration: 3000,
