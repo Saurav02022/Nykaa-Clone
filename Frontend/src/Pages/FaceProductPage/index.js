@@ -65,7 +65,6 @@ const banner = [
 
 function FaceProductPage() {
   const [data, setData] = useState([]);
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
@@ -255,7 +254,6 @@ function FaceProductPage() {
               ))}
             </Slider>
           </div>
-
           <div className="second_bnr">
             <div>
               <div className="top_txt">

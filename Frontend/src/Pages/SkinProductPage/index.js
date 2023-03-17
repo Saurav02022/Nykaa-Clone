@@ -1,5 +1,4 @@
 import { Flex } from "@chakra-ui/react";
-import { Skinproducts } from "./product";
 import ProductCartItem from "../../Components/ProductItem.jsx";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -7,7 +6,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import "./product.css";
 import Sidebar from "./Sidebar";
-import Pagination from "../Pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../Loading";
@@ -333,13 +331,20 @@ function SkinProductPage() {
             <Flex
               display={"grid"}
               gridTemplateColumns={{
-                base: "repeat(1,1fr)",
+                base: "repeat(2,1fr)",
                 sm: "repeat(2,1fr)",
                 md: "repeat(2,1fr)",
                 lg: "repeat(3,1fr)",
                 xl: "repeat(3,1fr)",
               }}
-              width="90%"
+              justifyContent={"center"}
+              width={{
+                base: "100%",
+                sm: "100%",
+                md: "95%",
+                lg: "90%",
+                xl: "90%",
+              }}
               margin="auto"
               gap={5}
               marginTop="20px"
@@ -372,6 +377,7 @@ function SkinProductPage() {
                     />
                   ))}
             </Flex>
+
             <div className="page-btn">
               <button disabled={page < 2} onClick={() => setPage(page - 1)}>
                 Prev

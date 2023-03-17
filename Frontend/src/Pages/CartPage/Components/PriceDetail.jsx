@@ -76,7 +76,7 @@ function PriceDetail() {
           fontSize={"18px"}
           fontFamily={"sans-serif"}
           _hover={{
-            color: "black",
+            color: "white",
           }}
           onClick={handleProccessButton}
         >
