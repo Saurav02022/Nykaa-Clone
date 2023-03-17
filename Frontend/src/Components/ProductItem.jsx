@@ -168,7 +168,7 @@ function ProductCartItem({
           </Heading>
         </Flex>
         {alreadyAdded && (
-          <Text color="red">Product Item already is in the cart</Text>
+          <Text color="red">Product Item added in the cart</Text>
         )}
         <Flex gap="2" justifyContent={"center"}>
           <Button
