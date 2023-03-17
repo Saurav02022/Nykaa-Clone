@@ -1,9 +1,9 @@
 export const SIGNUP_REQUEST = "USER_SIGNUP_REQUEST";
 export const SIGNUP_SUCCESS = "USER_SIGNUP_SUCCESS";
 export const SIGNUP_FAILURE = "USER_SIGNUP_FAILURE";
+export const RESET = "RESET";
 
 export const LOGIN_REQUEST = "USER_LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "USER_LOGIN_FAILURE";
-
 export const Logout = "LOGOUT";

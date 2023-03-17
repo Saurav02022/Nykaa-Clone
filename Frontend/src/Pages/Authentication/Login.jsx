@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../Redux/LogReducer/action";
+import { RESET } from "../../Redux/LogReducer/actionType";
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
@@ -34,55 +35,96 @@ const UserLogin = () => {
   const handlePass = () => setShow(!show);
 
   const handleClick = () => {
-    const data = {
+    if (!email) {
+      toast({
+        title: "invalid email",
+        description: "Please Enter Your email address",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+    if (!email.includes("@")) {
+      toast({
+        title: "invalid email",
+        description: "Please include @ in Your email address",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+    if (!password) {
+      toast({
+        title: "invalid password",
+        description: "Please Enter the password",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+    const payload = {
       email,
       password,
     };
-    if (email && password) {
-      dispatch(login(data));
-    } else {
-      toast({
-        description: "Please fill the required details",
-        status: "info",
-        duration: 4000,
-        isClosable: true,
-      });
-    }
+    dispatch(login(payload));
   };
 
-  if (loginSuccess !== "") {
-    if (loginSuccess === "Wrong Credentials !") {
-      toast({
-        description: "Wrong Credentials !",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-      });
-    } else if (loginSuccess === "Authentication Failed !") {
-      toast({
-        description: "Authentication Failed !",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        description: "login Successfully",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      navigate("/");
-    }
+  if (loginSuccess === "Wrong Password") {
+    toast({
+      description: "Wrong Password",
+      status: "warning",
+      duration: 3000,
+      isClosable: true,
+      position: "top-right",
+    });
+    dispatch({ type: RESET });
+    return;
   }
 
-  if (loginError !== "") {
+  if (loginSuccess === "Email Address not found") {
+    toast({
+      description: "Email Address not found",
+      status: "warning",
+      duration: 3000,
+      isClosable: true,
+      position: "top-right",
+    });
+    dispatch({ type: RESET });
+    setTimeout(() => {
+      navigate("/user/signup");
+    }, 1500);
+    return;
+  }
+
+  if (loginSuccess === "Login successfully") {
+    toast({
+      description: "Login successfully",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      position: "top-right",
+    });
+    setTimeout(() => {
+      navigate("/face");
+    }, 1500);
+    return;
+  }
+
+  if (loginError) {
     toast({
       description: loginError,
       status: "error",
-      duration: 4000,
+      duration: 3000,
       isClosable: true,
+      position: "top-right",
     });
+    return;
   }
 
   return (

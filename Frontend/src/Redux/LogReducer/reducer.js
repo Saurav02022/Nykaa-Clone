@@ -5,6 +5,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  RESET,
   Logout,
 } from "./actionType";
 
@@ -39,8 +40,21 @@ const AuthenticationReducer = (state = initialState, { type, payload }) => {
         isAuth: false,
         signupLoading: false,
         signupSuccess: "",
-        signupError:payload,
+        signupError: payload,
       };
+    case RESET: {
+      return {
+        isAuth: false,
+        signupLoading: false,
+        signupSuccess: "",
+        signupError: "",
+        loginLoading: false,
+        loginSuccess: "",
+        loginError: "",
+        token: "",
+        userid: "",
+      };
+    }
     case LOGIN_REQUEST:
       return {
         ...state,
@@ -52,10 +66,10 @@ const AuthenticationReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isAuth: true,
-        loginSuccess: payload.msg,
+        loginSuccess: payload.message,
         loginLoading: false,
-        token: payload.usertoken,
-        userid: payload.id,
+        token: payload.token,
+        userid: payload.userId,
       };
 
     case LOGIN_FAILURE:

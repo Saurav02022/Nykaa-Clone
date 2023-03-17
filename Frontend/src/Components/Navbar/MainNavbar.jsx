@@ -13,7 +13,7 @@ import {
 
 import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Logout } from "../../Redux/LogReducer/actionType";
@@ -44,6 +44,7 @@ const NavLink = ({ children }) => (
 
 export default function MainNavbar() {
   const toast = useToast();
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const { isAuth } = useSelector((state) => state.AuthenticationReducer);
@@ -53,10 +54,12 @@ export default function MainNavbar() {
     toast({
       description: "logout successfully",
       status: "success",
-      duration: 5000,
+      duration: 3000,
       isClosable: true,
+      position: "top-right",
     });
-    window.location.href='/'
+    navigate("/");
+    return;
   };
   return (
     <>

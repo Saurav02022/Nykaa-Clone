@@ -1,19 +1,17 @@
 import { Flex } from "@chakra-ui/react";
 import { Skinproducts } from "./product";
-import ProductCartItem from "./ProductCardItem";
+import ProductCartItem from "../../Components/ProductItem.jsx";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
-import "./product.css"
+import "./product.css";
 import Sidebar from "./Sidebar";
 import Pagination from "../Pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../Loading";
-import { Box,Center } from "@chakra-ui/react";
-
-
+import { Box, Center } from "@chakra-ui/react";
 
 function NextArrow(props) {
   const { className, style, onClick } = props;
@@ -30,7 +28,7 @@ function NextArrow(props) {
         padding: "2px 10px",
         borderRadius: "50%",
         marginRight: "3%",
-        opacity: "0.9"
+        opacity: "0.9",
       }}
       onClick={onClick}
     />
@@ -53,7 +51,7 @@ function PrevArrow(props) {
         borderRadius: "50%",
         marginLeft: "3%",
         zIndex: "2",
-        opacity: "0.9"
+        opacity: "0.9",
       }}
       onClick={onClick}
     />
@@ -64,153 +62,156 @@ const banner = [
   "https://images-static.nykaa.com/uploads/fd9d521f-7632-4e34-9d2f-10ae85db3dcc.jpg?tr=w-1200,cm-pad_resize",
   "https://images-static.nykaa.com/uploads/e6866268-c34e-48e0-93e7-44b8f4100eb4.gif?tr=w-1200,cm-pad_resize",
   "https://images-static.nykaa.com/uploads/a5ad9115-e671-4078-a989-db65cf5054fb.jpg?tr=w-1200,cm-pad_resize",
-  "https://images-static.nykaa.com/uploads/5a2bf765-8d79-4a1b-807b-fc4bfe62b66d.png?tr=w-1200,cm-pad_resize"
-]
+  "https://images-static.nykaa.com/uploads/5a2bf765-8d79-4a1b-807b-fc4bfe62b66d.png?tr=w-1200,cm-pad_resize",
+];
 
 function SkinProductPage() {
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  const [data,setData]=useState([])
-  const [page,setPage] = useState(1)
-  const [loading,setLoading] = useState(false)
-  const [error,setError] = useState(false)
+  const getData = (page) => {
+    setLoading(true);
+    axios
+      .get("https://fair-pear-salmon-suit.cyclic.app/Skin", {
+        params: {
+          _limit: 12,
+          _page: page,
+        },
+      })
+      .then((res) => {
+        setLoading(false);
+        setData(res.data);
+      })
+      .catch((err) => {
+        setError(true);
+      });
+  };
 
+  useEffect(() => {
+    getData(page);
+  }, [page]);
 
-  const getData=(page)=>{
-    
-    setLoading(true)
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin",{
-      params:
-      {
-        _limit:12,
-        _page:page
-      }
-    }).then((res)=>{
-      setTimeout(() => {
-        setLoading(false)
-        setData(res.data)
-        }, 2000);
-    
-      // console.log(res.data)
-    }).catch((err)=>{
-      console.log(err)
-      setError(true)
-    })
-  }
+  const pricelh = () => {
+    setLoading(true);
+    axios
+      .get("https://fair-pear-salmon-suit.cyclic.app/Skin/priceasc")
+      .then((res) => {
+        setData(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(true);
+      });
+  };
 
+  const ResetPriceAndRating = () => {
+    setLoading(true);
+    axios
+      .get("https://fair-pear-salmon-suit.cyclic.app/Skin")
+      .then((res) => {
+        setData(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(true);
+      });
+  };
 
+  const pricehl = () => {
+    setLoading(true);
+    axios
+      .get("https://fair-pear-salmon-suit.cyclic.app/Skin/pricedesc")
+      .then((res) => {
+        setData(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(true);
+      });
+  };
 
-  useEffect(()=>{
-    getData(page)
-  },[page])
+  const ratinglh = () => {
+    setLoading(true);
+    axios
+      .get("https://fair-pear-salmon-suit.cyclic.app/Skin/ratingasc")
+      .then((res) => {
+        setData(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(true);
+      });
+  };
 
-  
-  const pricelh=()=>{
-    setLoading(true)
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin/priceasc")
-    .then((res)=>{
-      setData(res.data)
-    setLoading(false)
-      // console.log(res.data)
-    }).catch((err)=>{
-      console.log(err)
-    setError(true)
+  const ratinghl = () => {
+    setLoading(true);
+    axios
+      .get("https://fair-pear-salmon-suit.cyclic.app/Skin/ratingdesc")
+      .then((res) => {
+        setData(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(true);
+      });
+  };
 
-    })
-  }
-
-  const pricehl=()=>{
-    setLoading(true)
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin/pricedesc")
-    .then((res)=>{
-      setData(res.data)
-    setLoading(false)
-
-      // console.log(res.data)
-    }).catch((err)=>{
-      console.log(err)
-    setError(true)
-
-    })
-  }
-
-
-  const ratinglh=()=>{
-    setLoading(true)
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin/ratingasc")
-    .then((res)=>{
-      setData(res.data)
-    setLoading(false)
-      // console.log(res.data)
-    }).catch((err)=>{
-      console.log(err)
-    setError(true)
-
-    })
-  }
-
-  const ratinghl=()=>{
-    setLoading(true)
-    axios.get("https://fair-pear-salmon-suit.cyclic.app/Skin/ratingdesc")
-    .then((res)=>{
-      setData(res.data)
-    setLoading(false)
-      // console.log(res.data)
-    }).catch((err)=>{
-      console.log(err)
-    setError(true)
-
-    })
-  }
-
-
-
-    const handlePriceChange=(e)=>{
-      if(e.target.value==="Price low to high"){
-        pricelh()
-      }else if(e.target.value === "Price high to low"){
-        pricehl()
-      }
-      
+  const handlePriceChange = (e) => {
+    if (e.target.value === "Price") {
+      ResetPriceAndRating();
+      return;
     }
-    const handleRatingChange=(e)=>{
-      if(e.target.value==="Rating low to high"){
-     ratinglh()
-      }else if(e.target.value === "Rating high to low"){
-     ratinghl()
-      }
-      
+    if (e.target.value === "Price low to high") {
+      pricelh();
+      return;
     }
-
-    const reset=()=>{
-      setLoading(true)
-      setTimeout(() => {
-        setLoading(false)
-      }, 2000);
-      getData();
-     let ptag= document.getElementById("priceSort")
-      ptag.value=""
-      let rtag=document.getElementById("ratingSort")
-       rtag.value=""
-       let ctag=document.getElementById("categorySort")
-       ctag.value=""
-       setFilter("")
+    if (e.target.value === "Price high to low") {
+      pricehl();
+      return;
     }
-    
-    const [filter,setFilter]=useState("")
-    const category=(e)=>{
-    setLoading(true)
-      let filterData= data.filter
-      ((el)=> {
-        return el.title.indexOf(e.target.value) !== -1
-        ? true:false;
-      }).map((el) => el);
-    setLoading(false)
-      setFilter(filterData)
+  };
+  const handleRatingChange = (e) => {
+    if (e.target.value === "Rating") {
+      ResetPriceAndRating();
+      return;
+    }
+    if (e.target.value === "Rating low to high") {
+      ratinglh();
+      return;
+    }
+    if (e.target.value === "Rating high to low") {
+      ratinghl();
+      return;
+    }
+  };
 
-    }    
+  const reset = () => {
+    setLoading(true);
+    getData();
+    setLoading(false);
+    let ptag = document.getElementById("priceSort");
+    ptag.value = "Price";
+    let rtag = document.getElementById("ratingSort");
+    rtag.value = "Rating";
+    let ctag = document.getElementById("categorySort");
+    ctag.value = "";
+    setFilter("");
+  };
 
-
-
+  const [filter, setFilter] = useState("");
+  const category = (e) => {
+    setLoading(true);
+    let filterData = data
+      .filter((el) => {
+        return el.title.indexOf(e.target.value) !== -1 ? true : false;
+      })
+      .map((el) => el);
+    setLoading(false);
+    setFilter(filterData);
+  };
 
   const pageChangeHandle = (value) => {
     setPage((prev) => prev + value);
@@ -289,7 +290,7 @@ function SkinProductPage() {
                 id="priceSort"
                 name="Price"
               >
-                <option value="">Price</option>
+                <option value="Price">Price</option>
                 <option value="Price low to high">Price low to high</option>
                 <option value="Price high to low">Price high to low</option>
               </select>
@@ -299,7 +300,7 @@ function SkinProductPage() {
                 id="ratingSort"
                 name="Rating"
               >
-                <option value="">Rating</option>
+                <option value="Rating">Rating</option>
                 <option value="Rating low to high">Rating low to high</option>
                 <option value="Rating high to low">Rating high to low</option>
               </select>
@@ -371,11 +372,13 @@ function SkinProductPage() {
                     />
                   ))}
             </Flex>
-            <div className='page-btn'>
-          <button disabled={page<2} onClick={() => setPage(page - 1)}>Prev</button>
-            <button>{page}</button>
-            <button  onClick={() => setPage(page + 1)}>Next</button>
-          </div>
+            <div className="page-btn">
+              <button disabled={page < 2} onClick={() => setPage(page - 1)}>
+                Prev
+              </button>
+              <button>{page}</button>
+              <button onClick={() => setPage(page + 1)}>Next</button>
+            </div>
           </div>
         </div>
       </div>

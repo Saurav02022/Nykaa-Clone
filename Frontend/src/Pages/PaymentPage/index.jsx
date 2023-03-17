@@ -28,8 +28,8 @@ function PaymentPage() {
   const { ItemCount, Totalprice, Totaldiscountprice } = useSelector(
     (state) => state.CartReducer
   );
+  const { Personaddress } = useSelector((state) => state.AddressReducer);
   const [method, setMethod] = useState("Card");
-
   return (
     <Flex
       direction={{
@@ -297,7 +297,21 @@ function PaymentPage() {
                 display="flex"
                 justifyContent={"space-between"}
               >
-                <Text>{ItemCount} items in the Cart</Text>
+                <Flex flexDirection="column" gap="1">
+                  <Text>{ItemCount} items in the Cart</Text>
+                  <Heading as="h2" fontSize="xl">
+                    Delivery Address
+                  </Heading>
+                  {Personaddress.length > 0 && (
+                    <>
+                      <Text>{Personaddress[0].name}</Text>
+                      <Text>{Personaddress[0].phone}</Text>
+                      <Text>{Personaddress[0].email}</Text>
+                      <Text>{Personaddress[0].Address}</Text>
+                      <Text>{Personaddress[0].pincode}</Text>
+                    </>
+                  )}
+                </Flex>
               </AccordionPanel>
             </AccordionItem>
             <AccordionItem></AccordionItem>

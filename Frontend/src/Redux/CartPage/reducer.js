@@ -5,6 +5,9 @@ import {
   deleteLoading,
   deleteSuccess,
   deleteError,
+  addToBagLoading,
+  addToBagSuccess,
+  addToBagError,
 } from "./actionType";
 
 let initialState = {
@@ -15,6 +18,9 @@ let initialState = {
   Totaldiscountprice: 0,
   ItemCount: 0,
   deletemsg: "",
+  addBagLoading: false,
+  addBagSuccess: "",
+  addBagError: "",
 };
 
 export const CartReducer = (state = initialState, { type, payload }) => {
@@ -69,6 +75,25 @@ export const CartReducer = (state = initialState, { type, payload }) => {
         loading: true,
         error: true,
         deletemsg: "",
+      };
+    }
+    case addToBagLoading: {
+      return {
+        ...state,
+        addBagLoading: true,
+      };
+    }
+    case addToBagSuccess: {
+      return {
+        ...state,
+        addBagSuccess: payload,
+        addBagLoading: false,
+      };
+    }
+    case addToBagError: {
+      return {
+        ...state,
+        addBagError: payload,
       };
     }
     default:

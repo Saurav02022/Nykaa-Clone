@@ -14,14 +14,17 @@ import {
 } from "@chakra-ui/react";
 import { InfoIcon } from "@chakra-ui/icons";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { CardImages } from "./Data/CardImages";
 
 import Loading from "../../Loading";
 import { useNavigate } from "react-router-dom";
+import { paymentSuccess } from "../../../Redux/CartPage/action";
 
 const CreditCard = () => {
+  const { userid } = useSelector((store) => store.AuthenticationReducer);
+  const dispatch = useDispatch();
   const toast = useToast();
   const [cardNumber, setcardNumber] = useState("");
   const [expiry, setExipry] = useState("");
@@ -52,7 +55,7 @@ const CreditCard = () => {
       isClosable: true,
       position: "top-right",
     });
-
+    dispatch(paymentSuccess(userid));
     setTimeout(() => {
       navigate("/");
     }, 2500);

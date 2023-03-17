@@ -22,6 +22,7 @@ import {
   DrawerFooter,
   Switch,
   useToast,
+  Textarea,
 } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -30,9 +31,7 @@ import { AddAddress } from "../../Redux/AddressPage/action";
 
 const initialAddress = {
   pincode: "",
-  house: "",
-  road: "",
-  defaultAddress: false,
+  Address: "",
   name: "",
   phone: "",
   email: "",
@@ -51,11 +50,6 @@ const Address = () => {
     (state) => state.AddressReducer
   );
 
-  const {
-    name = "watch",
-    img = "https://i.pinimg.com/236x/bc/47/18/bc47182aa08ac60cf4270d87961d3018.jpg",
-  } = ItemCount;
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = useRef();
   const [screen, setScreen] = useState("");
@@ -66,18 +60,51 @@ const Address = () => {
   const handlePost = () => {
     if (
       address.email &&
-      address.house &&
       address.name &&
       address.phone &&
       address.pincode &&
-      address.road
+      address.Address
     ) {
+      if (address.phone.length !== 10) {
+        toast({
+          title: "invalid phone number",
+          description: "phone number must be at least 10 characters",
+          status: "info",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
+        });
+        return;
+      }
+       if (address.pincode.length !== 6) {
+         toast({
+           title: "invalid pincode",
+           description: "phone number must be at least 6 characters",
+           status: "info",
+           duration: 3000,
+           isClosable: true,
+           position: "top-right",
+         });
+         return;
+      }
+       if (!address.email.includes("@")) {
+         toast({
+           title: "invalid email address",
+           description: "email address must be at least @ characters",
+           status: "info",
+           duration: 3000,
+           isClosable: true,
+           position: "top-right",
+         });
+         return;
+       }
       dispatch(AddAddress(userid, address));
       toast({
         description: "address added successfully",
         status: "success",
         duration: 4000,
         isClosable: true,
+        position: "top-right",
       });
       navigate("/payment");
     } else {
@@ -86,6 +113,7 @@ const Address = () => {
         status: "info",
         duration: 4000,
         isClosable: true,
+        position: "top-right",
       });
     }
   };
@@ -111,16 +139,10 @@ const Address = () => {
 
   const handleChange = (e) => {
     const Name = e.target.name;
-    if (Name === "defaultAddress") {
-      setAddress((address) => {
-        return { ...address, [Name]: !address.defaultAddress };
-      });
-    } else {
-      const value = e.target.value;
-      setAddress((address) => {
-        return { ...address, [Name]: value };
-      });
-    }
+    const value = e.target.value;
+    setAddress((address) => {
+      return { ...address, [Name]: value };
+    });
   };
 
   return (
@@ -137,7 +159,7 @@ const Address = () => {
       >
         <Box>
           <Heading as="h1" fontSize={"36px"}>
-            Choose Address
+            Add Delivery Address
           </Heading>
           <Text fontSize="14px">
             Detailed address will help our delivery partner reach your doorstep
@@ -176,7 +198,7 @@ const Address = () => {
             alt="Address"
           />
           <Heading as="h1" fontSize={"16px"} color="#e80071">
-            Add New Address
+            Add Delivery Address
           </Heading>
 
           {/* Drawer                 */}
@@ -190,7 +212,7 @@ const Address = () => {
             <DrawerContent>
               <DrawerCloseButton />
               <DrawerHeader borderBottomWidth="1px" fontSize={"32px"}>
-                New Address
+                Delivery Address
               </DrawerHeader>
 
               <DrawerBody>
@@ -206,28 +228,12 @@ const Address = () => {
                       value={address.pincode}
                       onChange={handleChange}
                     />
-                    <Input
-                      placeholder="House/ Flat/ Office No."
-                      name="house"
-                      value={address.house}
+                    <Textarea
+                      placeholder="Add Delivery Address"
                       onChange={handleChange}
+                      name="Address"
+                      value={address.Address}
                     />
-                    <Input
-                      placeholder="Road Name/ Area /Colony"
-                      name="road"
-                      value={address.road}
-                      onChange={handleChange}
-                    />
-                    <Box display={"flex"} justifyContent="space-between">
-                      <Text>Use as default address </Text>
-                      <Switch
-                        id="email-alerts"
-                        name="defaultAddress"
-                        onChange={handleChange}
-                        isChecked={address.defaultAddress}
-                      />
-                    </Box>
-
                     <FormLabel htmlFor="username">Contact</FormLabel>
                     <Text>
                       Information provided here will be used to contact you for
@@ -246,7 +252,7 @@ const Address = () => {
                       onChange={handleChange}
                     />
                     <Input
-                      placeholder="Email ID (Optional)"
+                      placeholder="Email ID"
                       name="email"
                       value={address.email}
                       onChange={handleChange}
@@ -298,14 +304,6 @@ const Address = () => {
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel
-                pb={4}
-                display="flex"
-                justifyContent={"space-between"}
-              >
-                <Image src={img} alt="Image" boxSize="90px" objectFit="cover" />
-                <Text>{name}</Text>
-              </AccordionPanel>
             </AccordionItem>
             <AccordionItem>
               <h2>

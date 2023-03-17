@@ -11,3 +11,14 @@ export const AddAddress = (userid, data) => async (dispatch) => {
     dispatch({ type: AddressFailure });
   }
 };
+
+export const getAddress = (userid) => async (dispatch) => {
+  try {
+    dispatch({ type: AddressLoading });
+    await axios
+      .get(`https://fair-pear-salmon-suit.cyclic.app/address/${userid}`)
+      .then((res) => dispatch({ type: AddressSuccess, payload: res.data }));
+  } catch (err) {
+    dispatch({ type: AddressFailure });
+  }
+};

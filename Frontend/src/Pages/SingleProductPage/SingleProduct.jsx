@@ -81,12 +81,12 @@ const SingleProduct = () => {
   // id :::: Get request
   // const getid = async () => {
   //   return await axios.get(
-  //     `https://fair-pear-salmon-suit.cyclic.app/skin/${id}`
+  //     `https://fair-pear-salmon-suit.cyclic.app//skin/${id}`
   //   );
   // };
 
   useEffect(() => {
-    console.log(id)
+    console.log(id);
   }, []);
 
   const { isAuth, userid } = useSelector(
@@ -100,7 +100,7 @@ const SingleProduct = () => {
     if (isAuth) {
       await axios
         .post(
-          `https://fair-pear-salmon-suit.cyclic.app/cart/${userid}`,
+          `https://fair-pear-salmon-suit.cyclic.app//cart/${userid}`,
           payload
         )
         .then((res) =>

@@ -14,8 +14,13 @@ function PriceDetail() {
   const { ItemCount, Totalprice, Totaldiscountprice } = useSelector(
     (state) => state.CartReducer
   );
+  const { Personaddress } = useSelector((state) => state.AddressReducer);
 
   const handleProccessButton = () => {
+    if (Personaddress.length > 0) {
+      navigate("/payment");
+      return;
+    }
     if (ItemCount > 0) {
       navigate("/address");
     } else {

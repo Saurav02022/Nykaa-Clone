@@ -8,10 +8,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
-import { AiOutlineHeart } from "react-icons/ai";
-import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { addToBag, getData } from "../Redux/CartPage/action";
 
 function ProductCartItem({
   _id,
@@ -25,61 +25,57 @@ function ProductCartItem({
   const { isAuth, userid } = useSelector(
     (state) => state.AuthenticationReducer
   );
+  const { data } = useSelector((state) => state.CartReducer);
+  const [alreadyAdded, setAlreadyAdded] = useState(false);
+  const dispatch = useDispatch();
   const toast = useToast();
   const navigate = useNavigate();
-  const HandleAddtoBag = async () => {
-    const payload = {
-      _id,
-      imgsrc,
-      title,
-      price,
-      discountedprice,
-      rating,
-      discount,
-    };
+  const payload = {
+    _id,
+    imgsrc,
+    title,
+    price,
+    discountedprice,
+    rating,
+    discount,
+  };
+  const alreadyinData = data.filter((item) => item._id === _id);
+  const HandleAddtoBag = () => {
     if (isAuth) {
-      await axios
-        .post(
-          `https://fair-pear-salmon-suit.cyclic.app/cart/${userid}`,
-          payload
-        )
-        .then((res) =>
-          toast({
-            description: "Product added successfully",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-          })
-        )
-        .catch((err) => {
-          toast({
-            description: err.message,
-            status: "error",
-            duration: 5000,
-            isClosable: true,
-          });
+      if (alreadyinData.length > 0) {
+        setAlreadyAdded(true);
+        toast({
+          description: "already in cart",
+          status: "info",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
         });
-    } else {
+        return;
+      }
+      dispatch(addToBag(userid, payload));
+      dispatch(getData(userid));
+      setAlreadyAdded(true);
       toast({
-        description: "Please login first",
-        status: "info",
+        description: "Product added successfully",
+        status: "success",
         duration: 5000,
         isClosable: true,
+        position: "top-right",
+      });
+    } else {
+      toast({
+        description: "Please login",
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
       });
     }
   };
 
-  const HandleProduct = (id) => {
-    const data = {
-      _id,
-      imgsrc,
-      title,
-      price,
-      discountedprice,
-      rating,
-      discount,
-    };
-    localStorage.setItem("singleProduct", JSON.stringify(data));
+  const HandleProduct = () => {
+    localStorage.setItem("singleProduct", JSON.stringify(payload));
     navigate("/singleproduct");
   };
 
@@ -96,7 +92,7 @@ function ProductCartItem({
       borderRadius="md"
     >
       <Box
-        onClick={() => HandleProduct(_id)}
+        onClick={HandleProduct}
         _hover={{
           cursor: "pointer",
         }}
@@ -154,15 +150,7 @@ function ProductCartItem({
             {discount}
           </Heading>
         </Flex>
-        <Heading
-          as={"p"}
-          fontSize="14px"
-          lineHeight={"20px"}
-          color="#FC2779"
-          fontWeight={"500"}
-        >
-          Get Free Product
-        </Heading>
+
         <Flex justifyContent={"center"} gap="1">
           <StarIcon fontSize={"14px"} />
           <StarIcon fontSize={"14px"} />
@@ -179,16 +167,17 @@ function ProductCartItem({
             {rating}
           </Heading>
         </Flex>
+        {alreadyAdded && (
+          <Text color="red">Product Item already is in the cart</Text>
+        )}
         <Flex gap="2" justifyContent={"center"}>
-          <Button color={"white"} backgroundColor="#FC2779">
-            <AiOutlineHeart />
-          </Button>
           <Button
             color={"white"}
             backgroundColor="#FC2779"
             onClick={HandleAddtoBag}
+            isDisabled={alreadyAdded}
           >
-            Add to bag
+            Add to Cart
           </Button>
         </Flex>
       </Flex>

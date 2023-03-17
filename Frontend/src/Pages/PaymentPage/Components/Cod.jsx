@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Flex, Heading, Button, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Loading from "../../Loading";
+import { paymentSuccess } from "../../../Redux/CartPage/action";
 
 const Cod = () => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { Totaldiscountprice } = useSelector((state) => state.CartReducer);
+  const { userid } = useSelector((store) => store.AuthenticationReducer);
   const toast = useToast();
   const navigate = useNavigate();
   const HandleClick = () => {
@@ -20,7 +23,7 @@ const Cod = () => {
         isClosable: true,
         position: "top-right",
       });
-
+      dispatch(paymentSuccess(userid));
       setTimeout(() => {
         navigate("/");
       }, 2500);

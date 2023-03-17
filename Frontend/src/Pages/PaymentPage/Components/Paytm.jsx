@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Flex, Heading, Input, Button, useToast } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../Loading";
 import { useNavigate } from "react-router-dom";
+import { paymentSuccess } from "../../../Redux/CartPage/action";
 const Paytm = () => {
+  const dispatch = useDispatch();
+  const { userid } = useSelector((store) => store.AuthenticationReducer);
   const [number, setNumber] = useState(0);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,7 +26,7 @@ const Paytm = () => {
       isClosable: true,
       position: "top-right",
     });
-
+    dispatch(paymentSuccess(userid));
     setTimeout(() => {
       navigate("/");
     }, 2500);

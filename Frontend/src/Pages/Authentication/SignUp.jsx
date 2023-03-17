@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 import React from "react";
 import {
   Heading,
@@ -15,6 +16,7 @@ import { useToast } from "@chakra-ui/react";
 import { Signup } from "../../Redux/LogReducer/action";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { RESET } from "../../Redux/LogReducer/actionType";
 
 const UserSignUp = () => {
   const navigate = useNavigate();
@@ -34,52 +36,117 @@ const UserSignUp = () => {
     (store) => store.AuthenticationReducer
   );
 
-  const handleClick = () => {
-    const data = {
-      name,
-      phone,
-      email,
-      password,
-    };
-    if (name && phone && email) {
-      if (password.length > 8) {
-        dispatch(Signup(data));
-      } else {
-        toast({
-          description: "password length should be greater than 8 characters",
-          status: "info",
-          duration: 3000,
-          isClosable: true,
-        });
-      }
-    } else {
+  const signupBtnHandle = () => {
+    if (!name) {
       toast({
-        description: "Please fill all details",
-        status: "info",
+        title: "invalid name",
+        description: "Please Enter Your Name",
+        status: "warning",
         duration: 3000,
         isClosable: true,
+        position: "top-right",
       });
+      return;
     }
+    if (!phone) {
+      toast({
+        title: "invalid phone Number",
+        description: "Please Enter Your Phone Number",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+    if (phone.length !== 10) {
+      toast({
+        title: "invalid phone",
+        description: "phone number should be 10 digit number",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+    if (!email) {
+      toast({
+        title: "invalid email",
+        description: "Please Enter Your email address",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+    if (!email.includes("@")) {
+      toast({
+        title: "invalid email",
+        description: "Please include @ in your email address",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+    if (!password) {
+      toast({
+        title: "invalid password",
+        description: "Please Enter the password",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+    if (password.length >= 8 === false) {
+      toast({
+        title: "invalid password",
+        description: "password length should be greater than eight characters",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+    const data = {
+      name,
+      email,
+      phone,
+      password,
+    };
+    dispatch(Signup(data));
   };
-  if (signupSuccess !== "") {
+
+  if (signupSuccess) {
     toast({
       description: signupSuccess,
       status: "success",
       duration: 3000,
       isClosable: true,
+      position: "top-right",
     });
-    navigate("/user/login");
+    dispatch({ type: RESET });
+    setTimeout(() => {
+      navigate("/user/login");
+    }, 1500);
   }
 
-  if (signupError !== "") {
+  if (signupError) {
     toast({
       description: signupError,
       status: "error",
-      duration: 4000,
+      duration: 3000,
       isClosable: true,
+      position: "top-right",
     });
+    return;
   }
-
   return (
     <Flex
       maxWidth={"md"}
@@ -162,7 +229,7 @@ const UserSignUp = () => {
         }}
         isLoading={signupLoading}
         loadingText="Submitting"
-        onClick={handleClick}
+        onClick={signupBtnHandle}
       >
         PROCEED
       </Button>
