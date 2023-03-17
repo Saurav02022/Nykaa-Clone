@@ -332,13 +332,14 @@ function SkinProductPage() {
             <Flex
               display={"grid"}
               gridTemplateColumns={{
-                base: "repeat(1,1fr)",
+                base: "repeat(2,1fr)",
                 sm: "repeat(2,1fr)",
                 md: "repeat(2,1fr)",
                 lg: "repeat(3,1fr)",
                 xl: "repeat(3,1fr)",
               }}
-              width="90%"
+              justifyContent={"center"}
+              width={{base:"100%",sm:"100%",md:"95%",lg:"90%",xl:"90%"}}
               margin="auto"
               gap={5}
               marginTop="20px"
@@ -372,10 +373,13 @@ function SkinProductPage() {
                   ))}
             </Flex>
             <div className='page-btn'>
-          <button disabled={page<2} onClick={() => setPage(page - 1)}>Prev</button>
-            <button>{page}</button>
-            <button  onClick={() => setPage(page + 1)}>Next</button>
-          </div>
+            <div>
+            <button className="pbtn" disabled={page < 2} onClick={() => setPage(page - 1)}>Prev</button>
+          <p>{page}</p>
+          <button className="pbtn" onClick={() => setPage(page + 1)}>Next</button>
+            </div>
+         
+        </div>
           </div>
         </div>
       </div>

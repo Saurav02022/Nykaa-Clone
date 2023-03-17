@@ -100,26 +100,28 @@ a:hover{
   width: 75%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .sort{
   width: 80%;
   margin: auto;
-  /* display: grid;
-  grid-template-columns: repeat(4,1fr); */
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
   gap: 10px;
-  justify-content: center;align-items: center;
   margin: 30px auto;
 }
 
 .sort button{
+  width: 80%;
   background-color: white;
   border: 1px solid black;
   font-weight: 700;
   }
 
 .sort>select{
+  width: 100%;
   padding: 5px 10px;
   border: 2px solid black;
   border-radius: 40px;
@@ -136,6 +138,30 @@ a:hover{
 
 .btn{
   display: flex;
+}
+
+
+.page-btn{
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-btn button{
+padding: 2px 15px;
+background-color: #FC2779;
+color: white;
+border: none;
+border-radius: 7px;
+
+}
+
+.page-btn>div{
+display: flex;
+justify-content: center;
+gap: 10px;
+align-items: center;
 }
 
 
