@@ -92,7 +92,7 @@ const Address = () => {
            title: "invalid email address",
            description: "email address must be at least @ characters",
            status: "info",
-           duration: 3000,
+           duration: 4000,
            isClosable: true,
            position: "top-right",
          });
