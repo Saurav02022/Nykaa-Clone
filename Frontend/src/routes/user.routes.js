@@ -12,6 +12,8 @@ import Address from "../Pages/AddressPage/Address";
 import PaymentPage from "../Pages/PaymentPage";
 import SingleProduct from "../Pages/SingleProductPage/SingleProduct";
 
+import ErrorPage from "../Pages/CartPage/Components/NotFound";
+
 import { Box } from "@chakra-ui/layout";
 
 import PrivateRoute from "../PrivateRoutes/PrivateRoute.jsx";
@@ -30,6 +32,7 @@ const UserRoutes = () => {
         <Route path="/skin" element={<SkinProductPage />} />
         <Route path="/user/signup" element={<UserSignUp />} />
         <Route path="/user/login" element={<UserLogin />} />
+        <Route path = "/error" element={<ErrorPage />} />
         <Route
           path="/singleproduct"
           element={

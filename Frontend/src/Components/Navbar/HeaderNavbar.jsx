@@ -1,9 +1,8 @@
 // eslint-disable-next-line no-unused-vars
-import { Box, color, Flex, Heading } from "@chakra-ui/react";
-import { IoIosApps, IoMdGift, IoIosHelpCircleOutline } from "react-icons/io";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import { IoIosApps, IoMdGift } from "react-icons/io";
 import { GrLocation } from "react-icons/gr";
 import { MdAdminPanelSettings } from "react-icons/md";
-import { Link } from "react-router-dom";
 
 const HeaderNavbar = () => {
   return (
@@ -31,6 +30,7 @@ const HeaderNavbar = () => {
         </Heading>
       </Box>
       <Flex
+        flexWrap="wrap"
         justifyContent={"space-around"}
         gap={5}
         marginTop={2}

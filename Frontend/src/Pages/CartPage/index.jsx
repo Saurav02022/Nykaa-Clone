@@ -1,36 +1,38 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import CartItem from "./CartItem";
-import PriceDetail from "./PriceDetail";
+import CartItem from "./Components/CartItem";
+import PriceDetail from "./Components/PriceDetail";
+import CartEmpty from "./Components/CartEmpty";
 
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getData } from "../../Redux/CartPage/action";
 
 import Loading from "../Loading";
-import ErrorPage from "./NotFound";
 
 function CartPage() {
   const [change, setChange] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { userid } = useSelector((state) => state.AuthenticationReducer);
-  const { data, loading, error, ItemCount, Totalprice, Totaldiscountprice } =
-    useSelector((state) => state.CartReducer);
+  const { data, loading, error } = useSelector((state) => state.CartReducer);
 
   useEffect(() => {
+    if (error) {
+      navigate("/error");
+    }
     setTimeout(() => {
       dispatch(getData(userid));
     }, 1000);
   }, [change]);
   return (
     <>
-      {error ? (
-        <ErrorPage />
-      ) : loading ? (
+      {loading ? (
         <Loading />
-      ) : (
+      ) : data.length > 0 ? (
         <Flex
           flexDirection={{
             base: "column",
@@ -45,6 +47,8 @@ function CartPage() {
           marginTop="5"
           marginBottom="5"
           border="0px solid black"
+          flexWrap="wrap"
+          gap="5"
         >
           <Flex flexDirection="column" gap="5" border="0px solid red">
             {data.map((el, index) => (
@@ -61,13 +65,11 @@ function CartPage() {
             ))}
           </Flex>
           <Box border="0px solid blue">
-            <PriceDetail
-              price={Totalprice}
-              discountprice={Totaldiscountprice}
-              length={ItemCount}
-            />
+            <PriceDetail />
           </Box>
         </Flex>
+      ) : (
+        <CartEmpty />
       )}
     </>
   );

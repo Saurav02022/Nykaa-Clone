@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Heading,
@@ -10,10 +10,59 @@ import {
   HStack,
   InputGroup,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { InfoIcon } from "@chakra-ui/icons";
 
-const CreditCard = ({ Totaldiscountprice }) => {
+import { useSelector } from "react-redux";
+
+import { CardImages } from "./Data/CardImages";
+
+import Loading from "../../Loading";
+import { useNavigate } from "react-router-dom";
+
+const CreditCard = () => {
+  const toast = useToast();
+  const [cardNumber, setcardNumber] = useState("");
+  const [expiry, setExipry] = useState("");
+  const [cvv, setcvv] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleBtn = () => {
+    if (cardNumber.length !== 16) {
+      alert("card number should be 16 digits without any spaces");
+      return;
+    }
+    if (!expiry.includes("/")) {
+      alert("Expiry should be a valid number");
+      return;
+    }
+
+    if (cvv.length !== 3 && typeof Number(cvv) !== Number) {
+      alert("invalid cvv number");
+      return;
+    }
+    setLoading(true);
+
+    toast({
+      description: "Payment Successful",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "top-right",
+    });
+
+    setTimeout(() => {
+      navigate("/");
+    }, 2500);
+  };
+
+  const { Totaldiscountprice } = useSelector((state) => state.CartReducer);
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <Flex
       gap="2"
@@ -42,45 +91,39 @@ const CreditCard = ({ Totaldiscountprice }) => {
           WE ACCEPT
         </Text>
         <HStack spacing="2">
-          <Image
-            src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/VISA.svg"
-            width=""
-            height=""
-            alt="visa card image"
-          />
-          <Image
-            src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/mastercard.svg"
-            width=""
-            height=""
-            alt="master card image"
-          />
-          <Image
-            src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/Rupay.svg"
-            width=""
-            height=""
-            alt="rupay card image"
-          />
-          <Image
-            src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/AMEX.svg"
-            width=""
-            height=""
-            alt="american card image"
-          />
+          {CardImages.map(({ id, src, alt }) => (
+            <Image key={id} src={src} width="" height="" alt={alt} />
+          ))}
         </HStack>
       </Flex>
-      <Input placeholder="Card Number" type="number" required />
+      <Input
+        placeholder="Card Number"
+        type="number"
+        isRequired={true}
+        onChange={(e) => setcardNumber(e.target.value)}
+      />
       <Flex gap="2">
-        <Input placeholder="Expiry (MM/YY)" type="text" required />
+        <Input
+          placeholder="Expiry (MM/YY)"
+          type="text"
+          isRequired={true}
+          onChange={(e) => setExipry(e.target.value)}
+        />
         <InputGroup>
           <InputRightElement
             pointerEvents="none"
             children={<InfoIcon color="gray.300" />}
           />
-          <Input type="text" placeholder="CVV" isRequired />
+          <Input
+            type="text"
+            placeholder="CVV"
+            isRequired={true}
+            onChange={(e) => setcvv(e.target.value)}
+          />
         </InputGroup>
       </Flex>
       <Flex gap="1">
-        <Checkbox colorScheme="pink" isRequired>
+        <Checkbox colorScheme="pink" isRequired={true}>
           Save this card securely for future
         </Checkbox>
         <Text
@@ -105,6 +148,7 @@ const CreditCard = ({ Totaldiscountprice }) => {
           color: "white",
           backgroundColor: "#E80080",
         }}
+        onClick={handleBtn}
       >
         Pay ₹ {Totaldiscountprice}
       </Button>

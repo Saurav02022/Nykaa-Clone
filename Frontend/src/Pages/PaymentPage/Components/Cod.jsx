@@ -1,20 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Flex, Heading, Button, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const Cod = ({ Totaldiscountprice }) => {
-  const toast = useToast()
-  const navigate = useNavigate()
+import Loading from "../../Loading";
+
+const Cod = () => {
+  const [loading, setLoading] = useState(false);
+  const { Totaldiscountprice } = useSelector((state) => state.CartReducer);
+  const toast = useToast();
+  const navigate = useNavigate();
   const HandleClick = () => {
     if (Totaldiscountprice > 0) {
+      setLoading(true);
       toast({
         description: "Payment Successful",
         status: "success",
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
+        position: "top-right",
       });
-      navigate("/")
+
+      setTimeout(() => {
+        navigate("/");
+      }, 2500);
     }
+  };
+
+  if (loading) {
+    return <Loading />;
   }
   return (
     <Flex

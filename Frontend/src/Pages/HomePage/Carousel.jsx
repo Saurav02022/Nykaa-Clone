@@ -1,4 +1,4 @@
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { Carousel } from "react-responsive-carousel";
 import { Box, Image } from "@chakra-ui/react";
 
@@ -15,9 +15,9 @@ const images = [
 const CarouselSlider = () => {
   return (
     <Carousel autoPlay infiniteLoop stopOnHover showIndicators={false}>
-      {images.map((image) => (
-        <Box>
-          <Image src={image}/>
+      {images.map((image,i) => (
+        <Box key={i}>
+          <Image src={image} alt='' width="" heigth=""/>
         </Box>
       ))}
     </Carousel>
