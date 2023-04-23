@@ -13,7 +13,7 @@ import {
 
 import { HamburgerIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Logout } from "../../Redux/LogReducer/actionType";

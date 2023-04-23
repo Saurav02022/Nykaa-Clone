@@ -29,7 +29,7 @@ function CartPage() {
     setTimeout(() => {
       dispatch(getData(userid));
     }, 1000);
-  }, [change]);
+  }, [change, dispatch, error, navigate, userid]);
   return (
     <>
       {loading ? (
